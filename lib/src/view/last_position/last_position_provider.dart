@@ -270,7 +270,7 @@ class LastPositionProvider with ChangeNotifier {
 
     fetchAll = false;
     markersProvider.simpleMarkers = {};
-    polylines = {};
+
     String res = await api.post(
       url: '/device',
       body: {
@@ -294,6 +294,9 @@ class LastPositionProvider with ChangeNotifier {
     markersProvider.onMarker.add(myPositionMarker);
     await Future.delayed(const Duration(seconds: 1));
     if (isSelected) {
+      if (polylines.isNotEmpty) {
+        await buildRoutes();
+      }
       moveCamera(LatLng(deviceProvider.selectedDevice.latitude,
           deviceProvider.selectedDevice.longitude));
     }

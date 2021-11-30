@@ -19,6 +19,7 @@ class FuelRepportData {
     required this.carbConsomation100,
     required this.drivingTime,
     required this.drivingTimeBySeconds,
+    required this.odometerKM,
   });
 
   DateTime date;
@@ -27,9 +28,11 @@ class FuelRepportData {
   String drivingTime;
   int drivingTimeBySeconds;
   double distance;
+  double odometerKM;
 
   factory FuelRepportData.fromJson(Map<String, dynamic> json) =>
       FuelRepportData(
+        odometerKM: json['odometerKM'],
         date: DateTime.parse(json["date"]),
         carbConsomation: json["carb_consomation"].toDouble(),
         distance: json["distance"].toDouble(),

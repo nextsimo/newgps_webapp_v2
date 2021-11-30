@@ -74,7 +74,7 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
           },
           child: Container(
             key: _key,
-            width: 270,
+            width: 360,
             height: 35,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -85,21 +85,21 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(left: 6),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.search,
-                  color: Colors.grey[400],
-                  size: 17,
+                Row(
+                  children: [
+                    const SizedBox(width: 4),
+                    Text(
+                      'Modifier les droits',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  'Modifier les droits',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey[400],
-                  ),
-                ),
+                const Icon(Icons.arrow_drop_down, color:Colors.grey)
               ],
             ),
           ),
@@ -118,7 +118,8 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
 class _ShowListDrois extends StatefulWidget {
   final UserDroits userDroits;
   final Function closeMenu;
-  const _ShowListDrois({Key? key, required this.closeMenu, required this.userDroits})
+  const _ShowListDrois(
+      {Key? key, required this.closeMenu, required this.userDroits})
       : super(key: key);
 
   @override
@@ -127,6 +128,7 @@ class _ShowListDrois extends StatefulWidget {
 
 class _ShowListDroisState extends State<_ShowListDrois> {
   final List<String> _listStr = const [
+    'Tous les droits',
     'Position',
     'Historique',
     'Rapport',
@@ -179,7 +181,41 @@ class _ShowListDroisState extends State<_ShowListDrois> {
       itemBuilder: (_, int index) {
         String str = _listStr.elementAt(index);
         Droit userDrois = widget.userDroits.droits.elementAt(index);
-        return CheckedDroits(element: str, userDroits: widget.userDroits, droit: userDrois);
+        return CheckedDroits(
+          onTapRead: (int _index) {
+            if (_index == 10) {
+              widget.userDroits.droits.first.read =
+                  !widget.userDroits.droits.first.read;
+              for (var d in widget.userDroits.droits) {
+                d.read = widget.userDroits.droits.first.read;
+              }
+              setState(() {});
+            } else {
+              widget.userDroits.droits.first.read = false;
+              widget.userDroits.droits[index].read =
+                  !widget.userDroits.droits[index].read;
+              setState(() {});
+            }
+          },
+          element: str,
+          userDroits: widget.userDroits,
+          droit: userDrois,
+          onTapWrite: (int _index) {
+            if (_index == 10) {
+              widget.userDroits.droits.first.write =
+                  !widget.userDroits.droits.first.write;
+              for (var d in widget.userDroits.droits) {
+                d.write = widget.userDroits.droits.first.write;
+              }
+              setState(() {});
+            } else {
+              widget.userDroits.droits.first.write = false;
+              widget.userDroits.droits[index].write =
+                  !widget.userDroits.droits[index].write;
+              setState(() {});
+            }
+          },
+        );
       },
       separatorBuilder: (_, __) => const SizedBox(height: 10),
       itemCount: _listStr.length,
@@ -188,6 +224,8 @@ class _ShowListDroisState extends State<_ShowListDrois> {
 }
 
 class CheckedDroits extends StatefulWidget {
+  final void Function(int index) onTapRead;
+  final void Function(int index) onTapWrite;
   final String element;
   final UserDroits userDroits;
   final Droit droit;
@@ -195,7 +233,9 @@ class CheckedDroits extends StatefulWidget {
       {Key? key,
       required this.element,
       required this.userDroits,
-      required this.droit})
+      required this.droit,
+      required this.onTapRead,
+      required this.onTapWrite})
       : super(key: key);
 
   @override
@@ -232,8 +272,15 @@ class _CheckedDroitsState extends State<CheckedDroits> {
                 Checkbox(
                   value: widget.droit.read,
                   onChanged: (_) {
-                    widget.droit.read = !widget.droit.read;
-                    setState(() {});
+                    widget.onTapRead(widget.droit.index);
+/*                     if (widget.droit.index == 10) {
+                      for (var d in widget.userDroits.droits) {
+                        d.read = !d.read;
+                        setState(() {});
+                      }
+                    } else {
+                      widget.droit.read = !widget.droit.read;
+                    } */
                   },
                 ),
                 const Text(
@@ -243,8 +290,16 @@ class _CheckedDroitsState extends State<CheckedDroits> {
                 Checkbox(
                   value: widget.droit.write,
                   onChanged: (_) {
-                    widget.droit.write = !widget.droit.write;
-                    setState(() {});
+                    widget.onTapWrite(widget.droit.index);
+/*                     if (widget.droit.index == 10) {
+                      for (var d in widget.userDroits.droits) {
+                        d.write = !d.write;
+                        setState(() {});
+                      }
+                    } else {
+                      widget.droit.write = !widget.droit.write;
+                      setState(() {});
+                    } */
                   },
                 ),
               ],

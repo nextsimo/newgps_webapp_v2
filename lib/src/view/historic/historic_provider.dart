@@ -398,6 +398,7 @@ class HistoricProvider with ChangeNotifier {
       isScrollControlled: false,
       builder: (context) {
         return FloatingGroupWindowInfo(
+          showCallDriver: false,
           onClose: () => showWindows = false,
           device: device,
           showOnOffDevice: _droit.write,

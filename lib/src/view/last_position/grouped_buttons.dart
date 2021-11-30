@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
+import 'package:newgps/src/widgets/buttons/appele_condcuteur_button.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
@@ -12,9 +14,14 @@ class GroupedButton extends StatelessWidget {
     LastPositionProvider provider =
         Provider.of<LastPositionProvider>(context, listen: false);
 
+    DeviceProvider deviceProvider =
+        Provider.of<DeviceProvider>(context, listen: false);
+
     bool fetchGroupes = context.select<LastPositionProvider, bool>(
         (p) => p.markersProvider.fetchGroupesDevices);
-    if (!fetchGroupes) return const SizedBox();
+    if (!fetchGroupes) {
+      return AppelCondicteurButton(device: deviceProvider.selectedDevice);
+    }
     return Positioned(
       right: AppConsts.outsidePadding,
       top: 50,

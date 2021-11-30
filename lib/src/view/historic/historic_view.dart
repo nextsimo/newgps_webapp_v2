@@ -8,6 +8,7 @@ import 'package:newgps/src/view/historic/histroric_map_view.dart';
 import 'package:newgps/src/view/historic/play_card.dart';
 import 'package:newgps/src/view/last_position/card_info.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
+import 'package:newgps/src/widgets/buttons/appele_condcuteur_button.dart';
 import 'package:newgps/src/widgets/buttons/log_out_button.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:newgps/src/widgets/buttons/zoom_button.dart';
@@ -99,60 +100,7 @@ class HistoricView extends StatelessWidget {
                   },
                 );
               }),
-          Positioned(
-            top: AppConsts.outsidePadding,
-            right: AppConsts.outsidePadding,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const LogoutButton(),
-                const SizedBox(height: 2),
-                if (deviceProvider.selectedDevice.phone1.isNotEmpty)
-                  Consumer<DeviceProvider>(builder: (_, ___, ____) {
-                    return MainButton(
-                      width: 150,
-                      height: 35,
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              return Dialog(
-                                child: Container(
-                                  width: 300,
-                                  padding: const EdgeInsets.all(17),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      MainButton(
-                                        onPressed: () {},
-                                        icon: Icons.phone_forwarded_rounded,
-                                        label: deviceProvider
-                                            .selectedDevice.phone1,
-                                      ),
-                                      const SizedBox(height: 10),
-                                      if (deviceProvider
-                                          .selectedDevice.phone2.isNotEmpty)
-                                        MainButton(
-                                          onPressed: () {},
-                                          icon: Icons.phone_forwarded_rounded,
-                                          label: deviceProvider
-                                              .selectedDevice.phone2,
-                                        ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            });
-                      },
-                      label: 'Apple conducteur',
-                    );
-                  }),
-              ],
-            ),
-          ),
+          AppelCondicteurButton(device: deviceProvider.selectedDevice),
           Selector<HistoricProvider, bool>(
               selector: (_, p) => p.historicIsPlayed,
               builder: (_, bool isPlayed, ___) {
@@ -184,3 +132,5 @@ class HistoricView extends StatelessWidget {
     );
   }
 }
+
+

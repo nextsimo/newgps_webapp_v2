@@ -51,7 +51,7 @@ class UserProvider with ChangeNotifier {
   Future<void> onSave(User newUser, BuildContext context, int index) async {
     bool res = false;
     if (newUser.userId.isEmpty) {
-      res = await addNewuser(newUser, index);
+      res = await addNewuser(newUser);
     } else {
       res = await updateUser(newUser, index);
     }
@@ -74,7 +74,7 @@ class UserProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> addNewuser(User newUser, int index) async {
+  Future<bool> addNewuser(User newUser) async {
     // save the new matricule
     Account? account = shared.getAccount();
     debugPrint("${newUser.toJson()}");
@@ -84,11 +84,11 @@ class UserProvider with ChangeNotifier {
     });
 
     if (res.isEmpty) {
-      // user exist
       log("user exist");
       return false;
     }
-    await createNewUserDroits(index);
+    String userId = jsonDecode(res)['userID'];
+    await createNewUserDroits(userId);
     return true;
   }
 
@@ -118,17 +118,25 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> updateUserDroits(int index) async {
-    debugPrint(json.encode(userDroits.elementAt(index)));
-
+    UserDroits _userDroits =
+        UserDroits.fromJson(userDroits.elementAt(index).toJson());
+    _userDroits.droits.removeAt(index);
     await api.post(url: '/user/droits/update', body: {
-      'droits': json.encode(userDroits.elementAt(index)),
+      'droits': json.encode(_userDroits.toJson()),
     });
   }
 
-  Future<void> createNewUserDroits(int index) async {
-    debugPrint(json.encode(userDroits.elementAt(index)));
+  Future<void> createNewUserDroits(String userid) async {
+    Account? account = shared.getAccount();
+    UserDroits _userDroits =
+        UserDroits.fromJson(userDroits.elementAt(0).toJson());
+    _userDroits.droits.removeAt(0);
+    debugPrint(json.encode(_userDroits.toJson()));
+
     await api.post(url: '/user/droits/create', body: {
-      'droits': json.encode(userDroits.elementAt(index)),
+      'user_id': userid,
+      'account_id': account!.account.accountId,
+      'droits': json.encode(_userDroits.toJson()),
     });
   }
 
@@ -143,6 +151,28 @@ class UserProvider with ChangeNotifier {
         contactPhone: '',
         password: '',
         devices: [],
+      ),
+    );
+
+    userDroits.insert(
+      0,
+      UserDroits(
+        id: 0,
+        userId: 'test',
+        accountId: 'test',
+        droits: [
+          Droit(read: false, write: false, index: 10),
+          Droit(read: false, write: false, index: 0),
+          Droit(read: false, write: false, index: 1),
+          Droit(read: false, write: false, index: 2),
+          Droit(read: false, write: false, index: 3),
+          Droit(read: false, write: false, index: 4),
+          Droit(read: false, write: false, index: 5),
+          Droit(read: false, write: false, index: 6),
+          Droit(read: false, write: false, index: 7),
+          Droit(read: false, write: false, index: 8),
+          Droit(read: false, write: false, index: 9),
+        ],
       ),
     );
 

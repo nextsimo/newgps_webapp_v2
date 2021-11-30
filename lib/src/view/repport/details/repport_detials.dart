@@ -24,10 +24,9 @@ class RepportDetailsView extends StatelessWidget {
         RepportDetailsProvider repportDetailsProvider =
             Provider.of<RepportDetailsProvider>(context, listen: false);
         repportDetailsProvider.fetchRepportModel(
-          deviceId: provider.selectedDevice.deviceId,
-          newDateFrom: provider.dateFrom,
-          newDateTo: provider.dateTo,
-        );
+            deviceId: provider.selectedDevice.deviceId,
+            newDateFrom: provider.dateFrom,
+            newDateTo: provider.dateTo);
         return Material(
           child: Column(
             children: [
@@ -103,8 +102,8 @@ class _BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Adresse',
-            flex: 4,
+            'Heure',
+            flex: 2,
             index: 1,
             ontap: repportDetailsProvider.onTap,
             isSlected: 1 == repportDetailsProvider.selectedIndex,
@@ -112,25 +111,25 @@ class _BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Statut',
-            flex: 2,
-            ontap: repportDetailsProvider.onTap,
+            'Adresse',
+            flex: 4,
             index: 2,
+            ontap: repportDetailsProvider.onTap,
             isSlected: 2 == repportDetailsProvider.selectedIndex,
             isUp: repportDetailsProvider.up,
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Vitesse',
+            'Statut',
             flex: 2,
-            index: 3,
             ontap: repportDetailsProvider.onTap,
+            index: 3,
             isSlected: 3 == repportDetailsProvider.selectedIndex,
             isUp: repportDetailsProvider.up,
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Niveau carburant (L)',
+            'Vitesse',
             flex: 2,
             index: 4,
             ontap: repportDetailsProvider.onTap,
@@ -139,7 +138,7 @@ class _BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Niveau carburant (%)',
+            'Km actuel',
             flex: 2,
             index: 5,
             ontap: repportDetailsProvider.onTap,
@@ -148,11 +147,29 @@ class _BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Total carburant (L)',
+            'Niveau carburant (L)',
             flex: 2,
             index: 6,
             ontap: repportDetailsProvider.onTap,
             isSlected: 6 == repportDetailsProvider.selectedIndex,
+            isUp: repportDetailsProvider.up,
+          ),
+          const BuildDivider(),
+          BuildClickableTextCell(
+            'Niveau carburant (%)',
+            flex: 2,
+            index: 7,
+            ontap: repportDetailsProvider.onTap,
+            isSlected: 7 == repportDetailsProvider.selectedIndex,
+            isUp: repportDetailsProvider.up,
+          ),
+          const BuildDivider(),
+          BuildClickableTextCell(
+            'Total carburant (L)',
+            flex: 2,
+            index: 8,
+            ontap: repportDetailsProvider.onTap,
+            isSlected: 8 == repportDetailsProvider.selectedIndex,
             isUp: repportDetailsProvider.up,
           ),
           const BuildDivider(),
@@ -184,13 +201,17 @@ class _RepportRow extends StatelessWidget {
       child: Row(
         children: [
           const BuildDivider(),
-          BuildTextCell(formatDeviceDate(repport.timestamp), flex: 2),
+          BuildTextCell(formatSimpleDate(repport.timestamp), flex: 2),
+          const BuildDivider(),
+          BuildTextCell(formatToTime(repport.timestamp), flex: 2),
           const BuildDivider(),
           BuildTextCell(repport.address, flex: 4),
           const BuildDivider(),
           BuildTextCell(repport.statut, flex: 2),
           const BuildDivider(),
           BuildTextCell('${repport.speedKph}', flex: 2),
+          const BuildDivider(),
+          BuildTextCell('${repport.odometerKM}', flex: 2),
           const BuildDivider(),
           BuildTextCell('${repport.fuelRemain}', flex: 2),
           const BuildDivider(),

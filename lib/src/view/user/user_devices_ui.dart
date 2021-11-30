@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/models/user_model.dart';
 import 'package:newgps/src/services/device_provider.dart';
+import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/widgets/inputs/search_widget.dart';
 import 'package:provider/provider.dart';
@@ -108,24 +109,6 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
             ),
           ),
         ),
-/*         Expanded(
-          child: Center(
-            child: MainButton(
-              onPressed: () async {
-                if (isMenuOpen) {
-                  closeMenu();
-                } else {
-                  openMenu();
-                }
-              },
-              label: 'Ajouter vehicule',
-              backgroundColor: AppConsts.mainColor,
-              height: 30,
-              width: 120,
-              factor: 0.7,
-            ),
-          ),
-        ), */
         const SizedBox(width: 10),
         Text(
           '${widget.user.devices.length} Selectioné',
@@ -148,13 +131,13 @@ class _ShowListDevices extends StatefulWidget {
 }
 
 class _ShowListDevicesState extends State<_ShowListDevices> {
-  List<Device> devices = [];
+  late List<Device> devices;
 
   @override
   void initState() {
     super.initState();
     DeviceProvider deviceProvider = Provider.of(context, listen: false);
-    devices = deviceProvider.devices;
+    devices = List<Device>.from(deviceProvider.devices);
     devices.sort((Device device1, Device device2) {
       if (widget.user.devices.contains(device1.deviceId)) {
         return -1;
@@ -164,6 +147,32 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
         return 0;
       }
     });
+
+    devices.insert(
+      0,
+      Device(
+          markerText: '',
+          description: 'Tous les devices',
+          deviceId: '',
+          dateTime: DateTime.now(),
+          latitude: 0,
+          longitude: 0,
+          address: '',
+          distanceKm: 0,
+          odometerKm: 0,
+          city: '',
+          heading: 0,
+          speedKph: 0,
+          index: 0,
+          colorR: 0,
+          colorG: 0,
+          colorB: 0,
+          statut: '',
+          markerPng: '',
+          phone1: '',
+          phone2: '',
+          markerTextPng: ''),
+    );
   }
 
   @override
@@ -224,6 +233,13 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
         bool selected = widget.user.devices.contains(device.deviceId);
         return CheckedMatricule(
           device: deviceName,
+          ontapAllDevice: () {
+            if (device.deviceId.isEmpty && !selected) {
+              widget.user.devices =
+                  List<String>.from(deviceProvider.devices.map((e) => e.deviceId));
+              setState(() {});
+            }
+          },
           checked: selected,
           deviceID: device.deviceId,
           user: widget.user,
@@ -236,6 +252,7 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
 }
 
 class CheckedMatricule extends StatefulWidget {
+  final void Function() ontapAllDevice;
   final String device;
   final User user;
   final String deviceID;
@@ -245,7 +262,8 @@ class CheckedMatricule extends StatefulWidget {
       required this.device,
       required this.checked,
       required this.user,
-      required this.deviceID})
+      required this.deviceID,
+      required this.ontapAllDevice})
       : super(key: key);
 
   @override
@@ -267,6 +285,7 @@ class _CheckedMatriculeState extends State<CheckedMatricule> {
         Checkbox(
             value: _checked,
             onChanged: (bool? check) {
+              widget.ontapAllDevice();
               if (check!) {
                 widget.user.devices.add(widget.deviceID);
               } else if (!check) {

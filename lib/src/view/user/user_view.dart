@@ -35,7 +35,7 @@ class UserDataView extends StatelessWidget {
     'Mot de passe utilisateur',
     'Droits utilisateur',
     'Véhicules',
-    'Ajoutement',
+    'Enregistrement',
     'Supression',
   ];
 
@@ -78,85 +78,85 @@ class UserDataView extends StatelessWidget {
                     ],
                   ),
                   const SizedBox(height: 8),
-                    Expanded(
-                      child: Container(
-                        width: MediaQuery.of(context).size.width,
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Table(
-                          border: TableBorder.all(color: Colors.grey),
-                          defaultVerticalAlignment:
-                              TableCellVerticalAlignment.middle,
-                          defaultColumnWidth: const IntrinsicColumnWidth(),
-                          children: [
-                            TableRow(
-                                decoration: BoxDecoration(
-                                    color:
-                                        AppConsts.mainColor.withOpacity(0.2)),
-                                children: _items.map<Widget>((item) {
-                                  
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    child: Text(
-                                      item,
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  );
-                                }).toList()),
-                            ...users.map<TableRow>((user) {
-                              return TableRow(children: [
-                                EditableCell(
-                                  content: user.userId,
-                                  autofocus: user.userId.isEmpty,
-                                  onchanged: (_) => user.newUserId = _,
-                                ),
-                                EditableCell(
-                                  content: user.displayName,
-                                  onchanged: (_) => user.displayName = _,
-                                ),
-                                EditableCell(
-                                  content: user.contactPhone,
-                                  onchanged: (_) => user.contactPhone = _,
-                                ),
-                                EditableCell(
-                                  content: user.password,
-                                  onchanged: (_) => user.password = _,
-                                ),
-                                UserDroitsUi(
-                                  userDroits: userProvider.userDroits.elementAt(user.index),
-                                ),
-                                UserDevicesUi(
-                                  user: user,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: MainButton(
-                                    onPressed: () async {
-                                      await userProvider.onSave(user, context,user.index);
-                                    },
-                                    label: 'Enregistrer',
-                                    backgroundColor: Colors.green,
-                                    height: 30,
+                  Expanded(
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Table(
+                        border: TableBorder.all(color: Colors.grey),
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        defaultColumnWidth: const IntrinsicColumnWidth(),
+                        children: [
+                          TableRow(
+                              decoration: BoxDecoration(
+                                  color: AppConsts.mainColor.withOpacity(0.2)),
+                              children: _items.map<Widget>((item) {
+                                return Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 15),
+                                  child: Text(
+                                    item,
+                                    textAlign: TextAlign.center,
                                   ),
+                                );
+                              }).toList()),
+                          ...users.map<TableRow>((user) {
+                            return TableRow(children: [
+                              EditableCell(
+                                content: user.userId,
+                                autofocus: user.userId.isEmpty,
+                                onchanged: (_) => user.newUserId = _,
+                              ),
+                              EditableCell(
+                                content: user.displayName,
+                                onchanged: (_) => user.displayName = _,
+                              ),
+                              EditableCell(
+                                content: user.contactPhone,
+                                onchanged: (_) => user.contactPhone = _,
+                              ),
+                              EditableCell(
+                                content: user.password,
+                                onchanged: (_) => user.password = _,
+                              ),
+                              UserDroitsUi(
+                                userDroits: userProvider.userDroits
+                                    .elementAt(user.index),
+                              ),
+                              UserDevicesUi(
+                                user: user,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MainButton(
+                                  onPressed: () async {
+                                    await userProvider.onSave(
+                                        user, context, user.index);
+                                  },
+                                  label: 'Enregistrer',
+                                  backgroundColor: Colors.green,
+                                  height: 30,
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: MainButton(
-                                    onPressed: () async {
-                                      // Supprimer
-                                      await userProvider.deleteUser(user);
-                                    },
-                                    label: 'Supprimer',
-                                    backgroundColor: Colors.red,
-                                    height: 30,
-                                  ),
-                                )
-                              ]);
-                            }).toList()
-                          ],
-                        ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: MainButton(
+                                  onPressed: () async {
+                                    // Supprimer
+                                    await userProvider.deleteUser(user);
+                                  },
+                                  label: 'Supprimer',
+                                  backgroundColor: Colors.red,
+                                  height: 30,
+                                ),
+                              )
+                            ]);
+                          }).toList()
+                        ],
                       ),
                     ),
+                  ),
                 ],
               ),
             ),

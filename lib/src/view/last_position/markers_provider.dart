@@ -207,7 +207,7 @@ class MarkersProvider {
     Uint8List imgRes = base64Decode(device.markerText);
     BitmapDescriptor bitmapDescriptor = BitmapDescriptor.fromBytes(imgRes);
     return Marker(
-      zIndex: -1,
+      zIndex: 1,
       position: position,
       anchor: const Offset(1.0, 0.5),
       markerId: MarkerId('${device.latitude},${device.longitude}___text'),
@@ -231,8 +231,9 @@ class MarkersProvider {
       backgroundColor: Colors.transparent,
       enableDrag: true,
       isScrollControlled: false,
-      builder: (context) {
-        return FloatingGroupWindowInfo(
+      builder: (context) { 
+        return FloatingGroupWindowInfo( 
+          showCallDriver: fetchGroupesDevices,
           onClose: () => showWindows = false,
           device: device,
           showOnOffDevice: droit.write,

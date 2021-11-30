@@ -12,7 +12,7 @@ String repportDetailsPaginateModelToJson(RepportDetailsPaginateModel data) =>
 
 class RepportDetailsPaginateModel {
   RepportDetailsPaginateModel({
-     this.currentPage = 0,
+    this.currentPage = 0,
     required this.repportsDetailsModel,
     this.lastPage = 0,
     this.perPage = 0,
@@ -57,6 +57,7 @@ class RepportsDetailsModel {
     required this.colorG,
     required this.colorB,
     required this.statut,
+    required this.odometerKM,
   });
 
   DateTime timestamp;
@@ -70,6 +71,7 @@ class RepportsDetailsModel {
   int colorG;
   int colorB;
   String statut;
+  double odometerKM;
 
   factory RepportsDetailsModel.fromJson(Map<String, dynamic> json) =>
       RepportsDetailsModel(
@@ -84,6 +86,7 @@ class RepportsDetailsModel {
         colorG: json["colorG"],
         colorB: json["colorB"],
         statut: json["statut"],
+        odometerKM: json["odometerKM"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -98,5 +101,6 @@ class RepportsDetailsModel {
         "colorG": colorG,
         "colorB": colorB,
         "statut": statut,
+        "odometerKM": odometerKM,
       };
 }

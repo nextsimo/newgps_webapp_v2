@@ -14,13 +14,15 @@ import 'buttons/outlined_button.dart';
 class FloatingGroupWindowInfo extends StatefulWidget {
   final Device device;
   final bool showOnOffDevice;
+  final bool showCallDriver;
   final void Function()? onClose;
 
   const FloatingGroupWindowInfo(
       {Key? key,
       required this.device,
       this.onClose,
-      this.showOnOffDevice = true})
+      this.showOnOffDevice = true,
+      this.showCallDriver = true})
       : super(key: key);
 
   @override
@@ -195,7 +197,8 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                           ),
 
                           const SizedBox(height: 7),
-                          if (widget.device.phone1.isNotEmpty)
+                          if (widget.device.phone1.isNotEmpty &&
+                              widget.showCallDriver)
                             MainButton(
                               height: 35,
                               icon: Icons.call,

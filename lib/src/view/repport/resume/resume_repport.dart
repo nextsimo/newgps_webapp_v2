@@ -56,7 +56,7 @@ class BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Km actuel',
+            'Km actuel(KM)',
             flex: 2,
             ontap: repportProvider.updateByCurrentDistance,
             isSlected: repportProvider.selectedIndex == 3,
@@ -88,7 +88,7 @@ class BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Cons L/100',
+            'Cons L/100Km',
             flex: 2,
             ontap: repportProvider.updateByCarbConsumation,
             isSlected: repportProvider.selectedIndex == 7,
