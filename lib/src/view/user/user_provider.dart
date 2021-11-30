@@ -50,6 +50,7 @@ class UserProvider with ChangeNotifier {
 
   Future<void> onSave(User newUser, BuildContext context, int index) async {
     bool res = false;
+    newUser.devices.removeWhere((e) => e.isEmpty);
     if (newUser.userId.isEmpty) {
       res = await addNewuser(newUser);
     } else {

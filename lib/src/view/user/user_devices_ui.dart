@@ -90,21 +90,27 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
             alignment: Alignment.centerLeft,
             margin: const EdgeInsets.only(left: 6),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(width: 4),
-                Icon(
-                  Icons.search,
-                  color: Colors.grey[400],
-                  size: 17,
+                Row(
+                  children: [
+                    const SizedBox(width: 4),
+                    Icon(
+                      Icons.search,
+                      color: Colors.grey[400],
+                      size: 17,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Ajouter vehicule',
+                      style: TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey[400],
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 8),
-                Text(
-                  'Ajouter vehicule',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.grey[400],
-                  ),
-                ),
+                const Icon(Icons.arrow_drop_down, color: Colors.grey)
               ],
             ),
           ),
@@ -148,33 +154,31 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
       }
     });
 
-    devices.insert(
-      0,
-      Device(
-          markerText: '',
-          description: 'Tous les devices',
-          deviceId: '',
-          dateTime: DateTime.now(),
-          latitude: 0,
-          longitude: 0,
-          address: '',
-          distanceKm: 0,
-          odometerKm: 0,
-          city: '',
-          heading: 0,
-          speedKph: 0,
-          index: 0,
-          colorR: 0,
-          colorG: 0,
-          colorB: 0,
-          statut: '',
-          markerPng: '',
-          phone1: '',
-          phone2: '',
-          markerTextPng: ''),
-    );
+    devices.insert(0, emptyDevice);
   }
 
+  Device emptyDevice = Device(
+      markerText: '',
+      description: 'Touts les véhicules',
+      deviceId: '',
+      dateTime: DateTime.now(),
+      latitude: 0,
+      longitude: 0,
+      address: '',
+      distanceKm: 0,
+      odometerKm: 0,
+      city: '',
+      heading: 0,
+      speedKph: 0,
+      index: 0,
+      colorR: 0,
+      colorG: 0,
+      colorB: 0,
+      statut: '',
+      markerPng: '',
+      phone1: '',
+      phone2: '',
+      markerTextPng: '');
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -235,8 +239,20 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
           device: deviceName,
           ontapAllDevice: () {
             if (device.deviceId.isEmpty && !selected) {
-              widget.user.devices =
-                  List<String>.from(deviceProvider.devices.map((e) => e.deviceId));
+              widget.user.devices = List<String>.from(
+                  deviceProvider.devices.map((e) => e.deviceId))
+                ..add('');
+              setState(() {});
+            } else if (device.deviceId.isEmpty) {
+              widget.user.devices.clear();
+              setState(() {});
+            } else {
+              if (selected) {
+                widget.user.devices.remove(device.deviceId);
+                widget.user.devices.remove('');
+              } else {
+                widget.user.devices.add(device.deviceId);
+              }
               setState(() {});
             }
           },
@@ -245,13 +261,19 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
           user: widget.user,
         );
       },
-      separatorBuilder: (_, __) => const SizedBox(height: 10),
+      separatorBuilder: (_, int index) => index == 0
+          ? Container(
+              height: 1.3,
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              color: Colors.grey,
+            )
+          : const SizedBox(height: 10),
       itemCount: devices.length,
     );
   }
 }
 
-class CheckedMatricule extends StatefulWidget {
+class CheckedMatricule extends StatelessWidget {
   final void Function() ontapAllDevice;
   final String device;
   final User user;
@@ -267,35 +289,28 @@ class CheckedMatricule extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<CheckedMatricule> createState() => _CheckedMatriculeState();
-}
-
-class _CheckedMatriculeState extends State<CheckedMatricule> {
-  late bool _checked;
-  @override
-  void initState() {
-    super.initState();
-    _checked = widget.checked;
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Checkbox(
-            value: _checked,
+            value: checked,
             onChanged: (bool? check) {
-              widget.ontapAllDevice();
-              if (check!) {
+              ontapAllDevice();
+/*               if (check!) {
                 widget.user.devices.add(widget.deviceID);
               } else if (!check) {
                 widget.user.devices.remove(widget.deviceID);
               }
               _checked = check;
-              setState(() {});
+              setState(() {}); */
             }),
         const SizedBox(width: 10),
-        Text(widget.device),
+        Text(
+          device,
+          style: TextStyle(
+            color: deviceID.isEmpty ? Colors.red : Colors.grey,
+          ),
+        ),
       ],
     );
   }

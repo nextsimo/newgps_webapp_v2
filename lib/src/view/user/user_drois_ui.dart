@@ -99,7 +99,7 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
                     ),
                   ],
                 ),
-                const Icon(Icons.arrow_drop_down, color:Colors.grey)
+                const Icon(Icons.arrow_drop_down, color: Colors.grey)
               ],
             ),
           ),
@@ -182,6 +182,7 @@ class _ShowListDroisState extends State<_ShowListDrois> {
         String str = _listStr.elementAt(index);
         Droit userDrois = widget.userDroits.droits.elementAt(index);
         return CheckedDroits(
+          color: userDrois.index == 10 ? Colors.red : null,
           onTapRead: (int _index) {
             if (_index == 10) {
               widget.userDroits.droits.first.read =
@@ -217,7 +218,13 @@ class _ShowListDroisState extends State<_ShowListDrois> {
           },
         );
       },
-      separatorBuilder: (_, __) => const SizedBox(height: 10),
+      separatorBuilder: (_, int index) => index == 0
+          ? Container(
+              height: 1.3,
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              color: Colors.grey,
+            )
+          : const SizedBox(height: 10),
       itemCount: _listStr.length,
     );
   }
@@ -228,6 +235,7 @@ class CheckedDroits extends StatefulWidget {
   final void Function(int index) onTapWrite;
   final String element;
   final UserDroits userDroits;
+  final Color? color;
   final Droit droit;
   const CheckedDroits(
       {Key? key,
@@ -235,7 +243,8 @@ class CheckedDroits extends StatefulWidget {
       required this.userDroits,
       required this.droit,
       required this.onTapRead,
-      required this.onTapWrite})
+      required this.onTapWrite,
+      required this.color})
       : super(key: key);
 
   @override
@@ -256,7 +265,10 @@ class _CheckedDroitsState extends State<CheckedDroits> {
             child: Row(
           children: [
             const SizedBox(width: 10),
-            Text('${widget.element}:'),
+            Text(
+              '${widget.element}:',
+              style: TextStyle(color: widget.color),
+            ),
             const SizedBox(width: 10),
           ],
         )),
