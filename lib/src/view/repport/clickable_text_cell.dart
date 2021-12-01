@@ -27,20 +27,29 @@ class BuildClickableTextCell extends StatelessWidget {
         child: Container(
           color: isSlected ? Colors.white : Colors.transparent,
           height: 48,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
             children: [
-              Expanded(
-                child: Text(
-                  content,
-                  textAlign: TextAlign.center,
+              Center(
+                child: FittedBox(
+                  fit: BoxFit.fitWidth,
+                  child: Text(
+                    content,
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
                 ),
               ),
-              Icon(
-                  isUp && isSlected
-                      ? Icons.arrow_drop_down_outlined
-                      : Icons.arrow_drop_up_outlined,
-                  size: 20)
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Icon(
+                    isUp && isSlected
+                        ? Icons.arrow_drop_down_outlined
+                        : Icons.arrow_drop_up_outlined,
+                    size: 17),
+              )
             ],
           ),
         ),

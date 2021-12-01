@@ -75,6 +75,7 @@ class RepportDataView extends StatelessWidget {
                       },
                     ),
                   if (repportProvider.selectedRepport.index != 0)
+                  
                     Padding(
                       padding: const EdgeInsets.only(left: 10),
                       child: MainButton(
@@ -114,7 +115,7 @@ class RepportDataView extends StatelessWidget {
                                 );
                               });
                         },
-                        label: 'Apple conducteur',
+                        label: 'Appel conducteur',
                       ),
                     ),
                   const SizedBox(width: 6),

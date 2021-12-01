@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
@@ -35,6 +36,12 @@ class NewGpsApp extends StatelessWidget {
           '/login': (context) => const LoginView(),
           // When navigating to the "/second" route, build the SecondScreen widget.
         },
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('fr')],
         debugShowCheckedModeBanner: false,
         builder: (context, child) => MediaQuery(
             data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),

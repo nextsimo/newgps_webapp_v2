@@ -56,7 +56,7 @@ class BuildHead extends StatelessWidget {
           ),
           const BuildDivider(),
           BuildClickableTextCell(
-            'Km actuel(KM)',
+            'Km actuel',
             flex: 2,
             ontap: repportProvider.updateByCurrentDistance,
             isSlected: repportProvider.selectedIndex == 3,
@@ -140,6 +140,7 @@ class BuildHead extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Redémarrer boitier',
+                  style: TextStyle(fontSize: 14),
                 ),
               )),
           const BuildDivider(),

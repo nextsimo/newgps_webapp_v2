@@ -16,9 +16,13 @@ class BuildTextCell extends StatelessWidget {
         height: 48,
         color: color,
         child: Center(
-          child: Text(
-            content,
-            textAlign: TextAlign.center,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              content,
+              textAlign: TextAlign.center,
+              maxLines: 1,
+            ),
           ),
         ),
       ),
