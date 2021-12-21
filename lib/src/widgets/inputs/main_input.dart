@@ -51,7 +51,7 @@ class MainInput extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Center(
-                    child: Icon(icon, color: Colors.white),
+                    child: Icon(icon, color: Colors.white)
                   ),
                 ),
         ),

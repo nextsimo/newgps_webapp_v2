@@ -19,14 +19,18 @@ class LogoutButton extends StatelessWidget {
         MainButton(
           height: 30,
           onPressed: () {
-            //shared.clear('account');
-            LastPositionProvider lastPositionProvider =
-                Provider.of(context, listen: false);
-            HistoricProvider historicProvider =
-                Provider.of(context, listen: false);
-            Navigator.of(context).pushNamed('/login');
-            lastPositionProvider.fresh();
-            historicProvider.fresh();
+            try {
+              LastPositionProvider lastPositionProvider =
+                  Provider.of(context, listen: false);
+              HistoricProvider historicProvider =
+                  Provider.of(context, listen: false); 
+              lastPositionProvider.fresh();
+              historicProvider.fresh();
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/login', (_) => false);
           },
           label: 'Deconnexion',
           backgroundColor: Colors.red,

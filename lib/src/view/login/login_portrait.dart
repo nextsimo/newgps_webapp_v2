@@ -1,37 +1,42 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/utils/functions.dart';
+import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
-import 'package:newgps/src/widgets/buttons/outlined_button.dart';
 import 'package:newgps/src/widgets/inputs/main_input.dart';
 import 'package:newgps/src/widgets/inputs/password_input.dart';
 import 'package:provider/provider.dart';
+
 import 'call_service_view.dart';
-import 'change_password_view.dart';
 import 'login_as/login_as_view.dart';
 
-class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+class LoginPortrait extends StatelessWidget {
+  final MainButton loginButton;
+  const LoginPortrait({Key? key, required this.loginButton}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     LoginProvider provider = Provider.of<LoginProvider>(context, listen: false);
-    final loginButton = MainButton(
-        label: 'Se connecter', onPressed: () => provider.login(context));
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SizedBox(
-          width: 400,
-          child: Form(
-            key: provider.formKey,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppConsts.outsidePadding),
+      child: Center(
+        child: Form(
+          key: provider.formKey,
+          child: SingleChildScrollView(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(
-                  'https://api.newgps.ma/api/icons/logo.svg',
-                  width: 100,
-                ),
+                if (kIsWeb)
+                  Image.network(
+                    'https://api.newgps.ma/api/icons/logo.svg',
+                    width: 100,
+                  ),
+                if (!kIsWeb)
+                  Image.asset(
+                    'assets/logo-200.png',
+                    width: 100,
+                  ),
                 const SizedBox(height: 20),
                 MainInput(
                   icon: Icons.folder,
@@ -58,21 +63,6 @@ class LoginView extends StatelessWidget {
                 const SizedBox(height: 20),
                 loginButton,
                 const SizedBox(height: 10),
-                CustomOutlinedButton(
-                  width: double.infinity,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (_) => Dialog(
-                        child: ChangePasswordView(
-                          context: context,
-                        ),
-                      ),
-                    );
-                  },
-                  label: 'Changer le mot de passe',
-                ),
-                const SizedBox(height: 10),
                 const LoginAsView(),
                 const SizedBox(height: 10),
                 Selector<LoginProvider, String>(
@@ -89,7 +79,6 @@ class LoginView extends StatelessWidget {
                   },
                   selector: (_, __) => __.errorText,
                 ),
-                const SizedBox(height: 10),
                 const CallServiceView(),
               ],
             ),

@@ -22,42 +22,46 @@ class SpeedAlertView extends StatelessWidget {
               .userDroits
               .droits[3];
           return Scaffold(
-            appBar: const CustomAppBar(
-              actions: [CloseButton(color: Colors.black)],
-            ),
-            body: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(AppConsts.outsidePadding),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 10),
-                    const BuildLabel(
-                      icon: Icons.speed,
-                      label: 'vitesse',
-                    ),
-                    const SizedBox(height: 30),
-                    Row(
+            appBar:
+                const CustomAppBar(actions: [CloseButton(color: Colors.black)]),
+            body: SingleChildScrollView(
+              child: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Padding(
+                    padding: const EdgeInsets.all(AppConsts.outsidePadding),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildInput(provider, readOnly: !droit.write),
-                        const SizedBox(width: 10),
-                        Switch(
-                            value: provider.active,
-                            onChanged:
-                                droit.write ? provider.onTapSwitch : null),
+                        const SizedBox(height: 10),
+                        const BuildLabel(
+                          icon: Icons.speed,
+                          label: 'vitesse',
+                        ),
+                        const SizedBox(height: 30),
+                        Row(
+                          children: [
+                            _buildInput(provider, readOnly: !droit.write),
+                            const SizedBox(width: 10),
+                            Switch(
+                                value: provider.active,
+                                onChanged:
+                                    droit.write ? provider.onTapSwitch : null),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        if (droit.write)
+                          MainButton(
+                            width: 210,
+                            backgroundColor: provider.active
+                                ? AppConsts.mainColor
+                                : Colors.blueGrey,
+                            onPressed: provider.onTapSaved,
+                            label: 'Enregistrer',
+                          ),
                       ],
                     ),
-                    const SizedBox(height: 20),
-                    if (droit.write)
-                      MainButton(
-                        width: 210,
-                        backgroundColor: provider.active
-                            ? AppConsts.mainColor
-                            : Colors.blueGrey,
-                        onPressed: provider.onTapSaved,
-                        label: 'Enregistrer',
-                      ),
-                  ],
+                  ),
                 ),
               ),
             ),
@@ -78,7 +82,8 @@ class SpeedAlertView extends StatelessWidget {
         controller: provider.controller,
         autofocus: true,
         onTap: provider.onTap,
-        keyboardType: TextInputType.number,
+        keyboardType:
+            const TextInputType.numberWithOptions(signed: true, decimal: true),
         textAlign: TextAlign.center,
         enabled: provider.active,
         decoration: InputDecoration(

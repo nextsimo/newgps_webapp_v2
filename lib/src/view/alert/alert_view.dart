@@ -84,17 +84,12 @@ class AlertView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: SizedBox(
+      body: Container(
         width: size.width,
+        margin: const EdgeInsets.only(top: 50),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            const Padding(
-              padding: EdgeInsets.only(
-                  right: AppConsts.outsidePadding,
-                  top: AppConsts.outsidePadding),
-              child: LogoutButton(),
-            ),
             Expanded(
               child: GridView.builder(
                 itemCount: _items.length,

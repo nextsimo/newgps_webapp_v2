@@ -10,64 +10,7 @@ class FuelProvider with ChangeNotifier {
   FuelNotifSetting? fuelNotifSetting;
   bool active = false;
 
-  List<FuelNotifHistoric> historics = [
-    FuelNotifHistoric(
-        id: 12,
-        notificationId: 122,
-        deviceId: '212',
-        deviceName: 'Device name',
-        address: 'Casablanca maroc test test',
-        latitude: 212,
-        fuelValue1: 70.0,
-        fuelValue2: 20,
-        longitude: 12,
-        accountId: 'accountId',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        date: "12/11/2020"),
-    FuelNotifHistoric(
-        id: 12,
-        notificationId: 122,
-        deviceId: '212',
-        deviceName: 'Device name',
-        address: 'Casablanca maroc test test',
-        latitude: 212,
-        fuelValue1: 70.0,
-        fuelValue2: 20,
-        longitude: 12,
-        accountId: 'accountId',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        date: "12/11/2020"),
-    FuelNotifHistoric(
-        id: 12,
-        notificationId: 122,
-        deviceId: '212',
-        deviceName: 'Device name',
-        address: 'Casablanca maroc test test',
-        latitude: 212,
-        fuelValue1: 70.0,
-        fuelValue2: 20,
-        longitude: 12,
-        accountId: 'accountId',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        date: "12/11/2020"),
-    FuelNotifHistoric(
-        id: 12,
-        notificationId: 122,
-        deviceId: '212',
-        deviceName: 'Device name',
-        address: 'Casablanca maroc test test',
-        latitude: 212,
-        fuelValue1: 70.0,
-        fuelValue2: 20,
-        longitude: 12,
-        accountId: 'accountId',
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        date: "12/11/2020"),
-  ];
+  List<FuelNotifHistoric> historics = [];
 
   FuelProvider({FirebaseMessagingService? m}) {
     messagingService = m;

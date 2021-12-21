@@ -116,19 +116,16 @@ class LastPositionProvider with ChangeNotifier {
     fetchAll = true;
     lastDateFetchDevices = DateTime.now();
     notifyMap = false;
-    googleMapController?.dispose();
+    googleMapController = null;
     markersProvider.clusterItems = [];
     markersProvider.clusterItemsText = [];
     markersProvider.clusterMarkers = {};
     markersProvider.onMarker = {};
-    //markersProvider.textMarkerManager.updateMap();
-    //markersProvider.simpleMarkerManager.updateMap();
     markersProvider.fetchGroupesDevices = true;
     markersProvider.showMatricule = false;
     markersProvider.showCluster = false;
     markersProvider.devices = [];
     markersProvider.textMakers = {};
-    notifyListeners();
   }
 
   Future<void> init(BuildContext context) async {

@@ -10,48 +10,7 @@ class BatteryProvider with ChangeNotifier {
   BatteryNotifcationSetting? batteryNotifcationSetting;
   bool active = false;
 
-  List<BatteryNotifcationHistoric> historics = [
-    BatteryNotifcationHistoric(
-      description: 'Description description',
-      notificationId: 12,
-      deviceName: 'Device name',
-      isBatteryDown: false,
-      isIntern: true,
-      date: '12/11/2020',
-    ),
-    BatteryNotifcationHistoric(
-      description: 'Description description',
-      notificationId: 12,
-      deviceName: 'Device name',
-      isBatteryDown: false,
-      isIntern: true,
-      date: '12/11/2020',
-    ),
-    BatteryNotifcationHistoric(
-      description: 'Description description',
-      notificationId: 12,
-      deviceName: 'Device name',
-      isBatteryDown: false,
-      isIntern: false,
-      date: '12/11/2020',
-    ),
-    BatteryNotifcationHistoric(
-      description: 'Description description',
-      notificationId: 12,
-      deviceName: 'Device name',
-      isBatteryDown: false,
-      isIntern: true,
-      date: '12/11/2020',
-    ),
-    BatteryNotifcationHistoric(
-      description: 'Description description',
-      notificationId: 12,
-      deviceName: 'Device name',
-      isBatteryDown: false,
-      isIntern: false,
-      date: '12/11/2020',
-    ),
-  ];
+  List<BatteryNotifcationHistoric> historics = [];
 
   BatteryProvider({FirebaseMessagingService? m}) {
     messagingService = m;

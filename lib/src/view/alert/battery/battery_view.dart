@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:newgps/src/models/batter_alert_historic.dart';
 import 'package:newgps/src/services/firebase_messaging_service.dart';
 import 'package:newgps/src/utils/styles.dart';
@@ -27,19 +26,24 @@ class BatteryAlertView extends StatelessWidget {
             appBar: const CustomAppBar(
               actions: [CloseButton(color: Colors.black)],
             ),
-            body: Padding(
-              padding: const EdgeInsets.all(AppConsts.outsidePadding),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  const BuildLabel(
-                      label: 'batterie',
-                      icon: Icons.battery_charging_full_outlined),
-                  const SizedBox(height: 20),
-                  _buildStatusLabel(provider, context),
-                  const SizedBox(height: 20),
-                  _buildHistoric(provider.historics),
-                ],
+            body: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50),
+                child: Padding(
+                  padding: const EdgeInsets.all(AppConsts.outsidePadding),
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const BuildLabel(
+                          label: 'batterie',
+                          icon: Icons.battery_charging_full_outlined),
+                      const SizedBox(height: 20),
+                      _buildStatusLabel(provider, context),
+                      const SizedBox(height: 20),
+                      _buildHistoric(provider.historics),
+                    ],
+                  ),
+                ),
               ),
             ),
           );

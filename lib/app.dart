@@ -4,6 +4,7 @@ import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
+import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:newgps/src/view/login/login_view.dart';
 import 'package:newgps/src/view/navigation/navigation_view.dart';
 import 'package:newgps/src/view/splash/splash_view.dart';
@@ -25,6 +26,9 @@ class NewGpsApp extends StatelessWidget {
             create: (_) => HistoricProvider()),
         ChangeNotifierProvider<SavedAcountProvider>(
           create: (_) => SavedAcountProvider(),
+        ),
+        ChangeNotifierProvider<LoginProvider>(
+          create: (_) => LoginProvider(),
         ),
       ],
       child: MaterialApp(

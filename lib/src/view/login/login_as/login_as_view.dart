@@ -104,7 +104,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
                 context: context);
             setState(() => loading = false);
 
-            Navigator.of(context).pushNamed('/');
+            Navigator.of(context).pushNamedAndRemoveUntil('/',(_) => false);
           } else {
             ///errorText = 'Mot de passe ou account est inccorect';
           }

@@ -97,7 +97,7 @@ class LoginProvider with ChangeNotifier {
             historicProvider: historicProvider,
             lastPositionProvider: lastPositionProvider,
             context: context);
-        Navigator.of(context).pushNamed('/navigation');
+        Navigator.of(context).pushNamedAndRemoveUntil('/navigation', (_) => false);
       } else {
         errorText = 'Mot de passe ou account est inccorect';
       }

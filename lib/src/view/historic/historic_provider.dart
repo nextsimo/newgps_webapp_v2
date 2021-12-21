@@ -71,8 +71,7 @@ class HistoricProvider with ChangeNotifier {
   void fresh() {
     markers = {};
     autoSearchController.dispose();
-    googleMapController?.dispose();
-    notifyListeners();
+    googleMapController = null;
   }
 
   Set<Marker> playedMarkers = {};

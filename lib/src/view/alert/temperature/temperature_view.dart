@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
@@ -28,20 +27,25 @@ class _TemperatureViewState extends State<TemperatureView> {
       appBar: const CustomAppBar(
         actions: [CloseButton(color: Colors.black)],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppConsts.outsidePadding),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            const BuildLabel(
-              label: 'température',
-              icon: Icons.edit_road_rounded,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Padding(
+            padding: const EdgeInsets.all(AppConsts.outsidePadding),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const BuildLabel(
+                  label: 'température',
+                  icon: Icons.edit_road_rounded,
+                ),
+                const SizedBox(height: 20),
+                _buildStatusLabel(),
+                const SizedBox(height: 20),
+                _buildHistoric(),
+              ],
             ),
-            const SizedBox(height: 20),
-            _buildStatusLabel(),
-            const SizedBox(height: 20),
-            _buildHistoric(),
-          ],
+          ),
         ),
       ),
     );

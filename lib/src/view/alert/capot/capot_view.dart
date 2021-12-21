@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
@@ -28,17 +27,22 @@ class _CapoViewState extends State<CapoView> {
       appBar: const CustomAppBar(
         actions: [CloseButton(color: Colors.black)],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(AppConsts.outsidePadding),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            const BuildLabel(label: 'capot', icon: Icons.radar),
-            const SizedBox(height: 20),
-            _buildStatusLabel(),
-            const SizedBox(height: 20),
-            _buildHistoric(),
-          ],
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 50),
+          child: Padding(
+            padding: const EdgeInsets.all(AppConsts.outsidePadding),
+            child: Column(
+              children: [
+                const SizedBox(height: 10),
+                const BuildLabel(label: 'capot', icon: Icons.radar),
+                const SizedBox(height: 20),
+                _buildStatusLabel(),
+                const SizedBox(height: 20),
+                _buildHistoric(),
+              ],
+            ),
+          ),
         ),
       ),
     );
