@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
-import 'package:newgps/src/widgets/buttons/log_out_button.dart';
 
 class AlertView extends StatelessWidget {
   const AlertView({Key? key}) : super(key: key);

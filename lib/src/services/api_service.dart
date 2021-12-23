@@ -19,7 +19,7 @@ class ApiService {
 
   Future<Account?> login(
       {required String accountId, required String password}) async {
-    Map<String, dynamic> body = {"accountId": accountId, "password": password};
+    Map<String, dynamic> body = {"accountId": accountId, "password": password}; 
     String res = await post(url: '/login', body: body);
     if (res.isEmpty) return null;
     Account? account = accountFromMap(res);

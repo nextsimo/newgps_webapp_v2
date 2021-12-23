@@ -36,23 +36,23 @@ class _UserCustomBottomNavigatioBarState
     SavedAcountProvider pro =
         Provider.of<SavedAcountProvider>(context, listen: false);
     _items = [
-      if (pro.userDroits.droits[0].read)
-        const _BuildTabBarItem(icon: 'last_position', label: 'Position'),
       if (pro.userDroits.droits[1].read)
-        const _BuildTabBarItem(icon: 'historic', label: 'Historique'),
+        const _BuildTabBarItem(icon: 'last_position', label: 'Position'),
       if (pro.userDroits.droits[2].read)
-        const _BuildTabBarItem(icon: 'report', label: 'Rapport'),
+        const _BuildTabBarItem(icon: 'historic', label: 'Historique'),
       if (pro.userDroits.droits[3].read)
-        const _BuildTabBarItem(icon: 'alert', label: 'Alerte'),
+        const _BuildTabBarItem(icon: 'report', label: 'Rapport'),
       if (pro.userDroits.droits[4].read)
-        const _BuildTabBarItem(icon: 'geozone', label: 'Géozone'),
+        const _BuildTabBarItem(icon: 'alert', label: 'Alerte'),
       if (pro.userDroits.droits[5].read)
-        const _BuildTabBarItem(icon: 'matricule', label: 'Matricule'),
-      if (pro.userDroits.droits[6].read)
-        const _BuildTabBarItem(icon: 'cam', label: 'Caméra'),
+        const _BuildTabBarItem(icon: 'geozone', label: 'Géozone'),
       if (pro.userDroits.droits[7].read)
-        const _BuildTabBarItem(icon: 'gestion', label: 'Gestion'),
+        const _BuildTabBarItem(icon: 'matricule', label: 'Matricule'),
       if (pro.userDroits.droits[8].read)
+        const _BuildTabBarItem(icon: 'cam', label: 'Caméra'),
+      if (pro.userDroits.droits[9].read)
+        const _BuildTabBarItem(icon: 'gestion', label: 'Gestion'),
+      if (pro.userDroits.droits[10].read)
         const _BuildTabBarItem(icon: 'driver', label: 'Conduite'),
     ];
   }

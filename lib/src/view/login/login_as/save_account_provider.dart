@@ -59,15 +59,15 @@ class SavedAcountProvider with ChangeNotifier {
     }
 
     return [
-      if (userDroits.droits[0].read) const LastPositionView(),
-      if (userDroits.droits[1].read) const HistoricView(),
-      if (userDroits.droits[2].read) const RepportView(),
-      if (userDroits.droits[3].read) const AlertNavigation(),
-      if (userDroits.droits[4].read) const GeozoneNavigation(),
-      if (userDroits.droits[6].read) const MatriculeView(),
-      if (userDroits.droits[7].read) const SoonPage(),
+      if (userDroits.droits[1].read) const LastPositionView(),
+      if (userDroits.droits[2].read) const HistoricView(),
+      if (userDroits.droits[3].read) const RepportView(),
+      if (userDroits.droits[4].read) const AlertNavigation(),
+      if (userDroits.droits[5].read) const GeozoneNavigation(),
+      if (userDroits.droits[7].read) const MatriculeView(),
       if (userDroits.droits[8].read) const SoonPage(),
       if (userDroits.droits[9].read) const SoonPage(),
+      if (userDroits.droits[10].read) const SoonPage(),
     ];
   }
 
