@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/repport/rapport_provider.dart';
 import 'package:newgps/src/view/repport/repport_type_model.dart';
@@ -165,31 +166,19 @@ class OptionItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-/*       trailing: Container(
-        padding: const EdgeInsets.all(6),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
-          color: Color.fromRGBO(repportTypeModel.colorR, device.colorG, device.colorB, 1),
-        ),
-        child: Text(
-          device.statut,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 10,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ), */
       title: Text(
         repportTypeModel.title,
       ),
       onTap: () async {
         onSelectDevice(repportTypeModel);
-        repportProvider.selectedRepport = repportTypeModel;
         FocusScope.of(context).unfocus();
-
         if (repportTypeModel.index == 0 && !repportProvider.selectAllDevices) {
           repportProvider.selectAllDevices = true;
+          repportProvider.handleSelectDevice();
+        } else if (repportTypeModel.index == 4) {
+          if (repportProvider.selectAllDevices) {
+            repportProvider.selectedDevice = deviceProvider.devices.first;
+          }
           repportProvider.handleSelectDevice();
         } else if (repportTypeModel.index != 0 &&
             repportProvider.selectAllDevices) {
@@ -197,14 +186,8 @@ class OptionItem extends StatelessWidget {
           repportProvider.selectAllDevices = false;
           repportProvider.handleSelectDevice();
         }
+                repportProvider.selectedRepport = repportTypeModel;
 
-/* 
-        if (repportTypeModel.index == 0 &&
-            repportProvider.selectedDevice != null) {
-          repportProvider.selectedDevice = null;
-        } */
-
-        //lastPositionProvider.moveCamera(device, zoom: 8.5);
       },
       minVerticalPadding: 0,
     );

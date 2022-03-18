@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
@@ -12,7 +11,6 @@ import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/last_position/markers_provider.dart';
 
 class LastPositionProvider with ChangeNotifier {
-  late List<Device> _devices = [];
   late Set<Polyline> polylines = {};
   late bool fetchAll = true;
   late DateTime lastDateFetchDevices = DateTime.now();
@@ -92,26 +90,24 @@ class LastPositionProvider with ChangeNotifier {
 
   Future<void> onClickRegoupement(bool state) async {
     regrouperClicked = state;
-    log("$state");
-    await markersProvider.onClickGroupment(state, devices);
+    //log("$state");
+    await markersProvider.onClickGroupment(state, deviceProvider.devices);
     notifyListeners();
   }
 
   Future<void> onClickMatricule(bool state) async {
     matriculeClicked = state;
-    log("$state");
-    await markersProvider.onClickMatricule(state, devices);
+    //log("$state");
+    await markersProvider.onClickMatricule(state, deviceProvider.devices);
     notifyListeners();
   }
 
   GoogleMapController? googleMapController;
 
-  List<Device> get devices => _devices;
-
   TextEditingController autoSearchController =
       TextEditingController(text: 'Touts les véhicules');
   void fresh() {
-    _devices = [];
+    deviceProvider.devices = [];
     polylines = {};
     fetchAll = true;
     lastDateFetchDevices = DateTime.now();
@@ -129,10 +125,10 @@ class LastPositionProvider with ChangeNotifier {
   }
 
   Future<void> init(BuildContext context) async {
-    markersProvider = MarkersProvider(devices, context);
+    markersProvider = MarkersProvider(deviceProvider.devices, context);
     _initCluster();
-    await fetchDevices();
-    await markersProvider.setMarkers(devices);
+    await fetchDevices(init: true);
+    await markersProvider.setMarkers(deviceProvider.devices);
     notifyListeners();
   }
 
@@ -154,7 +150,7 @@ class LastPositionProvider with ChangeNotifier {
   }
 
   set devices(List<Device> devices) {
-    _devices = devices;
+    deviceProvider.devices = devices;
     notifyListeners();
   }
 
@@ -171,7 +167,7 @@ class LastPositionProvider with ChangeNotifier {
   }
 
   void onTapEnter(String val) {
-    deviceProvider.selectedDevice = devices.firstWhere(
+    deviceProvider.selectedDevice = deviceProvider.devices.firstWhere(
       (device) {
         return device.description.toLowerCase().contains(
               val.toLowerCase(),
@@ -278,7 +274,7 @@ class LastPositionProvider with ChangeNotifier {
     );
 
     if (res.isNotEmpty) {
-      log(res);
+      //log(res);
       Device device = Device.fromMap(json.decode(res));
       deviceProvider.selectedDevice = device;
       await fetchInfoData();
@@ -294,21 +290,29 @@ class LastPositionProvider with ChangeNotifier {
       if (polylines.isNotEmpty) {
         await buildRoutes();
       }
-      moveCamera(LatLng(deviceProvider.selectedDevice.latitude,
-          deviceProvider.selectedDevice.longitude));
+      moveCamera(
+          LatLng(deviceProvider.selectedDevice.latitude,
+              deviceProvider.selectedDevice.longitude),
+          zoom: 14);
     }
   }
 
-  Future<void> fetchDevices() async {
+  Future<void> fetchDevices(
+      {bool fromSearch = false, bool init = false}) async {
+    if (fromSearch) {
+      googleMapController?.animateCamera(CameraUpdate.zoomTo(7));
+    }
     fetchAll = true;
     polylines = {};
 
-    _devices = await deviceProvider.fetchDevices();
+    deviceProvider.devices = await deviceProvider.fetchDevices(init: init);
     lastDateFetchDevices = DateTime.now();
-    if (_devices.length == 1) deviceProvider.selectedDevice = _devices.first;
+    if (deviceProvider.devices.length == 1) {
+      deviceProvider.selectedDevice = deviceProvider.devices.first;
+    }
     markersProvider.simpleMarkers.clear();
     markersProvider.textMakers.clear();
-    for (Device device in _devices) {
+    for (Device device in deviceProvider.devices) {
       Marker marker = markersProvider.getSimpleMarker(device);
       Marker textmarker = await markersProvider.getTextMarker(device);
       markersProvider.simpleMarkers.add(marker);

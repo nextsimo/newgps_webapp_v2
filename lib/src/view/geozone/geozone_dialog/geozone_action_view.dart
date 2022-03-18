@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/services/device_provider.dart';
@@ -12,8 +11,10 @@ import 'package:provider/provider.dart';
 
 class GeozoneActionView extends StatelessWidget {
   final GeozoneDialogProvider geozoneDialogProvider;
+  final bool readonly;
 
-  const GeozoneActionView({Key? key, required this.geozoneDialogProvider})
+  const GeozoneActionView(
+      {Key? key, required this.geozoneDialogProvider, this.readonly = false})
       : super(key: key);
 
   @override
@@ -39,33 +40,39 @@ class GeozoneActionView extends StatelessWidget {
                               flex: 4,
                               child: GeozoneInput(
                                 hint: 'Nom de la geozone',
+                                readonly: readonly,
                                 validator: FormValidatorService.isNotEmpty,
                                 controller:
                                     geozoneDialogProvider.controllerGeozoneName,
                               ),
                             ),
                             const SizedBox(width: 10),
-                            const Expanded(
+                            Expanded(
                               flex: 2,
-                              child: TypeSelectionGeozone(),
+                              child: TypeSelectionGeozone(
+                                readonly: readonly,
+                              ),
                             ),
                             const SizedBox(width: 10),
                             Expanded(
-                              flex: 2,
+                              flex:  2,
                               child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Expanded(
-                                    child: MainButton(
-                                      backgroundColor: Colors.red,
-                                      onPressed: () =>
-                                          geozoneDialogProvider.pop(context),
-                                      label: 'Annuler',
+                                  if (!readonly)
+                                    Expanded(
+                                      child: MainButton(
+                                        backgroundColor: Colors.red,
+                                        onPressed: () =>
+                                            geozoneDialogProvider.pop(context),
+                                        label: 'Annuler',
+                                      ),
                                     ),
-                                  ),
                                   MapTypeWidget(onChange: (_) {
                                     deviceProvider.mapType = _;
                                     geozoneDialogProvider.notify();
                                   }),
+                                  if (readonly) const CloseButton(),
                                 ],
                               ),
                             ),
@@ -77,34 +84,36 @@ class GeozoneActionView extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 4,
-                            child: GeoZoneSelectType(context: context),
+                            child: GeoZoneSelectType(context: context, readonly:readonly),
                           ),
                           Expanded(
                             flex: 2,
                             child: GeozoneInput(
                               hint: 'Par defaut: 4000 m',
+                              readonly: readonly,
                               validator: FormValidatorService.isNumber,
                               controller:
                                   geozoneDialogProvider.controllerGeozoneMetre,
                             ),
                           ),
                           const SizedBox(width: 10),
-                          Expanded(
-                            flex: 2,
-                            child: MainButton(
-                              onPressed: () =>
-                                  geozoneDialogProvider.onSave(context),
-                              label: 'Enregister',
+                          if (!readonly)
+                            Expanded(
+                              flex: 2,
+                              child: MainButton(
+                                onPressed: () =>
+                                    geozoneDialogProvider.onSave(context),
+                                label: 'Enregister',
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     ],
                   ),
                 ),
               ),
-              const Expanded(
-                child: GeozoneMap(),
+               Expanded(
+                child: GeozoneMap(readonly:readonly),
               ),
             ],
           );
@@ -113,7 +122,8 @@ class GeozoneActionView extends StatelessWidget {
 }
 
 class GeozoneMap extends StatelessWidget {
-  const GeozoneMap({Key? key}) : super(key: key);
+  final bool readonly;
+  const GeozoneMap({Key? key,required this.readonly}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -124,8 +134,8 @@ class GeozoneMap extends StatelessWidget {
     return Stack(
       children: [
         GoogleMap(
-          markers: geozoneDialogProvider.markers,
-          onTap: geozoneDialogProvider.addShape,
+          markers:readonly ? {}: geozoneDialogProvider.markers,
+          onTap: readonly ? (_){}: geozoneDialogProvider.addShape,
           circles: geozoneDialogProvider.circle,
           polygons: geozoneDialogProvider.polygone,
           onMapCreated: geozoneDialogProvider.initMap,
@@ -150,7 +160,9 @@ class GeozoneMap extends StatelessWidget {
 }
 
 class TypeSelectionGeozone extends StatelessWidget {
-  const TypeSelectionGeozone({Key? key}) : super(key: key);
+  final bool readonly;
+  const TypeSelectionGeozone({Key? key, required this.readonly})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -166,30 +178,35 @@ class TypeSelectionGeozone extends StatelessWidget {
         border: Border.all(
             width: AppConsts.borderWidth, color: AppConsts.mainColor),
       ),
-      child: DropdownButton<int>(
-        borderRadius: BorderRadius.circular(AppConsts.mainradius),
-        underline: const SizedBox(),
-        isExpanded: true,
-        value: geozoneDialogProvider.selectionType,
-        onChanged: (val) {
-          geozoneDialogProvider.selectionType =
-              val ?? geozoneDialogProvider.selectionType;
-        },
-        hint: const Text('Type de sélection'),
-        items: const [
-          DropdownMenuItem<int>(
-            child: Text(
-              'Cercle',
+      child: IgnorePointer(
+        ignoring: readonly,
+        child: DropdownButton<int>(
+          borderRadius: BorderRadius.circular(AppConsts.mainradius),
+          underline: const SizedBox(),
+          isExpanded: true,
+          value: geozoneDialogProvider.selectionType,
+          onChanged: readonly
+              ? (_) {}
+              : (val) {
+                  geozoneDialogProvider.selectionType =
+                      val ?? geozoneDialogProvider.selectionType;
+                },
+          hint: const Text('Type de sélection'),
+          items: const [
+            DropdownMenuItem<int>(
+              child: Text(
+                'Cercle',
+              ),
+              value: 0,
             ),
-            value: 0,
-          ),
-          DropdownMenuItem<int>(
-            child: Text(
-              'Forme',
+            DropdownMenuItem<int>(
+              child: Text(
+                'Forme',
+              ),
+              value: 1,
             ),
-            value: 1,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -203,8 +220,9 @@ class _InnerOuterMode {
 }
 
 class GeoZoneSelectType extends StatelessWidget {
+  final bool readonly;
   final BuildContext context;
-  const GeoZoneSelectType({Key? key, required this.context}) : super(key: key);
+  const GeoZoneSelectType({Key? key, required this.context,required this.readonly}) : super(key: key);
 
   final List<_InnerOuterMode> _items = const [
     _InnerOuterMode(value: 0, label: 'Entrée'),
@@ -221,6 +239,7 @@ class GeoZoneSelectType extends StatelessWidget {
       children: _items.map<Widget>((item) {
         return _InnerOuterWigdet(
           label: item.label,
+          readonly: readonly,
           value: item.value,
           isSelected: innerOuterValue == item.value,
         );
@@ -230,6 +249,7 @@ class GeoZoneSelectType extends StatelessWidget {
 }
 
 class _InnerOuterWigdet extends StatelessWidget {
+  final bool readonly;
   final String label;
   final int value;
   final bool isSelected;
@@ -238,7 +258,7 @@ class _InnerOuterWigdet extends StatelessWidget {
       {Key? key,
       required this.label,
       required this.value,
-      required this.isSelected})
+      required this.isSelected,required this.readonly})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -246,9 +266,9 @@ class _InnerOuterWigdet extends StatelessWidget {
         Provider.of<GeozoneDialogProvider>(context, listen: false);
     return Expanded(
       child: InkWell(
-        onTap: () => provider.updateInnerOuterValue(value),
+        onTap: readonly ? (){ } : () => provider.updateInnerOuterValue(value),
         child: Padding(
-          padding: const EdgeInsets.only(right:10),
+          padding: const EdgeInsets.only(right: 10),
           child: Container(
             width: 120,
             height: 50,
@@ -286,9 +306,14 @@ class _InnerOuterWigdet extends StatelessWidget {
 class GeozoneInput extends StatelessWidget {
   final String? Function(String?)? validator;
   final String hint;
+  final bool readonly;
   final TextEditingController? controller;
   const GeozoneInput(
-      {Key? key, required this.hint, this.controller, this.validator})
+      {Key? key,
+      required this.hint,
+      this.controller,
+      this.validator,
+      required this.readonly})
       : super(key: key);
 
   @override
@@ -299,6 +324,7 @@ class GeozoneInput extends StatelessWidget {
     return TextFormField(
       validator: validator,
       controller: controller,
+      readOnly: readonly,
       decoration: InputDecoration(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         border: outlineInputBorder,

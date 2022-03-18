@@ -72,7 +72,7 @@ class MarkersProvider {
     devices = initDevices;
     SavedAcountProvider pro =
         Provider.of<SavedAcountProvider>(context, listen: false);
-    droit = pro.userDroits.droits.first;
+    droit = pro.userDroits.droits[1];
   }
 
   bool fetchGroupesDevices = true;
@@ -209,7 +209,7 @@ class MarkersProvider {
     return Marker(
       zIndex: 1,
       position: position,
-      anchor: const Offset(1.0, 0.5),
+      anchor: const Offset(0.5, 0.1),
       markerId: MarkerId('${device.latitude},${device.longitude}___text'),
       icon: bitmapDescriptor,
     );

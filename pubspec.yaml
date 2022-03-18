@@ -1,43 +1,46 @@
 name: newgps
 description: NEW GPS vous permet de tracker vos véhicules en temps réel.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 dependencies:
+  device_info_plus: ^3.1.0
+  dio: ^4.0.3
+  download: ^0.0.1+1
+  editable: ^2.0.0
+  faker: ^2.0.0
+  firebase_core: ^1.11.0
+  firebase_dynamic_links: ^4.0.4
+  firebase_messaging: ^11.2.5
   flutter:
     sdk: flutter
-  faker: ^2.0.0
-  firebase_core: ^1.6.0
-  firebase_messaging: ^10.0.7
+  flutter_localizations:
+    sdk: flutter
   flutter_polyline_points: ^1.0.0
+  flutter_tts: ^3.2.2
   geolocator: ^7.6.2
   get_it: ^7.2.0
-  google_maps_flutter: ^2.1.0
-  google_maps_flutter_web: ^0.3.2
+  google_maps_cluster_manager: ^3.0.0+1
+  google_maps_flutter: ^2.1.2
+  google_maps_flutter_web: ^0.3.2+1
+  grouped_list: ^4.1.0
   http: ^0.13.3
   image: ^3.0.5
   intl: ^0.17.0
-  provider:
-  shared_preferences: ^2.0.8
-  syncfusion_flutter_gauges: ^19.2.62
-  google_maps_cluster_manager: ^3.0.0+1
-  editable: ^2.0.0
-  search_choices: ^2.0.14
-  device_info_plus: ^3.1.0
-  flutter_tts: ^3.2.2
   loadmore: ^2.0.1
   month_picker_dialog: ^0.4.0
-  dio: ^4.0.3
-  download: ^0.0.1+1
-  flutter_localizations: # Add this line
-    sdk: flutter
+  provider: null
+  search_choices: ^2.0.14
+  shared_preferences: ^2.0.8
+  syncfusion_flutter_gauges: ^19.2.62
+  url_launcher: ^6.0.20
 
 dev_dependencies:
+  flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
-  flutter_lints: ^1.0.0
 
 flutter:
   uses-material-design: true
@@ -45,3 +48,17 @@ flutter:
     - assets/
     - assets/icons/
     - assets/markers/
+
+  fonts:
+    - family: speed
+      fonts:
+        - asset: fonts/icons/speed.ttf
+    - family: battery
+      fonts:
+        - asset: fonts/icons/battery.ttf
+    - family: fuel
+      fonts:
+        - asset: fonts/icons/fuel.ttf
+    - family: geozone
+      fonts:
+        - asset: fonts/icons/geozone.ttf

@@ -6,10 +6,12 @@ class MainInput extends StatelessWidget {
   final Color? color;
   final String hint;
   final double? width;
+  final bool autofocus;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final void Function(String)? onchanged;
   final void Function()? onEditeComplete;
+  final TextInputType? textInputType;
 
   const MainInput(
       {Key? key,
@@ -20,13 +22,15 @@ class MainInput extends StatelessWidget {
       this.onEditeComplete,
       this.onchanged,
       this.color,
-      this.width})
+      this.textInputType,
+      this.width, this.autofocus = false})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
       child: TextFormField(
+        autofocus: autofocus,
         onEditingComplete: onEditeComplete,
         controller: controller,
         validator: validator,

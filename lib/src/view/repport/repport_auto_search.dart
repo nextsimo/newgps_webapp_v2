@@ -24,7 +24,7 @@ class AutoSearchField extends StatelessWidget {
         color: Colors.transparent,
         alignment: Alignment.topLeft,
         child: Container(
-          width: 270,
+          width: 290,
           margin: const EdgeInsets.fromLTRB(0, AppConsts.outsidePadding,
               AppConsts.outsidePadding, AppConsts.outsidePadding),
           child: Autocomplete<Device>(
@@ -159,7 +159,7 @@ class OptionViewBuilderWidget extends StatelessWidget {
         child: Align(
           alignment: Alignment.topLeft,
           child: Container(
-            width: 270,
+            width: 290,
             constraints: BoxConstraints(
               maxHeight: size.height * 0.75,
             ),
@@ -190,10 +190,12 @@ class OptionViewBuilderWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         FocusScope.of(context).unfocus();
-        provider.autoSearchTextController.text = 'Touts les véhicules';
         repportProvider.selectAllDevices = true;
+                provider.handleSelectDevice();
 
-        if (provider.selectedRepport.index != 0) {
+
+        if (provider.selectedRepport.index != 0 &&
+            provider.selectedRepport.index != 4) {
           provider.selectedRepport = provider.repportsType.first;
         }
       },
@@ -262,6 +264,7 @@ class OptionItem extends StatelessWidget {
           repportProvider.selectedRepport =
               repportProvider.repportsType.elementAt(1);
         }
+
 
         FocusScope.of(context).unfocus();
         //lastPositionProvider.moveCamera(device, zoom: 8.5);

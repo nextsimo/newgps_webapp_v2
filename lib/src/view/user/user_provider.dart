@@ -35,7 +35,7 @@ class UserProvider with ChangeNotifier {
       _users.remove(user);
     } else {
       Account? account = shared.getAccount();
-      debugPrint("${user.toJson()}");
+      //debugPrint("${user.toJson()}");
       String res = await api.post(url: '/user/delete', body: {
         'account_id': account?.account.accountId,
         'data': json.encode(user.toJson())
@@ -78,14 +78,14 @@ class UserProvider with ChangeNotifier {
   Future<bool> addNewuser(User newUser) async {
     // save the new matricule
     Account? account = shared.getAccount();
-    debugPrint("${newUser.toJson()}");
+    //debugPrint("${newUser.toJson()}");
     String res = await api.post(url: '/user/add', body: {
       'account_id': account?.account.accountId,
       'data': json.encode(newUser.toJson())
     });
 
     if (res.isEmpty) {
-      log("user exist");
+      //log("user exist");
       return false;
     }
     String userId = jsonDecode(res)['userID'];
@@ -112,7 +112,7 @@ class UserProvider with ChangeNotifier {
       'data': json.encode(newUser.toJson()),
     });
     if (res.isEmpty) {
-      log("user exist");
+      //log("user exist");
       return false;
     }
     return true;
@@ -132,7 +132,7 @@ class UserProvider with ChangeNotifier {
     UserDroits _userDroits =
         UserDroits.fromJson(userDroits.elementAt(0).toJson());
     _userDroits.droits.removeAt(0);
-    debugPrint(json.encode(_userDroits.toJson()));
+    //debugPrint(json.encode(_userDroits.toJson()));
 
     await api.post(url: '/user/droits/create', body: {
       'user_id': userid,

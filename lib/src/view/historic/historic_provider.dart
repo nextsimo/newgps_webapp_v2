@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/models/account.dart';
@@ -34,6 +33,15 @@ class HistoricProvider with ChangeNotifier {
   Device? selectedPlayData;
 
   Completer<GoogleMapController> controller = Completer<GoogleMapController>();
+
+  bool _enableZoomGesture = true;
+
+  bool get enableZoomGesture => _enableZoomGesture;
+
+  set enableZoomGesture(bool enableZoomGesture) {
+    _enableZoomGesture = enableZoomGesture;
+    notifyListeners();
+  }
 
   bool _loading = false;
 
@@ -77,6 +85,15 @@ class HistoricProvider with ChangeNotifier {
   Set<Marker> playedMarkers = {};
 
   Set<Polyline> line = {};
+
+  Set<Polyline> getLines() {
+    if (line.isEmpty) {
+      return histoLine;
+    }
+    return line;
+  }
+
+  Set<Polyline> histoLine = {};
 
   bool historicIsPlayed = false;
   int stopedIndex = 0;
@@ -159,7 +176,7 @@ class HistoricProvider with ChangeNotifier {
       return;
     }
     // clear all markers
-    int _index = stopedIndex;
+    int _index = stopedIndex -1 ;
     bool _init = true;
     for (Device device in historicModel.devices!
         .getRange(stopedIndex, historicModel.devices!.length)) {
@@ -245,8 +262,8 @@ class HistoricProvider with ChangeNotifier {
     deviceProvider.selectedDevice = deviceProvider.selectedDevice;
     SavedAcountProvider pro =
         Provider.of<SavedAcountProvider>(context, listen: false);
-    _droit = pro.userDroits.droits[1];
-    fetchHistorics(1, true);
+    _droit = pro.userDroits.droits[2];
+    fetchHistorics(deviceProvider.selectedDevice.deviceId, 1, true);
   }
 
   void normaleView() {
@@ -308,7 +325,7 @@ class HistoricProvider with ChangeNotifier {
       dateTo.second,
     );
 
-    fetchHistorics(1, true);
+    fetchHistorics(deviceProvider.selectedDevice.deviceId, 1, true);
   }
 
   void updateTimeRange(BuildContext context) async {
@@ -320,7 +337,10 @@ class HistoricProvider with ChangeNotifier {
     );
   }
 
-  Future<void> fetchHistorics([int page = 1, bool init = false]) async {
+  Future<void> fetchHistorics(String deviceID,
+      [int page = 1, bool init = false]) async {
+    histoLine.clear();
+
     if (init) {
       markers.clear();
       historicModel.devices?.clear();
@@ -332,7 +352,7 @@ class HistoricProvider with ChangeNotifier {
       url: '/historic',
       body: {
         'accountId': account?.account.accountId,
-        'deviceId': deviceProvider.selectedDevice.deviceId,
+        'deviceId': deviceID,
         'from': dateFrom.millisecondsSinceEpoch / 1000,
         'to': dateTo.millisecondsSinceEpoch / 1000,
         'page': page,
@@ -360,13 +380,31 @@ class HistoricProvider with ChangeNotifier {
         markers.add(marker);
       }
       if (historicModel.currentPage < historicModel.lastPage) {
-        fetchHistorics(++page);
+        fetchHistorics(deviceProvider.selectedDevice.deviceId, ++page);
         return;
+      }
+
+      int index = -1;
+      histoLine.clear();
+      for (var m in markers) {
+        index++;
+        if (index == markers.length - 2) break;
+        histoLine.addAll(Set<Polyline>.from({
+          Polyline(
+            width: 4,
+            color: Colors.red.withOpacity(0.4),
+            polylineId: PolylineId(m.position.toString()),
+            points: [
+              m.position,
+              markers.elementAt(index + 1).position,
+            ],
+          )
+        }));
       }
       _loading = false;
       notifyListeners();
       await Future.delayed(const Duration(seconds: 1));
-      moveCamera(markers.first.position);
+      //moveCamera(markers.first.position);
     }
   }
 
@@ -378,7 +416,7 @@ class HistoricProvider with ChangeNotifier {
     );
     deviceProvider.handleSelectDevice();
     notifyListeners();
-    fetchHistorics();
+    fetchHistorics(deviceProvider.selectedDevice.deviceId);
   }
 
   bool showWindows = false;

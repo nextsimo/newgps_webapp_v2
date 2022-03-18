@@ -9,8 +9,6 @@ import 'package:newgps/src/view/historic/play_card.dart';
 import 'package:newgps/src/view/last_position/card_info.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:newgps/src/widgets/buttons/appele_condcuteur_button.dart';
-import 'package:newgps/src/widgets/buttons/log_out_button.dart';
-import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:newgps/src/widgets/buttons/zoom_button.dart';
 import 'package:newgps/src/widgets/date_hour_widget.dart';
 import 'package:newgps/src/widgets/map_type_widget.dart';
@@ -96,11 +94,16 @@ class HistoricView extends StatelessWidget {
                 if (isPlayed) return const SizedBox();
                 return AutoSearchDevice(
                   onSelectDeviceFromOtherView: (Device device) async {
-                    provider.fetchHistorics(1, true);
+                    provider.fetchHistorics(device.deviceId ,1, true);
                   },
                 );
               }),
-          AppelCondicteurButton(device: deviceProvider.selectedDevice),
+          AppelCondicteurButton(
+            device: deviceProvider.selectedDevice,
+            callNewData: () async {
+              await deviceProvider.fetchDevice();
+            },
+          ),
           Selector<HistoricProvider, bool>(
               selector: (_, p) => p.historicIsPlayed,
               builder: (_, bool isPlayed, ___) {
@@ -132,5 +135,3 @@ class HistoricView extends StatelessWidget {
     );
   }
 }
-
-

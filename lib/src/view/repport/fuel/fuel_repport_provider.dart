@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/fuel_repport_model.dart';
@@ -16,24 +14,32 @@ class FuelRepportProvider with ChangeNotifier {
       day = 0;
     }
     Account? account = shared.getAccount();
-    String res = await api.post(
-      url: '/repport/resume/fuel',
-      body: {
-        'account_id': account?.account.accountId,
-        'device_id': deviceId,
-        'month': repportProvider.selectedDateMonth.month,
-        'year': repportProvider.selectedDateMonth.year,
-        'day': ++day,
-        'download': false,
-      },
-    );
 
-    if (res.isNotEmpty) {
-      repports.add(fuelRepportDataFromJson(res).first);
-      notifyListeners();
+    for (DateTime i = repportProvider.dateFrom;
+        i.isBefore(repportProvider.dateTo);
+        i = i.add(const Duration(days: 1))) {
+      String res = await api.post(
+        url: '/repport/resume/fuelbydate',
+        body: {
+          'account_id': account?.account.accountId,
+          'device_id': deviceId,
+          'year': i.year,
+          'month': i.month,
+          'day': i.day,
+          'date_from': 0,
+          'date_to': 0,
+          'hour_from': repportProvider.dateFrom.hour + 1,
+          'minute_from': repportProvider.dateFrom.minute,
+          'hour_to': repportProvider.dateTo.hour,
+          'minute_to': repportProvider.dateTo.minute,
+          'download': false,
+        },
+      );
 
-      log('---> $day');
-      await fetchRepports(deviceId, repportProvider, fromInside: true);
+      if (res.isNotEmpty) {
+        repports.add(fuelRepportDataFromJson(res).first);
+        notifyListeners();
+      }
     }
   }
 

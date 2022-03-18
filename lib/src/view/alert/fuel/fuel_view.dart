@@ -32,7 +32,7 @@ class FuelAlertView extends StatelessWidget {
                   const SizedBox(height: 10),
                   const BuildLabel(
                       label: 'carburant',
-                      icon: Icons.battery_charging_full_outlined),
+                      icon: Icons.ev_station_sharp),
                   const SizedBox(height: 20),
                   _buildStatusLabel(provider, context),
                   const SizedBox(height: 20),
@@ -75,7 +75,7 @@ class FuelAlertView extends StatelessWidget {
   _buildStatusLabel(FuelProvider provider, BuildContext context) {
     var droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[3];
+        .droits[4];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

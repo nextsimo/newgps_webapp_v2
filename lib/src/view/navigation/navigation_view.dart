@@ -9,10 +9,27 @@ import 'package:provider/provider.dart';
 import 'bottom_app_bar/bottom_navigatiom_bar.dart';
 import 'bottom_app_bar/user_bottom_navigation_bar.dart';
 
-class CustomNavigationView extends StatelessWidget {
-  CustomNavigationView({Key? key}) : super(key: key);
+class CustomNavigationView extends StatefulWidget {
+  final bool alert;
+  const CustomNavigationView({Key? key, this.alert = false}) : super(key: key);
 
-  final PageController _pageController = PageController();
+  @override
+  State<CustomNavigationView> createState() => _CustomNavigationViewState();
+}
+
+class _CustomNavigationViewState extends State<CustomNavigationView> {
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+    NewgpsService.resumeRepportProvider.fetchDataFromOutside();
+    if (widget.alert) {
+      _pageController = PageController(initialPage: 3);
+      deviceProvider.initAlertRoute = 'historics';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +50,7 @@ class CustomNavigationView extends StatelessWidget {
             bottomNavigationBar: account!.account.userID == null
                 ? CustomBottomNavigatioBar(
                     pageController: _pageController,
+                    alert: widget.alert,
                   )
                 : UserCustomBottomNavigatioBar(
                     pageController: _pageController,

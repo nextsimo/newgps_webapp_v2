@@ -1,12 +1,19 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:newgps/src/models/account.dart';
+import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
+import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+const String fuelLocalDataKey = 'last_fuel_histo_read_date';
+const String batteryLocalDataKey = 'last_battery_histo_read_date';
+const String speedLocalDataKey = 'last_speed_histo_read_date';
+const String geozoneLocalDataKey = 'last_geozone_histo_read_date';
 
 String formatDeviceDate(DateTime dateTime, [bool time = true]) {
   late DateFormat validFormatter;
@@ -85,6 +92,26 @@ class FormValidatorService {
     RegExp regExp = RegExp(pattern);
     return (!regExp.hasMatch(value)) ? 'Must be strong password' : null;
   }
+
+  static String? isMoroccanPhoneNumber(String? value) {
+    String? res = isNotEmpty(value);
+    if (res != null) return res;
+    String pattern = r'(\+212|0)([ \-_/]*)(\d[ \-_/]*){9}';
+
+    RegExp regex = RegExp(pattern);
+
+    return (!regex.hasMatch(value!))
+        ? "Le numéro de téléphone n'est pas valide"
+        : null;
+  }
+
+  static String? isMoroccanPhoneNumberNotEmpty(String? value) {
+    if (value == null || value.isEmpty) {
+      return null;
+    }
+
+    return isMoroccanPhoneNumber(value);
+  }
 }
 
 Future<void> fetchInitData(
@@ -104,6 +131,115 @@ Future<void> playAudio(String audio) async {
     await NewgpsService.audioPlayer.stop();
     await NewgpsService.audioPlayer.speak(audio);
   } catch (e) {
-    log(e.toString());
+    //log(e.toString());
   }
+}
+
+Map<String, String?> getBody() {
+  String lastFuelReadDate =
+      shared.sharedPreferences.getString(fuelLocalDataKey) ?? '2001-12-23';
+  String lastBatteryReadDate =
+      shared.sharedPreferences.getString(batteryLocalDataKey) ?? '2001-12-23';
+  String lastSpeedReadDate =
+      shared.sharedPreferences.getString(speedLocalDataKey) ?? '2001-12-23';
+
+  String lastgeozoneReadDate =
+      shared.sharedPreferences.getString(geozoneLocalDataKey) ?? '2001-12-23';
+
+  Account? account = shared.getAccount();
+  return {
+    fuelLocalDataKey: lastFuelReadDate,
+    batteryLocalDataKey: lastBatteryReadDate,
+    speedLocalDataKey: lastSpeedReadDate,
+    geozoneLocalDataKey: lastgeozoneReadDate,
+    'account_id': account?.account.accountId,
+  };
+}
+
+String whatsapFormat(DateTime dateTime) {
+  DateTime now = DateTime.now();
+  late String format;
+
+  if (now.day == dateTime.day &&
+      dateTime.year == now.year &&
+      now.month == dateTime.month) {
+    return "Aujourd'hui";
+  } else if (dateTime.year == now.year &&
+      now.month == dateTime.month &&
+      ((now.day - dateTime.day) == 1)) {
+    return 'Hier';
+  } else if (dateTime.year == now.year && now.month == dateTime.month) {
+    format = 'EEEE';
+  } else if (dateTime.year == now.year) {
+    format = 'E, dd MMM';
+  } else {
+    format = 'dd MMM yyyy';
+  }
+
+  final DateFormat formatter = DateFormat(format, 'fr');
+
+  return formatter.format(dateTime);
+}
+
+String whatsapFormatOnlyTime(DateTime dateTime) {
+  String format = 'HH:mm';
+
+  final DateFormat formatter = DateFormat(format, 'fr');
+
+  return formatter.format(dateTime);
+}
+
+String whatsapFormatDateTime(DateTime dateTime) {
+  DateTime now = DateTime.now();
+  late String format;
+
+  if (now.day == dateTime.day &&
+      dateTime.year == now.year &&
+      now.month == dateTime.month) {
+    format = 'HH:mm';
+  } else if (dateTime.year == now.year && now.month == dateTime.month) {
+    format = 'EEEE';
+  } else if (dateTime.year == now.year) {
+    format = 'E, dd MMM';
+  } else {
+    format = 'dd MMM yyyy';
+  }
+  final DateFormat formatter = DateFormat(format, 'fr');
+  return formatter.format(dateTime);
+}
+
+void showCallConducteurDialog(BuildContext context, Device device) {
+  showDialog(
+      context: context,
+      builder: (_) {
+        return Dialog(
+          child: Container(
+            width: 300,
+            padding: const EdgeInsets.all(17),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                MainButton(
+                  onPressed: () {
+
+                      launch('tel:${device.phone1}', webOnlyWindowName: '_self');
+                  },
+                  icon: Icons.phone_forwarded_rounded,
+                  label: device.phone1,
+                ),
+                const SizedBox(height: 10),
+                if (device.phone2.isNotEmpty)
+                  MainButton(
+                    onPressed: () {
+                      launch('tel:${device.phone2}', webOnlyWindowName: '_self');
+                    },
+                    icon: Icons.phone_forwarded_rounded,
+                    label: device.phone2,
+                  ),
+              ],
+            ),
+          ),
+        );
+      });
 }

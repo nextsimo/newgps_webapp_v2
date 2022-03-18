@@ -62,11 +62,11 @@ class RepportsDetailsModel {
 
   DateTime timestamp;
   String address;
-  int speedKph;
-  int fuelRemain;
-  double fuelLevel;
-  double fuelTotal;
-  int heading;
+  num speedKph;
+  num fuelRemain;
+  num fuelLevel;
+  num fuelTotal;
+  num heading;
   int colorR;
   int colorG;
   int colorB;

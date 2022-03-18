@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,6 +12,7 @@ import 'package:provider/provider.dart';
 
 class DeviceProvider with ChangeNotifier {
   late List<Device> devices = [];
+  String initAlertRoute = '/';
 
   InfoModel? _infoModel;
 
@@ -119,6 +119,23 @@ class DeviceProvider with ChangeNotifier {
 
   late BitmapDescriptor markerIcon;
 
+  Future<void> fetchDevice() async {
+    Account? account = shared.getAccount();
+    String res = await api.post(
+      url: '/device',
+      body: {
+        'accountId': account?.account.accountId,
+        'deviceId': selectedDevice.deviceId,
+        'is_web': false
+      },
+    );
+
+    if (res.isNotEmpty) {
+      Device device = Device.fromMap(json.decode(res));
+      deviceProvider.selectedDevice = device;
+    }
+  }
+
   Future<Marker> getPositionMarker() async {
     var myPos = await GeolocatorPlatform.instance.getCurrentPosition();
 
@@ -146,15 +163,22 @@ class DeviceProvider with ChangeNotifier {
     //notifyListeners();
   }
 
-  Future<List<Device>> fetchDevices() async {
+  Future<List<Device>> fetchDevices({bool init = false}) async {
     Account? account = shared.getAccount();
+
+    Map<String, dynamic> body = {
+      'accountId': account?.account.accountId,
+      'user_id': account?.account.userID,
+      'is_web': true,
+    };
+
+    if (init) {
+      body.addAll({'init': true});
+    }
+
     String res = await api.post(
       url: '/devices',
-      body: {
-        'accountId': account?.account.accountId,
-        'user_id': account?.account.userID,
-        'is_web': true
-      },
+      body: body,
     );
     if (res.isNotEmpty) {
       devices = deviceFromMap(res);

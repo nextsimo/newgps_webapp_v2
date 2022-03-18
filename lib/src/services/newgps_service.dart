@@ -3,6 +3,7 @@ import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/shared_preferences_service.dart';
 import 'package:newgps/src/utils/locator.dart';
 
+import '../view/repport/resume/resume_repport_provider.dart';
 import 'api_service.dart';
 import 'location_service.dart';
 
@@ -13,6 +14,8 @@ class NewgpsService {
       locator<SharedPrefrencesService>();
   static DeviceProvider deviceProvider = locator<DeviceProvider>();
   static FlutterTts audioPlayer = locator<FlutterTts>();
+  static ResumeRepportProvider resumeRepportProvider =
+      locator<ResumeRepportProvider>();
 }
 
 LocationService loc = NewgpsService.locationService;

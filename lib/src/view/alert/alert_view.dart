@@ -1,82 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
-import 'package:newgps/src/widgets/buttons/log_out_button.dart';
+import 'package:newgps/src/widgets/badge_icon.dart';
+import 'package:newgps/src/widgets/buttons/main_button.dart';
 
 class AlertView extends StatelessWidget {
   const AlertView({Key? key}) : super(key: key);
 
   final List<_AlertItem> _items = const [
     _AlertItem(
-      icon: Icons.speed,
-      label: 'Vitesse',
-      page: '/speed',
-      inDev: false,
-    ),
+        icon: IconData(0xe800, fontFamily: 'speed'),
+        label: 'Vitesse',
+        page: '/speed',
+        inDev: false),
     _AlertItem(
-      icon: Icons.ev_station_rounded,
-      label: 'Carburant',
-      page: '/fuel',
-      inDev: false,
-    ),
+        icon: Icons.ev_station_rounded,
+        label: 'Carburant',
+        page: '/fuel',
+        inDev: false),
     _AlertItem(
-      icon: Icons.battery_charging_full,
-      label: 'Batterie',
-      page: '/battery',
-      inDev: false,
-    ),
+        icon: Icons.battery_charging_full,
+        label: 'Batterie',
+        page: '/battery',
+        inDev: false),
+    _AlertItem(icon: Icons.radar, label: 'Capot', page: '/capot', inDev: false),
     _AlertItem(
-      icon: Icons.radar,
-      label: 'Capot',
-      page: '/capot',
-      inDev: false,
-    ),
+        icon: Icons.radio_button_on_sharp,
+        label: 'Radar',
+        page: '/radar',
+        inDev: false),
     _AlertItem(
-      icon: Icons.edit_road_rounded,
-      label: 'Température',
-      page: '/temp',
-      inDev: false,
-    ),
+        icon: Icons.fireplace,
+        label: 'Température',
+        page: '/temp',
+        inDev: false),
     _AlertItem(
-      icon: Icons.stacked_line_chart_sharp,
-      label: 'Kilometrage',
-      page: '/odometre',
-    ),
+        icon: Icons.stacked_line_chart_sharp,
+        label: 'Kilometrage',
+        page: '/odometre',
+        inDev: false),
     _AlertItem(
-      icon: Icons.car_repair_sharp,
-      label: 'Depanage',
-      page: '/depanage',
-    ),
+        icon: Icons.flash_off_outlined,
+        label: 'Débranchement',
+        page: '/debranchement',
+        inDev: false),
     _AlertItem(
-      icon: Icons.health_and_safety_sharp,
-      label: 'Débranchement',
-      page: '/debranchement',
-    ),
+        icon: Icons.edit_road_rounded,
+        label: 'Autoroute',
+        page: '/highway',
+        inDev: false),
     _AlertItem(
-      icon: Icons.flash_off_outlined,
-      label: 'Autoroute',
-      page: '/highway',
-    ),
+        icon: Icons.car_repair_sharp, label: 'Depanage', page: '/depanage'),
+    _AlertItem(icon: Icons.dangerous, label: 'Demarage', page: '/demarage'),
     _AlertItem(
-      icon: Icons.dangerous,
-      label: 'Demarage',
-      page: '/demarage',
-    ),
-    _AlertItem(
-      icon: Icons.car_rental,
-      label: 'Vidange',
-      page: '/vidange',
-    ),
-    _AlertItem(
-      icon: Icons.table_chart_rounded,
-      label: 'Visite technique',
-      page: '/visite',
-    ),
-    _AlertItem(
-      icon: Icons.verified_user_rounded,
-      label: 'Immobilisation',
-      page: '/immobilisation',
-    )
+        icon: Icons.verified_user_rounded,
+        label: 'Immobilisation',
+        page: '/immobilisation'),
   ];
 
   @override
@@ -84,25 +63,44 @@ class AlertView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: const CustomAppBar(),
-      body: Container(
+      body: SizedBox(
         width: size.width,
-        margin: const EdgeInsets.only(top: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+        child: Stack(
           children: [
-            Expanded(
-              child: GridView.builder(
-                itemCount: _items.length,
-                padding: const EdgeInsets.all(AppConsts.outsidePadding),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 150,
-                  crossAxisSpacing: AppConsts.outsidePadding,
-                  mainAxisSpacing: AppConsts.outsidePadding,
-                ),
-                itemBuilder: (_, int index) {
-                  return _AlertCatd(alertItem: _items.elementAt(index));
-                },
+            GridView.builder(
+              itemCount: _items.length,
+              padding: const EdgeInsets.fromLTRB(
+                  AppConsts.outsidePadding, 47, AppConsts.outsidePadding, 60),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 150,
+                crossAxisSpacing: AppConsts.outsidePadding,
+                mainAxisSpacing: AppConsts.outsidePadding,
               ),
+              itemBuilder: (_, int index) {
+                return _AlertCatd(alertItem: _items.elementAt(index));
+              },
+            ),
+            Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: AppConsts.outsidePadding, top: 8),
+                  child: MainButton(
+                    onPressed: () =>
+                        Navigator.of(context).pushNamed('/historics'),
+                    label: 'Historiques',
+                    width: 150,
+                    height: 30,
+                    backgroundColor: Colors.orange,
+                  ),
+                ),
+                const Positioned(
+                  right: -5,
+                  top: 0,
+                  child: BadgeIcon(),
+                ),
+              ],
             ),
           ],
         ),

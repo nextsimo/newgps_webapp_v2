@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/repport_resume_model.dart';
@@ -15,8 +17,26 @@ class ResumeRepportProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  ResumeRepportProvider(RepportProvider repportProvider) {
-    fetch(deviceID: 'all',repportProvider:  repportProvider);
+  void fetchDataFromOutside() {
+    fetch();
+  }
+
+  late Timer _timer;
+  late RepportProvider provider;
+
+  void init(RepportProvider repportProvider) {
+    provider = repportProvider;
+    _timer = Timer.periodic(const Duration(seconds: 12), (_) {
+      if (provider.isFetching && provider.selectedRepport.index == 0) {
+        fetch();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
   }
 
   bool orderByNumber = true;
@@ -149,31 +169,28 @@ class ResumeRepportProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetch(
-      {int index = 0,
-      required String deviceID,
-      bool download = false,
-      required RepportProvider repportProvider}) async {
+  bool loading = false;
+
+  Future<void> fetch({int index = 0, bool download = false}) async {
+    loading = true;
+    //debugPrint((repportProvider.dateFrom.millisecondsSinceEpoch / 1000).toString());
+    //debugPrint((repportProvider.dateTo.millisecondsSinceEpoch / 1000).toString());
     Account? account = shared.getAccount();
     String res;
     res = await api.post(
-      url: '/repport/resume/$index',
+      url: '/repport/resume/0',
       body: {
         'account_id': account?.account.accountId,
-        'device_id': deviceID,
         'user_id': account?.account.userID,
-        'date_from': repportProvider.dateFrom.millisecondsSinceEpoch / 1000,
-        'date_to': repportProvider.dateTo.millisecondsSinceEpoch / 1000,
         'download': download
       },
     );
-    if (download) {
-      // download file
-
-    }
     if (res.isNotEmpty) {
+      //debugPrint(res);
       _resumes = repportResumeModelFromJson(res);
       notifyListeners();
     }
+
+    loading = false;
   }
 }
