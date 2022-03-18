@@ -95,8 +95,7 @@ class LoginProvider with ChangeNotifier {
         savedAcountProvider.savedAcount(
             account.account.accountId, passwordController.text);
         await shared.saveAccount(account);
-        await fetchInitData(
-            historicProvider: historicProvider,
+         fetchInitData(
             lastPositionProvider: lastPositionProvider,
             context: context);
         compteController.text = '';
@@ -134,9 +133,8 @@ class LoginProvider with ChangeNotifier {
         account.account.userID,
       );
       shared.saveAccount(account);
-      await fetchInitData(
+       fetchInitData(
           context: context,
-          historicProvider: historicProvider,
           lastPositionProvider: lastPositionProvider);
       final ConnectedDeviceProvider connectedDeviceProvider =
           Provider.of<ConnectedDeviceProvider>(context, listen: false);

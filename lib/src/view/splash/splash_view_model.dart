@@ -1,41 +1,49 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/historic/historic_provider.dart';
-import 'package:newgps/src/view/last_position/last_position_provider.dart';
-import 'package:newgps/src/view/navigation/navigation_view.dart';
 import 'package:provider/provider.dart';
 
+import '../../services/newgps_service.dart';
+import '../../utils/functions.dart';
 import '../connected_device/connected_device_provider.dart';
+import '../last_position/last_position_provider.dart';
+
+
 
 class SplashViewModel with ChangeNotifier {
-  Future<void> init(BuildContext context, {bool alert = false}) async {
-    checkIfUserIsAuth(context, alert);
+  Future<void> init(BuildContext context) async {
+    checkIfUserIsAuth(context);
   }
 
-  void checkIfUserIsAuth(BuildContext context, bool alert) async {
-    await Future.delayed(const Duration(seconds: 3));
+  void checkIfUserIsAuth(BuildContext context) async {
+    await Future.delayed(const Duration(seconds: 1));
+
     if (shared.getAccount() != null) {
-      HistoricProvider historicProvider =
-          Provider.of<HistoricProvider>(context, listen: false);
-      LastPositionProvider lastPositionProvider =
-          Provider.of<LastPositionProvider>(context, listen: false);
-      await fetchInitData(
-          historicProvider: historicProvider,
+      int? isActive = json.decode(await api.post(url: '/isactive', body: {
+        'account_id': shared.getAccount()?.account.accountId,
+      }));
+
+      if (isActive == 1) {
+        LastPositionProvider lastPositionProvider =
+            Provider.of<LastPositionProvider>(context, listen: false);
+
+/*         SavedAcountProvider savedAcountProvider =
+            Provider.of<SavedAcountProvider>(context, listen: false);
+        savedAcountProvider.initUserDroit(); */
+
+         fetchInitData(
           lastPositionProvider: lastPositionProvider,
-          context: context);
+          context: context,
+        );
 
-      final ConnectedDeviceProvider connectedDeviceProvider =
-          Provider.of<ConnectedDeviceProvider>(context, listen: false);
-      connectedDeviceProvider.init();
-
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (_) => CustomNavigationView(
-              alert: alert,
-            ),
-          ),
-          (_) => false);
+        final ConnectedDeviceProvider connectedDeviceProvider =
+            Provider.of<ConnectedDeviceProvider>(context, listen: false);
+        connectedDeviceProvider.init();
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/navigation', (_) => false);
+      } else {
+        Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
+      }
     } else {
       Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
     }

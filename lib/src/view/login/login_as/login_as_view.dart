@@ -100,8 +100,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
                 Provider.of<LastPositionProvider>(context, listen: false);
             lastPositionProvider.fresh();
             await shared.saveAccount(account);
-            await fetchInitData(
-                historicProvider: historicProvider,
+             fetchInitData(
                 lastPositionProvider: lastPositionProvider,
                 context: context);
             setState(() => loading = false);

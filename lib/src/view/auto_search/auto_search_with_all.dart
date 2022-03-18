@@ -33,7 +33,6 @@ class _AutoSearchDeviceWithAllState extends State<AutoSearchDeviceWithAll> {
         Provider.of<LastPositionProvider>(context, listen: false);
 
     context.select<LastPositionProvider, bool>((p) => p.notifyMap);
-    if (deviceProvider.devices.isEmpty) return const SizedBox();
     return GestureDetector(
       onHorizontalDragStart: (_) {
         lastPositionProvider.handleSelectDevice();
@@ -129,6 +128,18 @@ class _BuildTextFieldState extends State<BuildTextField> {
 
   @override
   Widget build(BuildContext context) {
+    List<Device> devices =
+        context.select<DeviceProvider, List<Device>>((__) => __.devices);
+
+    if (devices.isEmpty) {
+      widget.lastPositionProvider.autoSearchController.text =
+          'Chargement des véhicules..';
+    } else if (widget.lastPositionProvider.autoSearchController.text ==
+        'Chargement des véhicules..') {
+      widget.lastPositionProvider.autoSearchController.text =
+          'Touts les véhicules';
+    }
+
     return SizedBox(
       height: 35,
       child: TextFormField(
@@ -150,7 +161,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
           suffixIcon: const Icon(Icons.arrow_drop_down),
           //suffix: Text('${deviceProvider.devices.length}'),
           //suffixIconConstraints: const BoxConstraints(),
-          suffixText: widget.focusNode.hasFocus
+          suffixText: (widget.focusNode.hasFocus || devices.isEmpty)
               ? ''
               : '${deviceProvider.devices.length}',
           border: widget.outlineInputBorder,

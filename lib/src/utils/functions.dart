@@ -113,7 +113,7 @@ class FormValidatorService {
     return isMoroccanPhoneNumber(value);
   }
 }
-
+/* 
 Future<void> fetchInitData(
     {required HistoricProvider historicProvider,
     required LastPositionProvider lastPositionProvider,
@@ -123,7 +123,18 @@ Future<void> fetchInitData(
   await savedAcountProvider.fetchUserDroits();
   await deviceProvider.init(context);
   await lastPositionProvider.init(context);
+} */
+
+void fetchInitData(
+    {required LastPositionProvider lastPositionProvider,
+    required BuildContext context}) async {
+  SavedAcountProvider savedAcountProvider =
+      Provider.of<SavedAcountProvider>(context, listen: false);
+  savedAcountProvider.fetchUserDroits();
+  deviceProvider.init(context);
+  lastPositionProvider.init(context);
 }
+
 
 Future<void> playAudio(String audio) async {
   try {
@@ -222,7 +233,6 @@ void showCallConducteurDialog(BuildContext context, Device device) {
               children: [
                 MainButton(
                   onPressed: () {
-
                       launch('tel:${device.phone1}', webOnlyWindowName: '_self');
                   },
                   icon: Icons.phone_forwarded_rounded,

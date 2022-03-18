@@ -21,7 +21,6 @@ class LastPositionView extends StatelessWidget {
   Widget build(BuildContext context) {
     final LastPositionProvider lastPositionProvider =
         Provider.of<LastPositionProvider>(context, listen: false);
-
     lastPositionProvider.fetchInitDevice();
     DeviceProvider deviceProvider =
         Provider.of<DeviceProvider>(context, listen: false);

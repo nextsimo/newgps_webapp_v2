@@ -16,7 +16,7 @@ class SplashView extends StatelessWidget {
         builder: (context, snapshot) {
           SplashViewModel model =
               Provider.of<SplashViewModel>(context, listen: false);
-          model.init(context, alert:alert);
+          model.init(context);
           return Material(
             child: Center(
               child: Image.asset(
