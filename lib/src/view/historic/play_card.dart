@@ -63,13 +63,13 @@ class PlayCard extends StatelessWidget {
                 children: [
                   _buildIconLabel(
                       icon: Icons.speed,
-                      label: '${device.speedKph} Km/h',
+                      label: '${device.speedKph.toInt()} Km/h',
                       title: 'Vitesse'),
                   const SizedBox(height: 10),
                   _buildIconLabel(
                       icon: Icons.wysiwyg_sharp,
-                      label: '${device.odometerKm} Km/h',
-                      title: 'Odometer'),
+                      label: '${device.odometerKm.toInt()} Km',
+                      title: 'Kilométrage'),
                 ],
               ),
             ],

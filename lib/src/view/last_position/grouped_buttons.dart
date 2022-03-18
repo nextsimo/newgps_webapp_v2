@@ -12,15 +12,19 @@ class GroupedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LastPositionProvider provider =
-        Provider.of<LastPositionProvider>(context, listen: false);
+        Provider.of<LastPositionProvider>(context);
 
     DeviceProvider deviceProvider =
         Provider.of<DeviceProvider>(context, listen: false);
 
-    bool fetchGroupes = context.select<LastPositionProvider, bool>(
-        (p) => p.markersProvider.fetchGroupesDevices);
-    if (!fetchGroupes) {
-      return AppelCondicteurButton(device: deviceProvider.selectedDevice);
+
+
+    if (!provider.fetchAll) {
+      return AppelCondicteurButton(
+        device: deviceProvider.selectedDevice,
+        callNewData: () async =>
+            await provider.fetchDevice(deviceProvider.selectedDevice.deviceId),
+      );
     }
     return Positioned(
       right: AppConsts.outsidePadding,

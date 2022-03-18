@@ -1,9 +1,17 @@
+import 'dart:convert';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/services/newgps_service.dart';
+import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/view/alert/alert_navigation.dart';
+import 'package:newgps/src/view/camera/camera_view.dart';
+import 'package:newgps/src/view/driver_view/driver_view.dart';
 import 'package:newgps/src/view/geozone/geozone_navigation.dart';
+import 'package:newgps/src/view/geozone/geozone_view.dart';
+import 'package:newgps/src/view/gestion/gestion_view.dart';
 import 'package:newgps/src/view/historic/historic_view.dart';
 import 'package:newgps/src/view/last_position/last_position_view.dart';
 import 'package:newgps/src/view/matricule/matricule_view.dart';
@@ -11,9 +19,29 @@ import 'package:newgps/src/view/repport/repport_view.dart';
 import 'package:newgps/src/view/user/user_view.dart';
 
 import '../../sone_view.dart';
+import '../../user_empty_page.dart';
 
 class SavedAcountProvider with ChangeNotifier {
   List<SavedAccount> _savedAcounts = [];
+  int _numberOfNotif = 0;
+
+  int get numberOfNotif => _numberOfNotif;
+
+  set numberOfNotif(int numberOfNotif) {
+    _numberOfNotif = numberOfNotif;
+    notifyListeners();
+  }
+
+  Future<void> checkNotifcation() async {
+    String res = await api.post(
+      url: '/notification/historics/count',
+      body: getBody()..addAll({'device_id': await _getDeviceToken()}),
+    );
+
+    if (res.isNotEmpty) {
+      numberOfNotif = jsonDecode(res);
+    }
+  }
 
   late UserDroits userDroits = UserDroits(
     id: 0,
@@ -41,34 +69,47 @@ class SavedAcountProvider with ChangeNotifier {
     return _buildUserPageView(index);
   }
 
-  final List<Widget> _accountWidget = const [
-    LastPositionView(),
-    HistoricView(),
-    RepportView(),
-    AlertNavigation(),
-    GeozoneNavigation(),
-    UsersView(),
-    MatriculeView(),
-    SoonPage(),
+  final List<Widget> _accountWidget = [
+    const LastPositionView(),
+    const HistoricView(),
+    const RepportView(),
+    const AlertNavigation(),
+    const GeozoneView(),
+    const UsersView(),
+    const MatriculeView(),
+    const CameraView(),
+    const GestionView(),
+    const DriverView(),
   ];
+
+  Future<String?> _getDeviceToken() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
+    return "${webBrowserInfo.appName}-${webBrowserInfo.platform}-${webBrowserInfo.productSub}";
+  }
 
   List<Widget> buildPages() {
     Account? account = shared.getAccount();
-    if (account!.account.userID == null) {
+    if (account!.account.userID == null || account.account.userID!.isEmpty) {
       return _accountWidget;
     }
 
-    return [
+    List<Widget> _userPages = [];
+
+    _userPages = [
       if (userDroits.droits[1].read) const LastPositionView(),
       if (userDroits.droits[2].read) const HistoricView(),
       if (userDroits.droits[3].read) const RepportView(),
       if (userDroits.droits[4].read) const AlertNavigation(),
-      if (userDroits.droits[5].read) const GeozoneNavigation(),
+      if (userDroits.droits[5].read) const GeozoneView(),
       if (userDroits.droits[7].read) const MatriculeView(),
-      if (userDroits.droits[8].read) const SoonPage(),
-      if (userDroits.droits[9].read) const SoonPage(),
-      if (userDroits.droits[10].read) const SoonPage(),
+      if (userDroits.droits[8].read) const CameraView(),
+      if (userDroits.droits[9].read) const GestionView(),
+      if (userDroits.droits[10].read) const DriverView(),
     ];
+
+    if (_userPages.isEmpty) return [const UserEmptyPage()];
+    return _userPages;
   }
 
   Widget _buildAccountPageView(int index) {
@@ -199,6 +240,7 @@ class SavedAcountProvider with ChangeNotifier {
               .toList());
       return _acconts.firstWhere((ac) => ac.user == accontID);
     }
+    return null;
   }
 
   void deleteAcount(String? user) {

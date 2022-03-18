@@ -1,17 +1,53 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:newgps/src/models/account.dart';
+import 'package:newgps/src/utils/device_size.dart';
+import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
+import 'package:provider/provider.dart';
 import 'newgps_service.dart';
 
 class FirebaseMessagingService {
   late int notificationID;
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+
+
+
+
+
 
   FirebaseMessagingService() {
-    saveUserMessagingToken();
+    _init();
+  }
+
+  Future<void> _init() async {
+    SavedAcountProvider acountProvider =
+        Provider.of<SavedAcountProvider>(DeviceSize.c, listen: false);
+    await saveUserMessagingToken();
+    acountProvider.checkNotifcation();
+    FirebaseMessaging.onMessage.listen((message) {
+      //debugPrint('onMessage');
+      acountProvider.checkNotifcation();
+    });
+/* 
+    FirebaseMessaging.onBackgroundMessage((message) async {
+      //debugPrint('onBackgroundMessage');
+      acountProvider.checkNotifcation();
+    });
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      debugPrint('onMessageOpenedApp');
+      acountProvider.checkNotifcation();
+
+    }); */
+
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      //debugPrint('onMessageOpenedApp');
+      acountProvider.checkNotifcation();
+      
+    });
   }
 
   Future<void> saveUserMessagingToken() async {
@@ -33,7 +69,7 @@ class FirebaseMessagingService {
     if (res.isNotEmpty) {
       notificationID = json.decode(res);
     }
-    log("Token update $res\nToken : $token");
+    //debugPrint("Token update $res\nToken : $token");
   }
 
   Future<String?> _getDeviceToken() async {

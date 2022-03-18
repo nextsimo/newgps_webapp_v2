@@ -48,7 +48,8 @@ class LastPositionView extends StatelessWidget {
       body: Stack(
         children: [
           const LastpositionMap(),
-          const AutoSearchDeviceWithAll(),
+          const AutoSearchDeviceWithAll(
+          ),
           const CardInfoView(),
           const Positioned(
             top: AppConsts.outsidePadding,

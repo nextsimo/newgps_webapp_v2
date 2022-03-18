@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
+import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/device_size.dart';
 import 'package:newgps/src/utils/functions.dart';
+import 'package:newgps/src/utils/locator.dart';
 import 'package:newgps/src/utils/styles.dart';
+import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
@@ -140,14 +143,14 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               const SizedBox(width: 5),
                               RichText(
                                   text: TextSpan(
-                                      text: "Vitesse: ",
-                                      style: TextStyle(
-                                          color: Colors.black.withOpacity(0.7)),
-                                      children: [
-                                    TextSpan(
-                                        text: "${widget.device.speedKph} Km/H",
-                                        style: const TextStyle())
-                                  ])),
+                                text: "Vitesse: ",
+                                style: TextStyle(
+                                    color: Colors.black.withOpacity(0.7)),
+                                children: [
+                                  TextSpan(
+                                      text: "${widget.device.speedKph} Km/H")
+                                ],
+                              )),
                             ],
                           ),
                           const SizedBox(height: 7),
@@ -182,12 +185,12 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               const SizedBox(width: 5),
                               RichText(
                                   text: TextSpan(
-                                      text: "Odometer: ",
+                                      text: "Kilométrage: ",
                                       style: TextStyle(
                                           color: Colors.black.withOpacity(0.7)),
                                       children: [
                                     TextSpan(
-                                        text: "${widget.device.odometerKm} Km",
+                                        text: "${widget.device.odometerKm.toInt()} Km",
                                         style: const TextStyle(
                                             color: Colors.black54))
                                   ])),
@@ -195,46 +198,18 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                           ),
 
                           const SizedBox(height: 7),
-                          if (widget.device.phone1.isNotEmpty &&
-                              widget.showCallDriver)
+                          if (widget.showCallDriver)
                             MainButton(
                               height: 35,
                               icon: Icons.call,
                               onPressed: () {
-                                if (widget.device.phone1.isNotEmpty) {
-                                  showDialog(
-                                      context: context,
-                                      builder: (_) {
-                                        return Dialog(
-                                          child: Container(
-                                            width: 300,
-                                            padding: const EdgeInsets.all(17),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                MainButton(
-                                                  onPressed: () {},
-                                                  icon: Icons
-                                                      .phone_forwarded_rounded,
-                                                  label: widget.device.phone1,
-                                                ),
-                                                const SizedBox(height: 10),
-                                                if (widget
-                                                    .device.phone2.isNotEmpty)
-                                                  MainButton(
-                                                    onPressed: () {},
-                                                    icon: Icons
-                                                        .phone_forwarded_rounded,
-                                                    label: widget.device.phone2,
-                                                  ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      });
-                                }
+                                locator<DriverPhoneProvider>().checkPhoneDriver(
+                                  context: context,
+                                  device: widget.device,
+                                  sDevice: widget.device,
+                                  callNewData: () async =>
+                                      await deviceProvider.fetchDevices(),
+                                );
                               },
                               label: 'Appele conducteur',
                             ),

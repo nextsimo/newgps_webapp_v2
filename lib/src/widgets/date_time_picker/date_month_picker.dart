@@ -21,7 +21,7 @@ class DateMonthPicker extends StatelessWidget {
           lastDate: DateTime.now(),
         );
 
-        log("$datetTime");
+        //log("$datetTime");
         if (datetTime != null) {
           provider.selectedDateMonth = datetTime;
         }

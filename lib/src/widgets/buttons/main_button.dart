@@ -51,7 +51,7 @@ class _MainButtonState extends State<MainButton> {
             await widget.onPressed();
             setState(() => _loding = false);
           } catch (e) {
-            log('-->${widget.label}', error: '$e');
+            //log('-->${widget.label}', error: '$e');
             setState(() => _loding = false);
           }
         },
@@ -71,7 +71,7 @@ class _MainButtonState extends State<MainButton> {
                       padding: const EdgeInsets.only(right: 10),
                       child: Icon(widget.icon, color: Colors.white, size: 21),
                     ),
-                  Text(widget.label, style: TextStyle(color: widget.textColor)),
+                  Text(widget.label, style: TextStyle(color: widget.textColor, fontWeight: FontWeight.w400)),
                 ],
               ),
       ),

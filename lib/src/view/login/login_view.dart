@@ -28,10 +28,8 @@ class LoginView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network(
-                  'https://api.newgps.ma/api/icons/logo.svg',
-                  width: 100,
-                ),
+                Image.network('https://api.newgps.ma/api/icons/logo.svg',
+                    width: 100),
                 const SizedBox(height: 20),
                 MainInput(
                   icon: Icons.folder,

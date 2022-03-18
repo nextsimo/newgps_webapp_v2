@@ -7,7 +7,7 @@ import 'package:newgps/src/view/repport/rapport_provider.dart';
 class RepportDetailsProvider with ChangeNotifier {
   RepportDetailsPaginateModel repportDetailsPaginateModel =
       RepportDetailsPaginateModel(repportsDetailsModel: []);
-
+  late RepportProvider provider;
   Future<void> fetchRepportModel(
       {required String deviceId,
       int index = 0,
@@ -42,6 +42,7 @@ class RepportDetailsProvider with ChangeNotifier {
     selectedDeviceId = repportProvider.selectedDevice.deviceId;
     dateTo = repportProvider.dateTo;
     dateFrom = repportProvider.dateFrom;
+    provider = repportProvider;
   }
 
   bool _init = true;
@@ -53,13 +54,13 @@ class RepportDetailsProvider with ChangeNotifier {
     if (selectedIndex == index && !up) {
       up = true;
       await fetchRepportModel(
-          deviceId: selectedDeviceId, index: index!, up: up);
+          deviceId: provider.selectedDevice.deviceId, index: index!, up: up);
       notifyListeners();
       return;
     }
     up = !up;
     selectedIndex = index!;
-    await fetchRepportModel(deviceId: selectedDeviceId, index: index, up: up);
+    await fetchRepportModel(deviceId: provider.selectedDevice.deviceId, index: index, up: up);
     notifyListeners();
   }
 

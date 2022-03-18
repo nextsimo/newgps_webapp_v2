@@ -32,7 +32,7 @@ class MatriculeProvider with ChangeNotifier {
       MatriculeModel newMatriculeData, BuildContext context) async {
     // save the new matricule
     Account? account = shared.getAccount();
-    debugPrint(jsonEncode(newMatriculeData.toJson()));
+    //debugPrint(jsonEncode(newMatriculeData.toJson()));
     String res = await api.post(
       url: '/matricules/update',
       body: {

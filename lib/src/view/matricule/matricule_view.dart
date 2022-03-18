@@ -96,7 +96,7 @@ class BuildHead extends StatelessWidget {
   Widget build(BuildContext context) {
     var droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[6];
+        .droits[7];
     var borderSide = const BorderSide(
         color: AppConsts.mainColor, width: AppConsts.borderWidth);
     return Container(
@@ -156,7 +156,7 @@ class MatriculeRowContent extends StatelessWidget {
         Provider.of<MatriculeProvider>(context, listen: false);
     var droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[6];
+        .droits[7];
     return Container(
       decoration: const BoxDecoration(
         border: Border(
@@ -275,7 +275,7 @@ class EditableCell extends StatelessWidget {
   Widget build(BuildContext context) {
     var droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[6];
+        .droits[7];
     _controller.text = content;
     return Expanded(
       flex: flex,

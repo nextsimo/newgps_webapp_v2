@@ -21,18 +21,20 @@ class FuelRepportView extends StatelessWidget {
       builder: (context, __) {
         RepportProvider provider =
             Provider.of<RepportProvider>(context, listen: false);
-
+        context.select<RepportProvider, DateTime>((p) => p.dateFrom);
+        context.select<RepportProvider, DateTime>((p) => p.dateTo);
         FuelRepportProvider fuelRepportProvider =
             Provider.of<FuelRepportProvider>(context, listen: false);
         fuelRepportProvider.fetchRepports(
             provider.selectedDevice.deviceId, provider);
-
         context.select<RepportProvider, Device>((p) => p.selectedDevice);
+
         return Material(
           child: Column(
             children: [
               const _BuildHead(),
-              Consumer<FuelRepportProvider>(builder: (context, __, ___) {
+              Consumer<FuelRepportProvider>(
+                  builder: (context, __, ____) {
                 return Expanded(
                   child: ListView.builder(
                     itemCount: fuelRepportProvider.repports.length,

@@ -94,11 +94,16 @@ class HistoricView extends StatelessWidget {
                 if (isPlayed) return const SizedBox();
                 return AutoSearchDevice(
                   onSelectDeviceFromOtherView: (Device device) async {
-                    provider.fetchHistorics(1, true);
+                    provider.fetchHistorics(device.deviceId ,1, true);
                   },
                 );
               }),
-          AppelCondicteurButton(device: deviceProvider.selectedDevice),
+          AppelCondicteurButton(
+            device: deviceProvider.selectedDevice,
+            callNewData: () async {
+              await deviceProvider.fetchDevice();
+            },
+          ),
           Selector<HistoricProvider, bool>(
               selector: (_, p) => p.historicIsPlayed,
               builder: (_, bool isPlayed, ___) {
@@ -130,5 +135,3 @@ class HistoricView extends StatelessWidget {
     );
   }
 }
-
-

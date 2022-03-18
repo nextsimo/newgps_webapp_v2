@@ -78,7 +78,7 @@ class _CapoViewState extends State<CapoView> {
   _buildStatusLabel() {
     Droit droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[3];
+        .droits[4];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

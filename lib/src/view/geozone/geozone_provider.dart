@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/models/account.dart';
@@ -116,7 +115,7 @@ class GeozoneProvider with ChangeNotifier {
       );
     }
 
-    debugPrint(res);
+    //debugPrint(res);
 
     fetchGeozones();
 
@@ -151,19 +150,20 @@ class GeozoneProvider with ChangeNotifier {
       );
     }
 
-    debugPrint(res);
+    //debugPrint(res);
 
     fetchGeozones();
 
     // nav.back();
   }
 
-  Future<void> onClickUpdate(GeozoneModel geozone, BuildContext context) async {
+  Future<void> onClickUpdate(GeozoneModel geozone, BuildContext context, {bool readOnly = false}) async {
     geozoneDialogProvider.onClickUpdate(geozone);
     bool? saved = await showDialog(
       context: context,
       builder: (_) => Dialog(
           child: GeozoneActionView(
+            readonly: readOnly,
         geozoneDialogProvider: geozoneDialogProvider,
       )),
     );
@@ -195,7 +195,7 @@ class GeozoneProvider with ChangeNotifier {
     bool res = await customDialog(context);
     Account? account = shared.getAccount();
 
-    log('$res');
+    //log('$res');
     if (res) {
       await api.post(url: '/delete/geozone', body: {
         'accountId': account?.account.accountId,

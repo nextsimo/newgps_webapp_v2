@@ -1,7 +1,5 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:typed_data';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:newgps/src/models/account.dart';
 
@@ -51,16 +49,16 @@ class ApiService {
       Response response = await _client.post(Uri.parse(_baseUrl + url),
           body: json.encode(body), headers: header);
 
-      debugPrint(_baseUrl + url);
+      //debugPrint(_baseUrl + url);
 
       if (response.statusCode == 200) {
-        debugPrint('$url succes');
+        //debugPrint('$url succes');
         return response.body;
       }
-      debugPrint('$url filed ${response.body}');
+      //debugPrint('$url filed ${response.body}');
       return '';
     } catch (e) {
-      debugPrint('$url failed $e');
+      //debugPrint('$url failed $e');
       return '';
     }
   }
@@ -77,15 +75,15 @@ class ApiService {
             'Accept': 'application/json',
           });
 
-      log(_baseUrl + url);
+      //log(_baseUrl + url);
 
       if (response.statusCode == 200) {
-        log('$url succes');
+        //log('$url succes');
         return response.bodyBytes;
       }
       return Uint8List(0);
     } catch (e) {
-      debugPrint('$url failed $e');
+      //debugPrint('$url failed $e');
       return Uint8List(0);
     }
   }
@@ -100,16 +98,16 @@ class ApiService {
       Response response = await _client.post(Uri.parse(_baseUrl + url),
           body: json.encode(body), headers: headerFile);
 
-      log(_baseUrl + url);
+      //log(_baseUrl + url);
 
       if (response.statusCode == 200) {
-        log('$url succes');
+        //log('$url succes');
         return response.body;
       }
-      log('$url filed ${response.body}');
+      //log('$url filed ${response.body}');
       return '';
     } catch (e) {
-      debugPrint('$url failed $e');
+      //debugPrint('$url failed $e');
       return '';
     }
   }
@@ -125,7 +123,7 @@ class ApiService {
 
       return response.body;
     } catch (e) {
-      debugPrint('$url failed $e');
+      //debugPrint('$url failed $e');
       return '';
     }
   }

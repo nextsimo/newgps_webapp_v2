@@ -9,6 +9,8 @@ import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../connected_device/connected_device_provider.dart';
+
 class LoginProvider with ChangeNotifier {
   final TextEditingController compteController = TextEditingController();
 
@@ -68,7 +70,7 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
-  Future<void> login(BuildContext context) async {
+  Future<void> login(BuildContext context) async { 
     errorText = '';
     if (formKey.currentState!.validate()) {
       // request login
@@ -97,7 +99,14 @@ class LoginProvider with ChangeNotifier {
             historicProvider: historicProvider,
             lastPositionProvider: lastPositionProvider,
             context: context);
-        Navigator.of(context).pushNamedAndRemoveUntil('/navigation', (_) => false);
+        compteController.text = '';
+        passwordController.text = '';
+              final ConnectedDeviceProvider connectedDeviceProvider =
+          Provider.of<ConnectedDeviceProvider>(context, listen: false);
+      connectedDeviceProvider.init();
+      connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
+        Navigator.of(context)
+            .pushNamedAndRemoveUntil('/navigation', (_) => false);
       } else {
         errorText = 'Mot de passe ou account est inccorect';
       }
@@ -129,6 +138,11 @@ class LoginProvider with ChangeNotifier {
           context: context,
           historicProvider: historicProvider,
           lastPositionProvider: lastPositionProvider);
+      final ConnectedDeviceProvider connectedDeviceProvider =
+          Provider.of<ConnectedDeviceProvider>(context, listen: false);
+      connectedDeviceProvider.init();
+      connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
+
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/navigation', (route) => false);
     } else {

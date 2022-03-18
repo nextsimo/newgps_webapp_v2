@@ -21,8 +21,9 @@ class _HistoricMapViewState extends State<HistoricMapView> {
         final DeviceProvider deviceProvider =
             Provider.of<DeviceProvider>(context, listen: false);
         return GoogleMap(
-          polylines: provider.line,
+          polylines: provider.getLines(),
           zoomControlsEnabled: false,
+          zoomGesturesEnabled:provider.enableZoomGesture,
           markers: provider.getMarker(),
           mapType: deviceProvider.mapType,
           onMapCreated: (controller) async {

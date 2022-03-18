@@ -183,39 +183,64 @@ class _ShowListDroisState extends State<_ShowListDrois> {
         Droit userDrois = widget.userDroits.droits.elementAt(index);
         return CheckedDroits(
           color: userDrois.index == 10 ? Colors.red : null,
-          onTapRead: (int _index) {
-            if (_index == 10) {
-              widget.userDroits.droits.first.read =
-                  !widget.userDroits.droits.first.read;
-              for (var d in widget.userDroits.droits) {
-                d.read = widget.userDroits.droits.first.read;
+            onTapRead: (int _index) {
+              if (_index == 10) {
+                widget.userDroits.droits.first.read =
+                    !widget.userDroits.droits.first.read;
+                for (var d in widget.userDroits.droits) {
+                  d.read = widget.userDroits.droits.first.read;
+                }
+                if (widget.userDroits.droits.first.write &&
+                    !widget.userDroits.droits.first.read) {
+                  widget.userDroits.droits.first.write = false;
+                  for (var d in widget.userDroits.droits) {
+                    d.write = false;
+                  }
+                }
+
+                setState(() {});
+              } else {
+                widget.userDroits.droits.first.read = false;
+                widget.userDroits.droits[index].read =
+                    !widget.userDroits.droits[index].read;
+
+                if (widget.userDroits.droits[index].write &&
+                    !widget.userDroits.droits[index].read) {
+                  widget.userDroits.droits[index].write = false;
+                }
+                setState(() {});
               }
-              setState(() {});
-            } else {
-              widget.userDroits.droits.first.read = false;
-              widget.userDroits.droits[index].read =
-                  !widget.userDroits.droits[index].read;
-              setState(() {});
-            }
-          },
+            },
           element: str,
           userDroits: widget.userDroits,
           droit: userDrois,
-          onTapWrite: (int _index) {
-            if (_index == 10) {
-              widget.userDroits.droits.first.write =
-                  !widget.userDroits.droits.first.write;
-              for (var d in widget.userDroits.droits) {
-                d.write = widget.userDroits.droits.first.write;
+            onTapWrite: (int _index) {
+              if (_index == 10) {
+                widget.userDroits.droits.first.write =
+                    !widget.userDroits.droits.first.write;
+                for (var d in widget.userDroits.droits) {
+                  d.write = widget.userDroits.droits.first.write;
+                }
+                if (widget.userDroits.droits.first.write &&
+                    !widget.userDroits.droits.first.read) {
+                  widget.userDroits.droits.first.read = true;
+                  for (var d in widget.userDroits.droits) {
+                    d.read = true;
+                  }
+                }
+                setState(() {});
+              } else {
+                widget.userDroits.droits.first.write = false;
+                widget.userDroits.droits[index].write =
+                    !widget.userDroits.droits[index].write;
+                if (widget.userDroits.droits[index].write &&
+                    !widget.userDroits.droits[index].read) {
+                  widget.userDroits.droits[index].read =
+                      !widget.userDroits.droits[index].read;
+                }
+                setState(() {});
               }
-              setState(() {});
-            } else {
-              widget.userDroits.droits.first.write = false;
-              widget.userDroits.droits[index].write =
-                  !widget.userDroits.droits[index].write;
-              setState(() {});
-            }
-          },
+            },
         );
       },
       separatorBuilder: (_, int index) => index == 0

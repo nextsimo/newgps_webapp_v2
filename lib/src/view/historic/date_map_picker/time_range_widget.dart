@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/historic/date_map_picker/time_input.dart';
 import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
@@ -37,7 +38,8 @@ class TimeRangeWigdet extends StatelessWidget {
           MainButton(
             onPressed: () {
               provider.onTimeRangeSaveClicked();
-              provider.fetchHistorics(1, true);
+              provider.fetchHistorics(
+                  deviceProvider.selectedDevice.deviceId, 1, true);
               Navigator.of(context).pop();
               //provider.dateTimeSavedButtonClicked = true;
               //Navigator.of(context).pop();
@@ -48,7 +50,7 @@ class TimeRangeWigdet extends StatelessWidget {
           MainButton(
             onPressed: () {
               provider.onTimeRangeRestaureClicked();
-              provider.fetchHistorics(1, true);
+              provider.fetchHistorics(deviceProvider.selectedDevice.deviceId,1, true);
               Navigator.of(context).pop();
 /*               provider.notifyDateTime();
               provider.dateTimeSavedButtonClicked = true;

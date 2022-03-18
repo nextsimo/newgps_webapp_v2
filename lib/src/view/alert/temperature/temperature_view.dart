@@ -37,7 +37,7 @@ class _TemperatureViewState extends State<TemperatureView> {
                 const SizedBox(height: 10),
                 const BuildLabel(
                   label: 'température',
-                  icon: Icons.edit_road_rounded,
+                  icon: Icons.fireplace,
                 ),
                 const SizedBox(height: 20),
                 _buildStatusLabel(),
@@ -81,7 +81,7 @@ class _TemperatureViewState extends State<TemperatureView> {
   _buildStatusLabel() {
     Droit droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[3];
+        .droits[4];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

@@ -9,6 +9,7 @@ import 'package:newgps/src/view/login/login_view.dart';
 import 'package:newgps/src/view/navigation/navigation_view.dart';
 import 'package:newgps/src/view/splash/splash_view.dart';
 import 'package:provider/provider.dart';
+import 'src/view/connected_device/connected_device_provider.dart';
 import 'src/view/historic/historic_provider.dart';
 import 'src/view/login/login_as/save_account_provider.dart';
 
@@ -30,14 +31,17 @@ class NewGpsApp extends StatelessWidget {
         ChangeNotifierProvider<LoginProvider>(
           create: (_) => LoginProvider(),
         ),
+        ChangeNotifierProvider<ConnectedDeviceProvider>(
+            create: (_) => ConnectedDeviceProvider()),
       ],
       child: MaterialApp(
         initialRoute: '/',
         routes: {
           // When navigating to the "/" route, build the FirstScreen widget.
           '/': (context) => const SplashView(),
-          '/navigation': (context) => CustomNavigationView(),
+          '/navigation': (context) => const CustomNavigationView(),
           '/login': (context) => const LoginView(),
+          '/alert': (context) => const SplashView(alert: true),
           // When navigating to the "/second" route, build the SecondScreen widget.
         },
         localizationsDelegates: const [

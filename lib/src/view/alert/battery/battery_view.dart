@@ -81,7 +81,7 @@ class BatteryAlertView extends StatelessWidget {
   _buildStatusLabel(BatteryProvider provider, BuildContext context) {
     var droit = Provider.of<SavedAcountProvider>(context, listen: false)
         .userDroits
-        .droits[3];
+        .droits[4];
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

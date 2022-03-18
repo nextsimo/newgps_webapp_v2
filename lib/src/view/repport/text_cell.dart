@@ -19,7 +19,7 @@ class BuildTextCell extends StatelessWidget {
           child: FittedBox(
             fit: BoxFit.fitWidth,
             child: Text(
-              content,
+              content.isEmpty ? '     ' : content,
               textAlign: TextAlign.center,
               maxLines: 1,
             ),

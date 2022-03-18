@@ -80,7 +80,7 @@ class CardInfoView extends StatelessWidget {
                               children: [
                                 _buildLabel(
                                     label: 'Distance parcourue',
-                                    content: '${device.distanceKm} Km'),
+                                    content: '${infoModel.distance} Km'),
                                 const SizedBox(height: 6),
                                 _buildLabel(
                                     label: 'Vitesse maximal',
@@ -101,7 +101,7 @@ class CardInfoView extends StatelessWidget {
                               children: [
                                 _buildLabel(
                                   label: 'Kilométrage',
-                                  content: '${device.odometerKm} KM',
+                                  content: '${infoModel.odometer} Km',
                                 ),
                                 const SizedBox(height: 6),
                                 _buildLabel(

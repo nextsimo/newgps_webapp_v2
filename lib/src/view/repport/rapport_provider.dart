@@ -30,7 +30,24 @@ class RepportProvider with ChangeNotifier {
       index: 3,
       title: 'Rapport arrêt / redémarrage',
     ),
+    RepportTypeModel(
+      index: 4,
+      title: 'Rapport distance',
+    ),
+    RepportTypeModel(
+      index: 5,
+      title: 'Rapport connexion',
+    ),
   ];
+
+  bool _isFetching = true;
+
+  bool get isFetching => _isFetching;
+
+  set isFetching(bool isFetching) {
+    _isFetching = isFetching;
+    notifyListeners();
+  }
 
   Future<void> downloadDocument(BuildContext context) async {
     showDialog(
@@ -103,6 +120,16 @@ class RepportProvider with ChangeNotifier {
       case 3:
         await downlaodTrips('xlsx');
         break;
+      case 4:
+        if (autoSearchTextController.text == 'Touts les véhicules') {
+          await _downloadAllDeistanceDevices('xlsx');
+        } else {
+          await _downloadOneDeviceDistanceRepport('xlsx');
+        }
+        break;
+      case 5:
+        await downlaodConnexion('xlsx');
+        break;
       default:
     }
   }
@@ -121,8 +148,90 @@ class RepportProvider with ChangeNotifier {
       case 3:
         await downlaodTrips('pdf');
         break;
+      case 4:
+        if (autoSearchTextController.text == 'Touts les véhicules') {
+          await _downloadAllDeistanceDevices('pdf');
+        } else {
+          await _downloadOneDeviceDistanceRepport('pdf');
+        }
+        break;
+      case 5:
+        await downlaodConnexion('pdf');
+        break;
       default:
     }
+  }
+
+    Future<void> _downloadOneDeviceDistanceRepport(String format) async {
+    Account? account = shared.getAccount();
+    String res = await api.post(
+      url: '/repport/distance/device',
+      body: {
+        'account_id': account?.account.accountId,
+        'user_id': account?.account.userID,
+        'date_from': dateFrom.millisecondsSinceEpoch / 1000,
+        'date_to': dateTo.millisecondsSinceEpoch / 1000,
+        'order_by': 'updated_at',
+        'or': 'desc',
+        'download': true,
+        'format': format,
+        'device_id': selectedDevice.deviceId,
+      },
+    );
+    html.AnchorElement(
+        href: "data:application/octet-stream;charset=utf-16le;base64,$res")
+      ..setAttribute("download",
+          "distance_repport_device_${formatSimpleDate(dateFrom)}.$format")
+      ..click()
+      ..remove();
+  }
+
+  Future<void> _downloadAllDeistanceDevices(String format) async {
+    Account? account = shared.getAccount();
+    String res = await api.post(
+      url: '/repport/distance/all',
+      body: {
+        'account_id': account?.account.accountId,
+        'user_id': account?.account.userID,
+        'date_from': dateFrom.millisecondsSinceEpoch / 1000,
+        'date_to': dateTo.millisecondsSinceEpoch / 1000,
+        'order_by': 'updated_at',
+        'or': 'desc',
+        'download': true,
+        'format': format,
+      },
+    );
+
+    html.AnchorElement(
+        href: "data:application/octet-stream;charset=utf-16le;base64,$res")
+      ..setAttribute("download",
+          "distance_repport_all_${formatSimpleDate(dateFrom)}.$format")
+      ..click()
+      ..remove();
+  }
+
+  Future<void> downlaodConnexion(String format) async {
+    Account? account = shared.getAccount();
+    String res = await api.post(
+      url: '/repport/connected/devices',
+      body: {
+        'account_id': account?.account.accountId,
+        'user_id': account?.account.userID,
+        'date_from': dateFrom.toString(),
+        'date_to': dateTo.toString(),
+        'order_by': 'updated_at',
+        'up': 'desc',
+        'download': true,
+        'format': format,
+      },
+    );
+
+    html.AnchorElement(
+        href: "data:application/octet-stream;charset=utf-16le;base64,$res")
+      ..setAttribute(
+          "download", "connexion_rapport_${formatSimpleDate(dateFrom)}.$format")
+      ..click()
+      ..remove();
   }
 
   DateTime _selectedDateMonth = DateTime.now();
@@ -178,13 +287,19 @@ class RepportProvider with ChangeNotifier {
   Future<void> downloadFuelRepport(String format) async {
     Account? account = shared.getAccount();
     String res = await api.post(
-      url: '/repport/resume/fuel',
+      url: '/repport/resume/fuelbydate',
       body: {
         'account_id': account?.account.accountId,
         'device_id': selectedDevice.deviceId,
-        'month': selectedDateMonth.month,
-        'year': selectedDateMonth.year,
+        'year': 0,
+        'month': 0,
         'day': 0,
+        'date_from': dateFrom.millisecondsSinceEpoch / 1000,
+        'date_to': dateTo.millisecondsSinceEpoch / 1000,
+        'hour_from': dateFrom.hour,
+        'minute_from': dateFrom.minute,
+        'hour_to': dateTo.hour,
+        'minute_to': dateTo.minute,
         'download': true,
         'format': format
       },
@@ -236,6 +351,7 @@ class RepportProvider with ChangeNotifier {
 
   void _initDate() {
     dateFrom = DateTime(dateTo.year, dateTo.month, dateTo.day, 0, 0, 0, 1);
+    dateTo =  DateTime(dateTo.year, dateTo.month, dateTo.day, 23, 59, 59);
     selectedTimeFrom = dateFrom;
     selectedTimeTo = dateTo;
   }
@@ -288,27 +404,39 @@ class RepportProvider with ChangeNotifier {
   late DateTime selectedTimeFrom;
   late DateTime selectedTimeTo;
 
-  Future<void> updateDate(context) async {
-    DateTime? dateTime = await showDatePicker(
+  Future<void> updateDateFrom(context) async {
+    DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: dateFrom,
-      firstDate: DateTime(2018),
-      lastDate: DateTime.now(),
+      firstDate: DateTime(200),
+      lastDate: dateTo,
     );
-
-    if (dateTime != null) {
+    if (newDate != null) {
       dateFrom = DateTime(
-        dateTime.year,
-        dateTime.month,
-        dateTime.day,
+        newDate.year,
+        newDate.month,
+        newDate.day,
         dateFrom.hour,
         dateFrom.minute,
         dateFrom.second,
       );
+      notifyDate = _notifyDate;
+      hanleFetchRepports();
+    }
+  }
+
+  Future<void> updateDateTo(context) async {
+    DateTime? newDate = await showDatePicker(
+      context: context,
+      initialDate: dateTo,
+      firstDate: dateFrom,
+      lastDate: DateTime.now(),
+    );
+    if (newDate != null) {
       dateTo = DateTime(
-        dateTime.year,
-        dateTime.month,
-        dateTime.day,
+        newDate.year,
+        newDate.month,
+        newDate.day,
         dateTo.hour,
         dateTo.minute,
         dateTo.second,
@@ -374,7 +502,7 @@ class RepportProvider with ChangeNotifier {
   Future<void> onSave(RepportResumeModel repportResumeModel) async {
     Account? account = shared.getAccount();
 
-    debugPrint(jsonEncode(repportResumeModel.toJson()));
+    //debugPrint(jsonEncode(repportResumeModel.toJson()));
     await api.post(
       url: '/repport/resume/update',
       body: {

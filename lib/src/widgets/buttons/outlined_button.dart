@@ -30,7 +30,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
             await widget.onPressed();
             setState(() => _loding = false);
           } catch (e) {
-            log('-->${widget.label}', error: '$e');
+            //log('-->${widget.label}', error: '$e');
             setState(() => _loding = false);
           }
         },

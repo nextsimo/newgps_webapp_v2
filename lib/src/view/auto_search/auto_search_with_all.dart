@@ -6,8 +6,22 @@ import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:provider/provider.dart';
 
-class AutoSearchDeviceWithAll extends StatelessWidget {
+class AutoSearchDeviceWithAll extends StatefulWidget {
   const AutoSearchDeviceWithAll({Key? key}) : super(key: key);
+
+  @override
+  State<AutoSearchDeviceWithAll> createState() =>
+      _AutoSearchDeviceWithAllState();
+}
+
+class _AutoSearchDeviceWithAllState extends State<AutoSearchDeviceWithAll> {
+  late FocusNode _focusNode;
+
+  @override
+  void dispose() {
+    _focusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +33,7 @@ class AutoSearchDeviceWithAll extends StatelessWidget {
         Provider.of<LastPositionProvider>(context, listen: false);
 
     context.select<LastPositionProvider, bool>((p) => p.notifyMap);
-    if (lastPositionProvider.devices.isEmpty) return const SizedBox();
+    if (deviceProvider.devices.isEmpty) return const SizedBox();
     return GestureDetector(
       onHorizontalDragStart: (_) {
         lastPositionProvider.handleSelectDevice();
@@ -39,20 +53,21 @@ class AutoSearchDeviceWithAll extends StatelessWidget {
             fieldViewBuilder: (BuildContext context, TextEditingController _,
                 FocusNode focusNode, Function onFieldSubmitted) {
               lastPositionProvider.autoSearchController = _;
+              _focusNode = focusNode;
               lastPositionProvider.handleSelectDevice(notify: false);
               return fieldViewBuilderWidget(
                 lastPositionProvider,
                 outlineInputBorder,
-                focusNode,
+                _focusNode,
                 onFieldSubmitted,
               );
             },
             displayStringForOption: (d) => d.description,
             optionsBuilder: (TextEditingValue textEditingValue) {
               if (textEditingValue.text.isEmpty) {
-                return lastPositionProvider.devices;
+                return deviceProvider.devices;
               }
-              return lastPositionProvider.devices.where(
+              return deviceProvider.devices.where(
                 (device) {
                   return device.description
                       .toLowerCase()
@@ -63,6 +78,7 @@ class AutoSearchDeviceWithAll extends StatelessWidget {
             optionsViewBuilder: (BuildContext context,
                 void Function(Device device) deviceFunc, devices) {
               return OptionViewBuilderWidget(
+                focusNode: _focusNode,
                 devices: devices.toList(),
                 onSelectDevice: deviceFunc,
               );
@@ -149,6 +165,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
 }
 
 class OptionViewBuilderWidget extends StatelessWidget {
+  final FocusNode focusNode;
   final List<Device> devices;
   final void Function(Device) onSelectDevice;
 
@@ -156,6 +173,7 @@ class OptionViewBuilderWidget extends StatelessWidget {
     Key? key,
     required this.devices,
     required this.onSelectDevice,
+    required this.focusNode,
   }) : super(key: key);
 
   Widget _buildToutsWidget(
@@ -164,10 +182,12 @@ class OptionViewBuilderWidget extends StatelessWidget {
         Provider.of<DeviceProvider>(context, listen: false);
     return InkWell(
       onTap: () async {
+        lastPositionProvider.enableZoomGesture = true;
+        lastPositionProvider.fetchAll = true;
         lastPositionProvider.handleSelectDevice();
-        FocusScope.of(context).unfocus();
-        await lastPositionProvider.fetchDevices();
         deviceProvider.infoModel = null;
+        focusNode.unfocus();
+        lastPositionProvider.fetchDevices(fromSearch: true);
       },
       child: Container(
         height: 50,
@@ -197,7 +217,7 @@ class OptionViewBuilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     LastPositionProvider lastPositionProvider =
         Provider.of<LastPositionProvider>(context, listen: false);
-        Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
@@ -211,14 +231,15 @@ class OptionViewBuilderWidget extends StatelessWidget {
         child: Material(
           color: Colors.transparent,
           child: Container(
-            constraints:  BoxConstraints(
-              maxHeight:size.height*0.75 ,
+            constraints: BoxConstraints(
+              maxHeight: size.height * 0.75,
             ),
             child: ListView(
               shrinkWrap: true,
               padding: EdgeInsets.zero,
               children: devices.map<Widget>((device) {
                 return OptionItem(
+                  focusNode: focusNode,
                   onSelectDevice: onSelectDevice,
                   lastPositionProvider: lastPositionProvider,
                   device: device,
@@ -234,12 +255,14 @@ class OptionViewBuilderWidget extends StatelessWidget {
 }
 
 class OptionItem extends StatelessWidget {
+  final FocusNode focusNode;
   final Device device;
   const OptionItem({
     Key? key,
     required this.onSelectDevice,
     required this.lastPositionProvider,
     required this.device,
+    required this.focusNode,
   }) : super(key: key);
 
   final void Function(Device p1) onSelectDevice;
@@ -253,10 +276,12 @@ class OptionItem extends StatelessWidget {
         device.description,
       ),
       onTap: () async {
+        lastPositionProvider.enableZoomGesture = true;
         onSelectDevice(device);
         deviceProvider.selectedDevice = device;
-        FocusScope.of(context).unfocus();
-        await lastPositionProvider.fetchDevice(device.deviceId, isSelected: true);
+        focusNode.unfocus();
+        await lastPositionProvider.fetchDevice(device.deviceId,
+            isSelected: true);
         //lastPositionProvider.moveCamera(device, zoom: 8.5);
       },
       minVerticalPadding: 0,

@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/models/repport_resume_model.dart';
+import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/functions.dart';
+import 'package:newgps/src/utils/locator.dart';
 import 'package:newgps/src/utils/styles.dart';
+import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
+import 'package:newgps/src/view/repport/resume/loading/resume_repport_loading.dart';
 import 'package:newgps/src/view/repport/resume/resume_repport_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
@@ -157,23 +162,27 @@ class ResumeRepport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final RepportProvider repportProvider = Provider.of(context, listen: false);
-    return ChangeNotifierProvider<ResumeRepportProvider>(
-        create: (__) => ResumeRepportProvider(repportProvider),
+    RepportProvider repportProvider =
+        Provider.of<RepportProvider>(context, listen: false);
+
+    return ChangeNotifierProvider<ResumeRepportProvider>.value(
+        value: NewgpsService.resumeRepportProvider,
         builder: (context, snapshot) {
           ResumeRepportProvider resumeRepportProvider =
-              Provider.of<ResumeRepportProvider>(context);
-          List<RepportResumeModel> resumes = resumeRepportProvider.resumes;
-          return StreamBuilder(
-            stream: Stream.periodic(
-                const Duration(seconds: 7),
-                (_) => resumeRepportProvider.fetch(
-                    deviceID: repportProvider.selectedDevice.deviceId,
-                    repportProvider: repportProvider)),
-            builder: (_, __) {
-              return _BuildTable(resumes: resumes);
+              Provider.of<ResumeRepportProvider>(context, listen: false);
+          resumeRepportProvider.init(repportProvider);
+
+          return Consumer<ResumeRepportProvider>(
+            builder: (_, p, __) {
+              if (p.resumes.isEmpty) {
+                return const ResumeRepportLoading();
+              }
+              return _BuildTable(resumes: p.resumes);
             },
           );
+/*           return Consumer<ResumeRepportProvider>(builder: (context, p, __) {
+            return _BuildTable(resumes: p.resumes);
+          }); */
         });
   }
 }
@@ -238,33 +247,14 @@ class RepportRow extends StatelessWidget {
             flex: 4,
             child: InkWell(
               onTap: () {
-                showDialog(
+                Device device = deviceProvider.devices.firstWhere(
+                    (element) => element.deviceId == repport.deviceId);
+                locator<DriverPhoneProvider>().checkPhoneDriver(
                     context: context,
-                    builder: (_) {
-                      return Dialog(
-                        child: Container(
-                          width: 300,
-                          padding: const EdgeInsets.all(17),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              MainButton(
-                                onPressed: () {},
-                                icon: Icons.phone_forwarded_rounded,
-                                label: repport.phone1,
-                              ),
-                              const SizedBox(height: 10),
-                              if (repport.phone2.isNotEmpty)
-                                MainButton(
-                                  onPressed: () {},
-                                  icon: Icons.phone_forwarded_rounded,
-                                  label: repport.phone2,
-                                ),
-                            ],
-                          ),
-                        ),
-                      );
+                    device: device,
+                    sDevice: device,
+                    callNewData: () async {
+                      await deviceProvider.fetchDevices();
                     });
               },
               child: SizedBox(
