@@ -12,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'card_info.dart';
 import 'date_widget.dart';
 import 'grouped_buttons.dart';
-import 'suivi/suivi_widget.dart';
 
 class LastPositionView extends StatelessWidget {
   const LastPositionView({Key? key}) : super(key: key);
@@ -63,7 +62,7 @@ class LastPositionView extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SuiviWidget(),
+                //const SuiviWidget(),
                 const SizedBox(height: 6),
                 MapZoomWidget(completer: lastPositionProvider.controller),
               ],

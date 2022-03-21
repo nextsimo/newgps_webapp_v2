@@ -283,8 +283,6 @@ class LastPositionProvider with ChangeNotifier {
       markersProvider.fetchGroupesDevices = false;
       notifyListeners();
     }
-    Marker myPositionMarker = await deviceProvider.getPositionMarker();
-    markersProvider.onMarker.add(myPositionMarker);
     await Future.delayed(const Duration(seconds: 1));
     if (isSelected) {
       if (polylines.isNotEmpty) {
@@ -318,8 +316,6 @@ class LastPositionProvider with ChangeNotifier {
       markersProvider.simpleMarkers.add(marker);
       markersProvider.textMakers.add(textmarker);
     }
-    Marker myPositionMarker = await deviceProvider.getPositionMarker();
-    markersProvider.simpleMarkers.add(myPositionMarker);
     markersProvider.fetchGroupesDevices = true;
     notifyListeners();
   }

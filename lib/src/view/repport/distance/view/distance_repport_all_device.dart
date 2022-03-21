@@ -73,7 +73,7 @@ class _DistanceRepportAllDeviceViewState
                           Expanded(
                             child: Center(
                               child: Text(
-                                "${provider.distanceSum}",
+                                "${provider.distanceSum == 0 ? '...' : provider.distanceSum}",
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),

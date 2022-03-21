@@ -142,7 +142,7 @@ class DeviceProvider with ChangeNotifier {
       deviceProvider.selectedDevice = device;
     }
   }
-
+/* 
   Future<Marker> getPositionMarker() async {
     var myPos = await GeolocatorPlatform.instance.getCurrentPosition();
 
@@ -153,7 +153,7 @@ class DeviceProvider with ChangeNotifier {
       position: LatLng(myPos.latitude, myPos.longitude),
     );
   }
-
+ */
   Future<void> init(BuildContext context) async {
     markerIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(35, 35)),

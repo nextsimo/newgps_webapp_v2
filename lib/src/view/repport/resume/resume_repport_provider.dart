@@ -73,6 +73,8 @@ class ResumeRepportProvider with ChangeNotifier {
   void updateByCurrentDistance(_) {
     resumes.sort((r1, r2) => r1.lastOdometerKm.compareTo(r2.lastOdometerKm));
     if (!odrderByCurrentDistance) resumes = resumes.reversed.toList();
+
+
     odrderByCurrentDistance = !odrderByCurrentDistance;
     selectedIndex = 3;
 
@@ -81,8 +83,16 @@ class ResumeRepportProvider with ChangeNotifier {
 
   bool odrderByCurrentSpeed = true;
   void updateByCurrentSpeed(_) {
-    resumes
-        .sort((r1, r2) => r1.lastValidSpeedKph.compareTo(r2.lastValidSpeedKph));
+    resumes.sort((r1, r2) {
+      if (r1.statut != 'En Route' &&
+          r2.statut != 'En Route' &&
+          r1.lastValidSpeedKph == 0 &&
+          r2.lastValidSpeedKph == 0) {
+        return r1.statut.compareTo(r2.statut);
+      }
+
+      return r1.lastValidSpeedKph.compareTo(r2.lastValidSpeedKph);
+    });
     if (!odrderByCurrentSpeed) resumes = resumes.reversed.toList();
     odrderByCurrentSpeed = !odrderByCurrentSpeed;
     selectedIndex = 4;

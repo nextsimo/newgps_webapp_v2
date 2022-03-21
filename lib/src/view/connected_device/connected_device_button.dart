@@ -30,7 +30,7 @@ class ConnectedDeviceButton extends StatelessWidget {
             style:const TextStyle(
               color: Colors.black,
               fontSize: 10,
-              fontWeight: FontWeight.w700,
+              //fontWeight: FontWeight.w700,
             ),
           ),
         ],
