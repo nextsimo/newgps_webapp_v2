@@ -12,7 +12,6 @@ import 'package:newgps/src/view/last_position/markers_provider.dart';
 
 class LastPositionProvider with ChangeNotifier {
   late Set<Polyline> polylines = {};
-  late bool fetchAll = true;
   late DateTime lastDateFetchDevices = DateTime.now();
   late bool notifyMap = false;
   late bool _menuClicked = false;
@@ -59,7 +58,6 @@ class LastPositionProvider with ChangeNotifier {
 
   Future<void> fetchInfoData() async {
     Account? account = shared.getAccount();
-
     String res = await api.post(
       url: '/info',
       body: {
@@ -67,7 +65,6 @@ class LastPositionProvider with ChangeNotifier {
         'device_id': deviceProvider.selectedDevice.deviceId
       },
     );
-
     if (res.isNotEmpty) {
       deviceProvider.infoModel = infoModelFromJson(res);
     }
@@ -109,7 +106,7 @@ class LastPositionProvider with ChangeNotifier {
   void fresh() {
     deviceProvider.devices = [];
     polylines = {};
-    fetchAll = true;
+    markersProvider.fetchGroupesDevices = true;
     lastDateFetchDevices = DateTime.now();
     notifyMap = false;
     googleMapController = null;
@@ -117,7 +114,6 @@ class LastPositionProvider with ChangeNotifier {
     markersProvider.clusterItemsText = [];
     markersProvider.clusterMarkers = {};
     markersProvider.onMarker = {};
-    markersProvider.fetchGroupesDevices = true;
     markersProvider.showMatricule = false;
     markersProvider.showCluster = false;
     markersProvider.devices = [];
@@ -140,7 +136,7 @@ class LastPositionProvider with ChangeNotifier {
 
   Future<void> fetchInitDevice() async {
     if (_init) {
-      if (fetchAll) {
+      if (markersProvider.fetchGroupesDevices) {
         await fetchDevices();
       } else {
         await fetchDevice(deviceProvider.selectedDevice.deviceId);
@@ -159,7 +155,7 @@ class LastPositionProvider with ChangeNotifier {
     if (notify) {
       enableZoomGesture = true;
     }
-    if (fetchAll) {
+    if (markersProvider.fetchGroupesDevices) {
       autoSearchController.text = 'Touts les véhicules';
     } else {
       autoSearchController.text = deviceProvider.selectedDevice.description;
@@ -258,10 +254,16 @@ class LastPositionProvider with ChangeNotifier {
     return points;
   }
 
+  bool _fetchOneDevice = false;
+
   Future<void> fetchDevice(String deviceId, {bool isSelected = false}) async {
+    if (_fetchOneDevice) {
+      return;
+    }
+    _fetchOneDevice = true;
     Account? account = shared.getAccount();
 
-    fetchAll = false;
+    markersProvider.fetchGroupesDevices = false;
     markersProvider.simpleMarkers = {};
 
     String res = await api.post(
@@ -272,6 +274,10 @@ class LastPositionProvider with ChangeNotifier {
         'is_web': true
       },
     );
+
+    if (markersProvider.fetchGroupesDevices) {
+      return;
+    }
 
     if (res.isNotEmpty) {
       //log(res);
@@ -293,14 +299,34 @@ class LastPositionProvider with ChangeNotifier {
               deviceProvider.selectedDevice.longitude),
           zoom: 14);
     }
+
+    _fetchOneDevice = false;
+  }
+
+  bool _fetchAllDevices = false;
+
+  void _fetchDevicesFromSelect() async {
+    for (Device device in deviceProvider.devices) {
+      Marker marker = markersProvider.getSimpleMarker(device);
+      Marker textmarker = await markersProvider.getTextMarker(device);
+      markersProvider.simpleMarkers.add(marker);
+      markersProvider.textMakers.add(textmarker);
+      notifyListeners();
+    }
   }
 
   Future<void> fetchDevices(
-      {bool fromSearch = false, bool init = false}) async {
-    if (fromSearch) {
-      googleMapController?.animateCamera(CameraUpdate.zoomTo(7));
+      {bool fromSelect = false, bool init = false}) async {
+    if (fromSelect) {
+      googleMapController?.animateCamera(CameraUpdate.zoomTo(6.5));
+      _fetchDevicesFromSelect();
     }
-    fetchAll = true;
+
+    if (_fetchAllDevices) {
+      return;
+    }
+    _fetchAllDevices = true;
+    markersProvider.fetchGroupesDevices = true;
     polylines = {};
 
     deviceProvider.devices = await deviceProvider.fetchDevices(init: init);
@@ -310,6 +336,13 @@ class LastPositionProvider with ChangeNotifier {
     }
     markersProvider.simpleMarkers.clear();
     markersProvider.textMakers.clear();
+
+    if (!markersProvider.fetchGroupesDevices) {
+      markersProvider.fetchGroupesDevices = false;
+      _fetchAllDevices = false;
+      return;
+    }
+
     for (Device device in deviceProvider.devices) {
       Marker marker = markersProvider.getSimpleMarker(device);
       Marker textmarker = await markersProvider.getTextMarker(device);
@@ -317,6 +350,7 @@ class LastPositionProvider with ChangeNotifier {
       markersProvider.textMakers.add(textmarker);
     }
     markersProvider.fetchGroupesDevices = true;
+    _fetchAllDevices = false;
     notifyListeners();
   }
 }

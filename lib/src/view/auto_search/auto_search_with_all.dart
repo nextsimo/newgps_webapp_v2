@@ -194,11 +194,11 @@ class OptionViewBuilderWidget extends StatelessWidget {
     return InkWell(
       onTap: () async {
         lastPositionProvider.enableZoomGesture = true;
-        lastPositionProvider.fetchAll = true;
+        lastPositionProvider.markersProvider.fetchGroupesDevices = true;
         lastPositionProvider.handleSelectDevice();
         deviceProvider.infoModel = null;
         focusNode.unfocus();
-        lastPositionProvider.fetchDevices(fromSearch: true);
+        lastPositionProvider.fetchDevices(fromSelect: true);
       },
       child: Container(
         height: 50,
