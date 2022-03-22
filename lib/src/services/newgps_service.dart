@@ -5,6 +5,7 @@ import 'package:newgps/src/utils/locator.dart';
 
 import '../view/repport/resume/resume_repport_provider.dart';
 import 'api_service.dart';
+import 'firebase_messaging_service.dart';
 import 'location_service.dart';
 
 class NewgpsService {
@@ -16,6 +17,9 @@ class NewgpsService {
   static FlutterTts audioPlayer = locator<FlutterTts>();
   static ResumeRepportProvider resumeRepportProvider =
       locator<ResumeRepportProvider>();
+
+  static FirebaseMessagingService messaging =
+      locator<FirebaseMessagingService>();
 }
 
 LocationService loc = NewgpsService.locationService;

@@ -36,10 +36,11 @@ class _CustomNavigationViewState extends State<CustomNavigationView> {
     DeviceSize.init(context);
     SavedAcountProvider pro =
         Provider.of<SavedAcountProvider>(context, listen: false);
+    NewgpsService.messaging.init();
+
     Account? account = shared.getAccount();
-    return Provider<FirebaseMessagingService>(
-        lazy: false,
-        create: (_) => FirebaseMessagingService(),
+    return Provider.value(
+        value: NewgpsService.messaging,
         builder: (context, snapshot) {
           return Scaffold(
             body: PageView(

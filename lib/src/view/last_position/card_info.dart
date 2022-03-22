@@ -106,7 +106,7 @@ class CardInfoView extends StatelessWidget {
                                 const SizedBox(height: 6),
                                 _buildLabel(
                                   label: 'Niveau carburant',
-                                  content: '${infoModel.carbNiveau}',
+                                  content: '${infoModel.carbNiveau} L',
                                 ),
                               ],
                             ),

@@ -35,7 +35,8 @@ class SavedAcountProvider with ChangeNotifier {
   Future<void> checkNotifcation() async {
     String res = await api.post(
       url: '/notification/historics/count',
-      body: getBody()..addAll({'device_id': await _getDeviceToken()}),
+      body: await getBody()
+        ..addAll({'device_id': await _getDeviceToken()}),
     );
 
     if (res.isNotEmpty) {
