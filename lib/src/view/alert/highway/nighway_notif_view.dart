@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/utils/styles.dart';
-import 'package:newgps/src/view/alert/widgets/build_label.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
-import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:provider/provider.dart';
+
+import '../../login/login_as/save_account_provider.dart';
+import '../../navigation/top_app_bar.dart';
+import '../widgets/build_label.dart';
 
 class HighwayNotifView extends StatefulWidget {
   const HighwayNotifView({Key? key}) : super(key: key);
@@ -39,8 +40,6 @@ class _HighwayNotifViewState extends State<HighwayNotifView> {
                     label: 'Autoroute', icon: Icons.edit_road_rounded),
                 const SizedBox(height: 20),
                 _buildStatusLabel(),
-                const SizedBox(height: 20),
-                _buildHistoric(),
               ],
             ),
           ),
@@ -49,32 +48,7 @@ class _HighwayNotifViewState extends State<HighwayNotifView> {
     );
   }
 
-  Widget _buildHistoric() {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Historiques:'),
-          const SizedBox(height: 20),
-          Expanded(
-            child: GridView.builder(
-              padding: const EdgeInsets.all(AppConsts.outsidePadding),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                childAspectRatio: 2.8,
-                crossAxisSpacing: AppConsts.outsidePadding,
-                maxCrossAxisExtent: 400,
-                mainAxisSpacing: AppConsts.outsidePadding,
-              ),
-              itemCount: 0,
-              itemBuilder: (_, int index) {
-                return const SizedBox();
-              },
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   _buildStatusLabel() {
     Droit droit = Provider.of<SavedAcountProvider>(context, listen: false)

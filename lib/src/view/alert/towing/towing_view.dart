@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:newgps/src/services/firebase_messaging_service.dart';
+import 'package:newgps/src/utils/styles.dart';
 import 'package:provider/provider.dart';
-import '../../../services/firebase_messaging_service.dart';
-import '../../../utils/styles.dart';
-import '../../login/login_as/save_account_provider.dart';
 import '../../navigation/top_app_bar.dart';
 import '../alert_widgets/shwo_all_device_widget.dart';
 import '../widgets/build_label.dart';
-import 'battery_provider.dart';
+import 'towing_provider.dart';
 
-class BatteryAlertView extends StatelessWidget {
-  const BatteryAlertView({Key? key}) : super(key: key);
-
+class TowingView extends StatelessWidget {
+  const TowingView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<FirebaseMessagingService,
-            BatteryProvider>(
-        create: (_) => BatteryProvider(),
+            TowingProvider>(
+        create: (_) => TowingProvider(),
         lazy: false,
         update: (_, messaging, provider) {
-          return BatteryProvider(m: messaging);
+          return TowingProvider(messaging);
         },
         builder: (context, __) {
-          BatteryProvider provider = Provider.of<BatteryProvider>(context);
+          TowingProvider provider = Provider.of<TowingProvider>(context);
           return Scaffold(
             appBar: const CustomAppBar(
               actions: [CloseButton(color: Colors.black)],
@@ -37,18 +35,17 @@ class BatteryAlertView extends StatelessWidget {
                       children: [
                         const SizedBox(height: 10),
                         const BuildLabel(
-                          label: 'batterie',
-                          icon: Icons.battery_charging_full_outlined,
-                        ),
+                            label: 'Dépannage', icon: Icons.car_repair_sharp),
                         const SizedBox(height: 20),
-                        _buildStatusLabel(provider, context),
+                        if (provider.towingAlertSetting != null)
+                          _buildStatusLabel(context, provider),
                         const SizedBox(height: 20),
-                        ShowAllDevicesWidget(
-                          onSaveDevices: provider.onSave,
-                          selectedDevices: provider
-                                  .batteryNotifcationSetting?.selectedDevices ??
-                              [],
-                        ),
+                        if (provider.towingAlertSetting != null)
+                          ShowAllDevicesWidget(
+                            onSaveDevices: provider.onSelectedDevice,
+                            selectedDevices:
+                                provider.towingAlertSetting!.selectedDevices,
+                          ),
                       ],
                     ),
                   ),
@@ -59,17 +56,14 @@ class BatteryAlertView extends StatelessWidget {
         });
   }
 
-  _buildStatusLabel(BatteryProvider provider, BuildContext context) {
-    var droit = Provider.of<SavedAcountProvider>(context, listen: false)
-        .userDroits
-        .droits[4];
+  _buildStatusLabel(BuildContext context, TowingProvider provider) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text('Notification statut:'),
         Switch(
-            value: provider.active,
-            onChanged: droit.write ? provider.onSwitchTaped : null),
+            value: provider.towingAlertSetting!.isActive,
+            onChanged: provider.updateState),
       ],
     );
   }

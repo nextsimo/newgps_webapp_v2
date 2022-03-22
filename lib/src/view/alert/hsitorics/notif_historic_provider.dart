@@ -1,17 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/device.dart';
-import 'package:newgps/src/models/notif_historic_model.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/utils/locator.dart';
-import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/notif_historic_model.dart';
+import '../../driver_phone/driver_phone_provider.dart';
+import '../../login/login_as/save_account_provider.dart';
 import 'map_view/map_view_alert.dart';
 import 'notif_historic_details.dart';
 
@@ -26,6 +28,26 @@ class NotifHistoricPorvider with ChangeNotifier {
 
   late Device selectedDevice;
 
+  final ScrollController scrollController = ScrollController();
+
+  void _init() {
+    scrollController.addListener(_scrollListner);
+  }
+
+  void _scrollListner() {
+    if (scrollController.position.pixels >=
+        scrollController.position.maxScrollExtent) {
+      if (!_stopPagination) _fetchDetailsHisto(deviceId: deviceID, type: _type);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    scrollController.removeListener(_scrollListner);
+    scrollController.dispose();
+  }
+
   set histos(List<NotifHistoric> histos) {
     _histos = histos;
     notifyListeners();
@@ -38,7 +60,8 @@ class NotifHistoricPorvider with ChangeNotifier {
     if (type.isEmpty) {
       fetchHisto();
     } else {
-      _fetchDetailsRepport(type: type);
+      _fetchDetailsHisto(type: type);
+      _init();
     }
   }
 
@@ -74,7 +97,7 @@ class NotifHistoricPorvider with ChangeNotifier {
       'account_id': account?.account.accountId,
       'device_id': deviceId,
       'timestamp': timestamp,
-      'is_web' : true,
+      'is_web': true,
     });
 
     if (res.isNotEmpty) {
@@ -95,10 +118,14 @@ class NotifHistoricPorvider with ChangeNotifier {
   }
 
   void fetchDeviceFromSearchWidget() {
+    _page = 1;
+    _loadingDeatailsHisto = false;
+    _stopPagination = false;
+    histos = [];
     if (deviceID == 'all') {
-      _fetchDetailsRepport(type: _type);
+      _fetchDetailsHisto(type: _type);
     } else {
-      _fetchDetailsRepport(type: _type, deviceId: deviceID);
+      _fetchDetailsHisto(type: _type, deviceId: deviceID);
     }
   }
 
@@ -112,6 +139,31 @@ class NotifHistoricPorvider with ChangeNotifier {
     notifyListeners();
   }
 
+  IconData getIcon(String type) {
+    switch (type) {
+      case 'fuel':
+        return Icons.ev_station_rounded;
+      case 'battery':
+        return Icons.battery_charging_full;
+      case 'geozone':
+        return const IconData(0xe802, fontFamily: 'geozone');
+      case 'speed':
+        return Icons.speed;
+      case 'startup':
+        return Icons.dangerous;
+      case 'imobility':
+        return Icons.verified_user_rounded;
+      case 'hood':
+        return Icons.radar;
+      case 'oil_change':
+        return Icons.ev_station_rounded;
+      case 'towing':
+        return Icons.stacked_line_chart_sharp;
+      default:
+        return Icons.car_repair_sharp;
+    }
+  }
+
   String getLabel(String type) {
     switch (type) {
       case 'fuel':
@@ -122,14 +174,23 @@ class NotifHistoricPorvider with ChangeNotifier {
         return 'vitesse';
       case 'geozone':
         return 'geozone';
+      case 'startup':
+        return 'demarage';
+      case 'imobility':
+        return 'Imobilisation';
+      case 'hood':
+        return 'Capot';
+      case 'oil_change':
+        return 'Vidange';
+      case 'towing':
+        return 'Dépannage';
       default:
         return '';
     }
   }
 
   void navigateToDetaisl(BuildContext context, {required NotifHistoric model}) {
-    _saveLastReadToLocal(
-        model.type, DateTime.now().toString());
+    _saveLastReadToLocal(model.type);
     SavedAcountProvider acountProvider =
         Provider.of<SavedAcountProvider>(context, listen: false);
 
@@ -139,48 +200,71 @@ class NotifHistoricPorvider with ChangeNotifier {
         builder: (_) => NotifHistorisDetails(type: model.type)));
   }
 
-  Future<void> _fetchDetailsRepport({
+  bool _loadingDeatailsHisto = false;
+  int _page = 1;
+  bool _stopPagination = false;
+  Future<void> _fetchDetailsHisto({
     String type = '',
     String deviceId = 'all',
   }) async {
+    if (_loadingDeatailsHisto) return;
+    _loadingDeatailsHisto = true;
     Account? account = shared.getAccount();
     String res = await api.post(
-      url: '/notification/historics/details',
+      url: '/notification/historics/details2',
       body: {
         'type': type,
         'device_id': deviceId,
         'account_id': account?.account.accountId,
+        'page': _page,
+        'notification_id': NewgpsService.messaging.notificationID,
       },
     );
+    _page++;
     if (res.isNotEmpty) {
-      histos = notifHistoricFromJson(res);
+      List<NotifHistoric> newHisto = notifHistoricFromJson(res);
+      if (newHisto.isEmpty) {
+        _stopPagination = true;
+      }
+      histos.addAll(newHisto);
+      notifyListeners();
     }
+    _loadingDeatailsHisto = false;
   }
 
-  void _saveLastReadToLocal(String type, String date) {
-    switch (type) {
-      case 'fuel':
-        shared.sharedPreferences.setString(fuelLocalDataKey, date);
-        break;
-      case 'battery':
-        shared.sharedPreferences.setString(batteryLocalDataKey, date);
-        break;
-      case 'speed':
-        shared.sharedPreferences.setString(speedLocalDataKey, date);
-        break;
-      case 'geozone':
-        shared.sharedPreferences.setString(geozoneLocalDataKey, date);
-        break;
-    }
+  Future<void> _saveLastReadToLocal(String type) async {
+    Account? account = shared.getAccount();
+    await api.post(
+      url: '/alert/historic/read/save',
+      body: {
+        'type': type,
+        'device_token': await _getDeviceToken(),
+        'account_id': account?.account.accountId,
+      },
+    );
   }
+
+  final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
+  Future<String?> _getDeviceToken() async {
+    WebBrowserInfo webBrowserInfo = await _deviceInfo.webBrowserInfo;
+    return "${webBrowserInfo.appName}-${webBrowserInfo.platform}-${webBrowserInfo.productSub}";
+  }
+
+  bool loading = false;
 
   Future<void> fetchHisto() async {
+    loading = true;
     String res = await api.post(
-      url: '/notification/historics',
-      body: getBody(),
+      url: '/notification/historics2',
+      body: await getBody()
+        ..addAll({
+          'notification_id': NewgpsService.messaging.notificationID,
+        }),
     );
     if (res.isNotEmpty) {
       histos = notifHistoricFromJson(res);
     }
+    loading = false;
+    notifyListeners();
   }
 }

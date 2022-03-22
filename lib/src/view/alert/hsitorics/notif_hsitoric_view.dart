@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:newgps/src/models/notif_historic_model.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/utils/styles.dart';
-import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/notif_historic_model.dart';
+import '../../navigation/top_app_bar.dart';
 import 'notif_historic_provider.dart';
 
 class NotifHistoricView extends StatelessWidget {
@@ -35,6 +35,20 @@ class NotifHistoricView extends StatelessWidget {
                     child: Selector<NotifHistoricPorvider, List<NotifHistoric>>(
                         selector: (_, __) => __.histos,
                         builder: (_, histos, __) {
+                          if (porvider.loading) {
+                            return const Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                AppConsts.mainColor))),
+                              ),
+                            );
+                          }
+
                           if (histos.isEmpty) {
                             return Center(
                               child: Column(
@@ -91,6 +105,7 @@ class NotifHistoricView extends StatelessWidget {
             SizedBox(height: 10),
             Text(
               'Historiques',
+              style: TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
             ),
           ],
         ),
@@ -126,13 +141,12 @@ class _HistoricCard extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                      IconData(notifHistoric.hexIcon,
-                          fontFamily: notifHistoric.type),
-                      color: AppConsts.mainColor,
-                      size: 19),
+                  Icon(provider.getIcon(notifHistoric.type),
+                      color: AppConsts.mainColor, size: 19),
                   const SizedBox(height: 6),
-                  Text(provider.getLabel(notifHistoric.type)),
+                  Text(provider.getLabel(notifHistoric.type),
+                      style: const TextStyle(
+                          fontSize: 11, fontWeight: FontWeight.w500)),
                 ],
               ),
             ),
@@ -143,10 +157,18 @@ class _HistoricCard extends StatelessWidget {
                 children: [
                   Text(
                     notifHistoric.device,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
                   ),
                   const SizedBox(height: 4),
                   Text(
                     notifHistoric.message,
+                    style: const TextStyle(
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13),
                   ),
                 ],
               ),
@@ -166,7 +188,24 @@ class _HistoricCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 5),
                   if (notifHistoric.countNotRead > 0)
-                    Container(
+                    CircleAvatar(
+                      radius: 12,
+                      backgroundColor: Colors.blue,
+                      child: Padding(
+                        padding: const EdgeInsets.all(1),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            '${notifHistoric.countNotRead}',
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400),
+                          ),
+                        ),
+                      ),
+                    ),
+/*                     Container(
                       padding: const EdgeInsets.all(5),
                       decoration: const BoxDecoration(
                         shape: BoxShape.circle,
@@ -176,9 +215,11 @@ class _HistoricCard extends StatelessWidget {
                         '${notifHistoric.countNotRead}',
                         style: const TextStyle(
                           color: Colors.white,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
-                    ),
+                    ), */
                 ],
               ),
             ),

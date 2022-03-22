@@ -14,15 +14,32 @@ class FirebaseMessagingService {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
+  void init() {
+    saveUserMessagingToken();
+    SavedAcountProvider acountProvider =
+        Provider.of<SavedAcountProvider>(DeviceSize.c, listen: false);
+    _initmessage();
+    FirebaseMessaging.onMessage.listen((message) {
+      //debugPrint('onMessage');
+      acountProvider.checkNotifcation();
+    });
 
-
-
-
-
-  FirebaseMessagingService() {
-    _init();
+    FirebaseMessaging.onMessageOpenedApp.listen((message) {
+      //debugPrint('onMessageOpenedApp');
+      acountProvider.checkNotifcation();
+    });
   }
 
+  Future<void> _initmessage() async {
+    RemoteMessage? remoteMessage = await messaging.getInitialMessage();
+    if (remoteMessage != null) {
+      SavedAcountProvider acountProvider =
+          Provider.of<SavedAcountProvider>(DeviceSize.c, listen: false);
+      acountProvider.checkNotifcation();
+    }
+  }
+
+/* 
   Future<void> _init() async {
     SavedAcountProvider acountProvider =
         Provider.of<SavedAcountProvider>(DeviceSize.c, listen: false);
@@ -46,10 +63,9 @@ class FirebaseMessagingService {
     FirebaseMessaging.onMessageOpenedApp.listen((message) {
       //debugPrint('onMessageOpenedApp');
       acountProvider.checkNotifcation();
-      
     });
   }
-
+ */
   Future<void> saveUserMessagingToken() async {
     String? token = await messaging.getToken();
 

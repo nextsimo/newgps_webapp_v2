@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/user_droits.dart';
+import 'package:newgps/src/services/firebase_messaging_service.dart';
 import 'package:newgps/src/utils/styles.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
-import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
+import '../../login/login_as/save_account_provider.dart';
+import '../../navigation/top_app_bar.dart';
 import 'speed_provider.dart';
 import '../widgets/build_label.dart';
 
@@ -13,8 +14,12 @@ class SpeedAlertView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<SpeedAlertProvider>(
-        create: (_) => SpeedAlertProvider(),
+    return ChangeNotifierProxyProvider<FirebaseMessagingService,
+            SpeedAlertProvider>(
+        create: (_) => SpeedAlertProvider(null),
+        update: (_, messaging, provider) {
+          return SpeedAlertProvider(messaging);
+        },
         builder: (context, _) {
           final SpeedAlertProvider provider =
               Provider.of<SpeedAlertProvider>(context);

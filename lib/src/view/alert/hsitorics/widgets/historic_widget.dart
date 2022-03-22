@@ -209,6 +209,9 @@ class OptionViewBuilderWidget extends StatelessWidget {
           child: Align(
             alignment: Alignment.topLeft,
             child: Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height*0.8
+              ),
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(

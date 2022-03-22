@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
-import 'package:newgps/src/models/notif_historic_model.dart';
 import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/navigation/top_app_bar.dart';
+
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/notif_historic_model.dart';
+import '../../navigation/top_app_bar.dart';
 import 'notif_historic_provider.dart';
 import 'notif_hsitoric_view.dart';
 import 'widgets/historic_widget.dart';
@@ -23,10 +24,6 @@ class NotifHistorisDetails extends StatelessWidget {
           porvider.initDevices(context);
           return Scaffold(
             appBar: CustomAppBar(
-              onTap: () {
-                porvider.handleSelectDevice();
-                FocusScope.of(context).unfocus();
-              },
               actions: [
                 CloseButton(
                   color: Colors.black,
@@ -36,26 +33,25 @@ class NotifHistorisDetails extends StatelessWidget {
                 )
               ],
             ),
-            body: InkWell(
-              hoverColor: Colors.transparent,
-              onTap: (){
-                                porvider.handleSelectDevice();
-                FocusScope.of(context).unfocus();
-              },
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildHead(context, type),
-                  Selector<NotifHistoricPorvider, List<NotifHistoric>>(
-                    builder: (_, histos, __) {
-                      if (histos.isEmpty) return const SizedBox();
-                      return Expanded(
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildHead(context, type),
+                Consumer<NotifHistoricPorvider>(
+                  builder: (_, pro, __) {
+                    if (pro.histos.isEmpty) return const SizedBox();
+                    return Expanded(
+                      child: SafeArea(
+                        bottom: false,
+                        right: false,
+                        top: false,
                         child: GroupedListView<NotifHistoric, DateTime>(
+                          controller: pro.scrollController,
                           useStickyGroupSeparators:
-                              histos.length > 9 ? true : false,
+                              pro.histos.length > 9 ? true : false,
                           order: GroupedListOrder.DESC,
                           elements: porvider.histos,
-                          padding: const EdgeInsets.fromLTRB(10, 8, 10, 20),
+                          padding: const EdgeInsets.fromLTRB(10, 8, 10, 150),
                           groupBy: (_) => DateTime(_.createdAt.year,
                               _.createdAt.month, _.createdAt.day),
                           itemComparator: (notif1, notif2) => DateTime(
@@ -79,12 +75,11 @@ class NotifHistorisDetails extends StatelessWidget {
                             groupByValue: groupByValue,
                           ),
                         ),
-                      );
-                    },
-                    selector: (_, __) => __.histos,
-                  ),
-                ],
-              ),
+                      ),
+                    );
+                  },
+                ),
+              ],
             ),
           );
         });
@@ -122,6 +117,7 @@ class NotifHistorisDetails extends StatelessWidget {
             const SizedBox(height: 13),
             Text(
               'Historiques ${porvider.getLabel(type)}',
+              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
             ),
           ],
         ),
@@ -156,14 +152,16 @@ class GroupSeparatorBuilderWidget extends StatelessWidget {
           child: Text(
             whatsapFormat(groupByValue),
             textAlign: TextAlign.center,
-            style: TextStyle(color: Colors.grey[800]),
+            style: TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w500,
+                color: Colors.grey[800]),
           ),
         ),
       ],
     );
   }
 }
-
 class _HistoricCard extends StatelessWidget {
   final NotifHistoric notifHistoric;
   const _HistoricCard({Key? key, required this.notifHistoric})
@@ -171,8 +169,7 @@ class _HistoricCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final NotifHistoricPorvider porvider =
-        Provider.of<NotifHistoricPorvider>(context, listen: false);
+    final NotifHistoricPorvider porvider = Provider.of<NotifHistoricPorvider>(context, listen: false);
     Size size = MediaQuery.of(context).size;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -188,29 +185,27 @@ class _HistoricCard extends StatelessWidget {
                   children: [
                     Text(
                       notifHistoric.device,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 11,
+                      ),
                     ),
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         MainButton(
-                          onPressed: () =>
-                              porvider.call(context, notifHistoric.deviceId),
+                          onPressed: () => porvider.call(context, notifHistoric.deviceId),
                           label: 'Conducteur',
-                          width: 140,
+                          width: 150,
                           height: 30,
-                          //fontSize: 10,
                           icon: Icons.call,
                         ),
                         const SizedBox(width: 3),
                         MainButton(
-                          onPressed: () => porvider.findAlertPosition(
-                              context: context,
-                              deviceId: notifHistoric.deviceId,
-                              timestamp: notifHistoric.timestamp),
+                          onPressed: () => porvider.findAlertPosition(context: context, deviceId: notifHistoric.deviceId, timestamp: notifHistoric.timestamp),
                           label: 'Localiser',
-                          width: 140,
+                          width: 150,
                           height: 30,
-                          //fontSize: 10,
                           icon: Icons.location_on,
                         ),
                       ],
@@ -238,13 +233,16 @@ class _HistoricCard extends StatelessWidget {
                 children: [
                   Text(
                     notifHistoric.message,
-                    style: const TextStyle(color: Colors.white),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 13),
                   ),
                 ],
               ),
             ),
-            if (notifHistoric.address.isEmpty)
-              Align(
+            if( notifHistoric.address.isEmpty )
+            Align(
                 alignment: Alignment.centerRight,
                 child: Text(
                   whatsapFormatOnlyTime(
@@ -269,10 +267,12 @@ class _HistoricCard extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4),
                     child: Text(
                       notifHistoric.address,
-                      maxLines: 2,
                       style: const TextStyle(
-                        color: Colors.grey
+                        fontSize: 10,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.grey,
                       ),
+                      maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),

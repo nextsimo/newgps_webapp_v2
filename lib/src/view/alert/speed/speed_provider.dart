@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
-import 'package:newgps/src/models/speed_alert_model.dart';
+import 'package:newgps/src/view/alert/speed/speed_alert_model.dart';
+import 'package:newgps/src/services/firebase_messaging_service.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 
-class SpeedAlertProvider with ChangeNotifier {
-  SpeedAlertModel? model;
+class SpeedAlertProvider with ChangeNotifier {    
+  SpeedAlertSettings? model;
   bool _loading = false;
   bool _active = false;
 
@@ -22,10 +23,13 @@ class SpeedAlertProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  FirebaseMessagingService? messagingService;
+
   final TextEditingController controller = TextEditingController();
 
-  SpeedAlertProvider() {
-    fetchSpeedParam();
+  SpeedAlertProvider(FirebaseMessagingService? firebaseMessagingService) {
+    messagingService = firebaseMessagingService;
+    if (firebaseMessagingService != null) fetchSpeedParam();
   }
 
   @override
@@ -39,28 +43,27 @@ class SpeedAlertProvider with ChangeNotifier {
   }
 
   Future<void> onTapSwitch(bool val) async {
-    Account? account = shared.getAccount();
     await api.post(
-      url: '/notification/updatestate',
-      body: {'account_id': account!.account.accountId, 'is_active': val},
+      url: '/speednotif/update/status',
+      body: {
+        'notification_id': messagingService?.notificationID,
+        'is_active': val,
+      },
     );
     active = val;
   }
 
   Future<void> onTapSaved() async {
     _setTextController(controller.text);
-
     await _updateMaxSpeed(double.parse(controller.text.split(' ').first));
   }
 
   Future<void> _updateMaxSpeed(double speedLimit) async {
-    Account? account = shared.getAccount();
-
     await api.post(
-      url: '/notification/updatespeedlimit',
+      url: '/speednotif/update/maxspeed',
       body: {
-        'account_id': account?.account.accountId,
-        'speed_limit': speedLimit,
+        'notification_id': messagingService?.notificationID,
+        'max_speed': speedLimit,
       },
     );
   }
@@ -80,14 +83,13 @@ class SpeedAlertProvider with ChangeNotifier {
     _loading = false;
     Account? account = shared.getAccount();
 
-    String res = await api.post(url: '/notification/settings', body: {
+    String res = await api.post(url: '/speednotif/settings', body: {
       'account_id': account?.account.accountId,
+      'notification_id': messagingService?.notificationID,
     });
-    model = notificationSettingFromJson(res).first;
-    _setTextController(model!.speedLimit.toString());
+    model = speedAlertSettingsFromJson(res);
+    _setTextController(model!.maxSpeed.toString());
     active = model!.isActive;
     loading = true;
   }
-
-
 }

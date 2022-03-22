@@ -1,8 +1,10 @@
+import 'dart:convert';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
@@ -10,10 +12,15 @@ import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-const String fuelLocalDataKey = 'last_fuel_histo_read_date';
-const String batteryLocalDataKey = 'last_battery_histo_read_date';
-const String speedLocalDataKey = 'last_speed_histo_read_date';
-const String geozoneLocalDataKey = 'last_geozone_histo_read_date';
+const String fuelLocalDataKey = 'fuel';
+const String batteryLocalDataKey = 'battery';
+const String speedLocalDataKey = 'speed';
+const String geozoneLocalDataKey = 'geozone';
+const String startUpLocalDataKey = 'startup';
+const String imobilityLocalDataKey = 'imobility';
+const String hoodLocalDataKey = 'hood';
+const String oilChangelocalDataKey = 'oil_change';
+const String towingLocalDataKey = 'towing';
 
 String formatDeviceDate(DateTime dateTime, [bool time = true]) {
   late DateFormat validFormatter;
@@ -146,24 +153,55 @@ Future<void> playAudio(String audio) async {
   }
 }
 
-Map<String, String?> getBody() {
-  String lastFuelReadDate =
-      shared.sharedPreferences.getString(fuelLocalDataKey) ?? '2001-12-23';
-  String lastBatteryReadDate =
-      shared.sharedPreferences.getString(batteryLocalDataKey) ?? '2001-12-23';
-  String lastSpeedReadDate =
-      shared.sharedPreferences.getString(speedLocalDataKey) ?? '2001-12-23';
+Future<String> _getLastReadDate(String type) async {
+  Account? account = shared.getAccount();
+  String res = await api.post(
+    url: '/alert/historic/read',
+    body: {
+      'type': type,
+      'device_token': await _getDeviceToken(),
+      'account_id': account?.account.accountId,
+    },
+  );
 
-  String lastgeozoneReadDate =
-      shared.sharedPreferences.getString(geozoneLocalDataKey) ?? '2001-12-23';
+  return json.decode(res)['last_read_date'];
+}
+
+final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
+
+
+  Future<String?> _getDeviceToken() async {
+    WebBrowserInfo webBrowserInfo = await _deviceInfo.webBrowserInfo;
+    return "${webBrowserInfo.appName}-${webBrowserInfo.platform}-${webBrowserInfo.productSub}";
+  }
+
+Future<Map<String, dynamic>> getBody() async {
+  String lastFuelReadDate = await _getLastReadDate(fuelLocalDataKey);
+  //shared.sharedPreferences.getString(fuelLocalDataKey) ?? '2001-12-23';
+  String lastBatteryReadDate = await _getLastReadDate(batteryLocalDataKey);
+  //shared.sharedPreferences.getString(batteryLocalDataKey) ?? '2001-12-23';
+  String lastSpeedReadDate = await _getLastReadDate(speedLocalDataKey);
+  // shared.sharedPreferences.getString(speedLocalDataKey) ?? '2001-12-23';
+  String lastgeozoneReadDate = await _getLastReadDate(geozoneLocalDataKey);
+  String laststartUpReadDate = await _getLastReadDate(startUpLocalDataKey);
+  String lastImobilityReadDate = await _getLastReadDate(imobilityLocalDataKey);
+  String lastHoodReadDate = await _getLastReadDate(hoodLocalDataKey);
+  String lastOilChangeReadDate = await _getLastReadDate(oilChangelocalDataKey);
+  String lastTowingReadDate = await _getLastReadDate(towingLocalDataKey);
+  // shared.sharedPreferences.getString(geozoneLocalDataKey) ?? '2001-12-23';
 
   Account? account = shared.getAccount();
   return {
-    fuelLocalDataKey: lastFuelReadDate,
-    batteryLocalDataKey: lastBatteryReadDate,
-    speedLocalDataKey: lastSpeedReadDate,
-    geozoneLocalDataKey: lastgeozoneReadDate,
-    'account_id': account?.account.accountId,
+    'last_fuel_histo_read_date': lastFuelReadDate,
+    'last_battery_histo_read_date': lastBatteryReadDate,
+    'last_speed_histo_read_date': lastSpeedReadDate,
+    'last_geozone_histo_read_date': lastgeozoneReadDate,
+    'last_startup_histo_read_date': laststartUpReadDate,
+    'last_imobility_histo_read_date': lastImobilityReadDate,
+    'last_hood_histo_read_date': lastHoodReadDate,
+    'last_oil_change_histo_read_date': lastOilChangeReadDate,
+    'last_towing_histo_read_date': lastTowingReadDate,
+    'account_id': account?.account.accountId
   };
 }
 

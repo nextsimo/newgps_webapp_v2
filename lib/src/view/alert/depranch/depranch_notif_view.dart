@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/utils/styles.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
-import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:provider/provider.dart';
+import '../../login/login_as/save_account_provider.dart';
+import '../../navigation/top_app_bar.dart';
 import '../widgets/build_label.dart';
 
 class DepranchNotifView extends StatefulWidget {
@@ -56,8 +56,6 @@ class _DepranchNotifViewState extends State<DepranchNotifView> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Historiques:'),
-          const SizedBox(height: 20),
           Expanded(
             child: GridView.builder(
               padding: const EdgeInsets.all(AppConsts.outsidePadding),

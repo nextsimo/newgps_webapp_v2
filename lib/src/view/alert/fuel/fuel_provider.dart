@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/fuel_notif_historic.dart';
-import 'package:newgps/src/models/fuel_settings_model.dart';
+import 'package:newgps/src/view/alert/fuel/fuel_settings_model.dart';
 import 'package:newgps/src/services/firebase_messaging_service.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 
@@ -33,13 +33,29 @@ class FuelProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchAlert() async {
+  Future<void> onSave(List<String> newSelectedDevices) async {
+    newSelectedDevices.remove('all');
+    await api.post(
+      url: '/alert/fuel/update/devices',
+      body: {
+        'id': fuelNotifSetting?.id,
+        'devices': newSelectedDevices.join(','),
+      },
+    );
+    await fetchAlert();
+  }
+
+  Future<void> fetchAlert() async {
     Account? account = shared.getAccount();
+    String devices = List<String>.from(
+            deviceProvider.devices.map((e) => e.deviceId).toList())
+        .join(',');
     String res = await api.post(
       url: '/fuelnotif/settings',
       body: {
         'account_id': account?.account.accountId,
         'notification_id': messagingService!.notificationID,
+        'devices': devices,
       },
     );
 
