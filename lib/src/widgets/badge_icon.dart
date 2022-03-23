@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -19,8 +20,7 @@ class BadgeIcon extends StatelessWidget {
             child: Center(
               child: Text(
                 '$count+',
-                style: const TextStyle(
-                    color: Colors.white, fontSize: 12),
+                style: GoogleFonts.amiri(color: Colors.white, fontSize: 12),
               ),
             ),
           );
@@ -31,8 +31,7 @@ class BadgeIcon extends StatelessWidget {
           child: Center(
             child: Text(
               '$count',
-              style: const TextStyle(
-                  color: Colors.white, fontSize: 12),
+              style: GoogleFonts.amiri(color: Colors.white, fontSize: 12),
             ),
           ),
         );

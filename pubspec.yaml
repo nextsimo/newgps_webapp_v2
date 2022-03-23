@@ -1,6 +1,6 @@
 name: newgps
 description: NEW GPS vous permet de tracker vos véhicules en temps réel.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+##publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
@@ -22,6 +22,7 @@ dependencies:
   flutter_tts: ^3.2.2
   geolocator: ^7.6.2
   get_it: ^7.2.0
+  google_fonts: ^2.3.1
   google_maps_cluster_manager: ^3.0.0+1
   google_maps_flutter: ^2.1.2
   google_maps_flutter_web: ^0.3.2+1

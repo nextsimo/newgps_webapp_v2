@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
@@ -79,7 +80,7 @@ class LoginView extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         error,
-                        style: const TextStyle(
+                        style:  GoogleFonts.amiri(
                           color: Colors.red,
                         ),
                       ),

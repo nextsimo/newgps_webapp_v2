@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/models/user_model.dart';
 import 'package:newgps/src/services/device_provider.dart';
@@ -103,7 +104,7 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
                     const SizedBox(width: 8),
                     Text(
                       'Ajouter vehicule',
-                      style: TextStyle(
+                      style: GoogleFonts.amiri(
                         fontSize: 10,
                         color: Colors.grey[400],
                       ),
@@ -307,7 +308,7 @@ class CheckedMatricule extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           device,
-          style: TextStyle(
+          style: GoogleFonts.amiri(
             color: deviceID.isEmpty ? Colors.red : Colors.grey,
           ),
         ),

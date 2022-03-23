@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
@@ -71,7 +72,7 @@ class LoginPortrait extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         error,
-                        style: const TextStyle(
+                        style:  GoogleFonts.amiri(
                           color: Colors.red,
                         ),
                       ),

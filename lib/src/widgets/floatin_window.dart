@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/newgps_service.dart';
@@ -86,7 +87,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                           if (widget.device.description.isNotEmpty)
                             Text(
                               widget.device.description,
-                              style: const TextStyle(
+                              style:  GoogleFonts.amiri(
                                   color: AppConsts.blue,
                                   fontWeight: FontWeight.bold),
                             ),
@@ -98,13 +99,13 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               RichText(
                                   text: TextSpan(
                                       text: "État: ",
-                                      style: TextStyle(
+                                      style: GoogleFonts.amiri(
                                         color: Colors.black.withOpacity(0.7),
                                       ),
                                       children: [
                                     TextSpan(
                                         text: widget.device.statut,
-                                        style: const TextStyle(
+                                        style:  GoogleFonts.amiri(
                                             color: Colors.black54))
                                   ])),
                             ],
@@ -120,14 +121,14 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                                 child: RichText(
                                     text: TextSpan(
                                         text: "Date: ",
-                                        style: TextStyle(
+                                        style: GoogleFonts.amiri(
                                           color: Colors.black.withOpacity(0.7),
                                         ),
                                         children: [
                                       TextSpan(
                                           text: formatDeviceDate(
                                               widget.device.dateTime),
-                                          style: const TextStyle(
+                                          style:  GoogleFonts.amiri(
                                             color: Colors.black54,
                                           ))
                                     ])),
@@ -144,7 +145,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               RichText(
                                   text: TextSpan(
                                 text: "Vitesse: ",
-                                style: TextStyle(
+                                style: GoogleFonts.amiri(
                                     color: Colors.black.withOpacity(0.7)),
                                 children: [
                                   TextSpan(
@@ -164,13 +165,13 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                                 child: RichText(
                                     text: TextSpan(
                                         text: "Adresse: ",
-                                        style: TextStyle(
+                                        style: GoogleFonts.amiri(
                                             color:
                                                 Colors.black.withOpacity(0.7)),
                                         children: [
                                       TextSpan(
                                           text: widget.device.address,
-                                          style: const TextStyle(
+                                          style:  GoogleFonts.amiri(
                                               color: Colors.black54))
                                     ])),
                               ),
@@ -186,12 +187,12 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               RichText(
                                   text: TextSpan(
                                       text: "Kilométrage: ",
-                                      style: TextStyle(
+                                      style: GoogleFonts.amiri(
                                           color: Colors.black.withOpacity(0.7)),
                                       children: [
                                     TextSpan(
                                         text: "${widget.device.odometerKm.toInt()} Km",
-                                        style: const TextStyle(
+                                        style:  GoogleFonts.amiri(
                                             color: Colors.black54))
                                   ])),
                             ],

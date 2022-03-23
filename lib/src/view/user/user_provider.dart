@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/user_droits.dart';

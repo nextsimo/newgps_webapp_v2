@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
@@ -155,7 +156,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
           suffixText: widget.focusNode.hasFocus
               ? ''
               : '${deviceProvider.devices.length}',
-          suffixStyle: const TextStyle(color: Colors.grey),
+          suffixStyle: GoogleFonts.amiri(color: Colors.grey),
           border: widget.outlineInputBorder,
           focusedBorder: widget.outlineInputBorder,
           enabledBorder: widget.outlineInputBorder,
@@ -317,7 +318,7 @@ class _BuildStatuWidget extends StatelessWidget {
       ),
       child: Text(
         device.statut,
-        style: const TextStyle(color: Colors.white),
+        style: GoogleFonts.amiri(color: Colors.white),
       ),
     );
   }

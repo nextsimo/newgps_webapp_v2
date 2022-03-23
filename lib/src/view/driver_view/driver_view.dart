@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:newgps/src/widgets/buttons/log_out_button.dart';
@@ -115,16 +116,16 @@ class _BuildDriverCard extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: '$note',
-          style: const TextStyle(
+          style:  GoogleFonts.amiri(
             fontSize: 55,
             color: AppConsts.mainColor,
             fontWeight: FontWeight.w500,
 
           ),
-          children: const [
+          children:  [
             TextSpan(
               text: '/20',
-              style: TextStyle(
+              style: GoogleFonts.amiri(
                 fontSize: 14,
                 color: Colors.grey,
                 fontWeight: FontWeight.w500,

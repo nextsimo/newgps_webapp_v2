@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/utils/styles.dart';
 
@@ -92,7 +93,7 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
                     const SizedBox(width: 4),
                     Text(
                       'Modifier les droits',
-                      style: TextStyle(
+                      style: GoogleFonts.amiri(
                         fontSize: 10,
                         color: Colors.grey[400],
                       ),
@@ -292,7 +293,7 @@ class _CheckedDroitsState extends State<CheckedDroits> {
             const SizedBox(width: 10),
             Text(
               '${widget.element}:',
-              style: TextStyle(color: widget.color),
+              style: GoogleFonts.amiri(color: widget.color),
             ),
             const SizedBox(width: 10),
           ],
@@ -302,9 +303,9 @@ class _CheckedDroitsState extends State<CheckedDroits> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text(
+                 Text(
                   'Lire',
-                  style: TextStyle(color: Colors.grey),
+                  style: GoogleFonts.amiri(color: Colors.grey),
                 ),
                 Checkbox(
                   value: widget.droit.read,
@@ -320,9 +321,9 @@ class _CheckedDroitsState extends State<CheckedDroits> {
                     } */
                   },
                 ),
-                const Text(
+                 Text(
                   'Modifier',
-                  style: TextStyle(color: Colors.grey),
+                  style: GoogleFonts.amiri(color: Colors.grey),
                 ),
                 Checkbox(
                   value: widget.droit.write,

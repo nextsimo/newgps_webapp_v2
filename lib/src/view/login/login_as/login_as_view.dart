@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
@@ -94,8 +93,6 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
             );
           }
           if (account != null) {
-            final HistoricProvider historicProvider =
-                Provider.of<HistoricProvider>(context, listen: false);
             final LastPositionProvider lastPositionProvider =
                 Provider.of<LastPositionProvider>(context, listen: false);
             lastPositionProvider.fresh();

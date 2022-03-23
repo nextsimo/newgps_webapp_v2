@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
@@ -22,7 +23,7 @@ class DateWidget extends StatelessWidget {
           ),
           child: Text(
             formatDeviceDate(provider.lastDateFetchDevices),
-            style: const TextStyle(color: Colors.white),
+            style:  GoogleFonts.amiri(color: Colors.white),
           ),
         ),
       );

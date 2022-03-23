@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:grouped_list/grouped_list.dart';
 import 'package:newgps/src/utils/functions.dart';
 
@@ -117,7 +118,7 @@ class NotifHistorisDetails extends StatelessWidget {
             const SizedBox(height: 13),
             Text(
               'Historiques ${porvider.getLabel(type)}',
-              style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 20),
+              style:  GoogleFonts.amiri(fontWeight: FontWeight.w700, fontSize: 20),
             ),
           ],
         ),
@@ -152,7 +153,7 @@ class GroupSeparatorBuilderWidget extends StatelessWidget {
           child: Text(
             whatsapFormat(groupByValue),
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: GoogleFonts.amiri(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[800]),
@@ -185,7 +186,7 @@ class _HistoricCard extends StatelessWidget {
                   children: [
                     Text(
                       notifHistoric.device,
-                      style: const TextStyle(
+                      style:  GoogleFonts.amiri(
                         fontWeight: FontWeight.bold,
                         fontSize: 11,
                       ),
@@ -233,7 +234,7 @@ class _HistoricCard extends StatelessWidget {
                 children: [
                   Text(
                     notifHistoric.message,
-                    style: const TextStyle(
+                    style:  GoogleFonts.amiri(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                         fontSize: 13),
@@ -247,7 +248,7 @@ class _HistoricCard extends StatelessWidget {
                 child: Text(
                   whatsapFormatOnlyTime(
                       notifHistoric.createdAt.add(const Duration(hours: 1))),
-                  style: TextStyle(
+                  style: GoogleFonts.amiri(
                     color: Colors.grey[700],
                   ),
                 ),
@@ -267,7 +268,7 @@ class _HistoricCard extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4),
                     child: Text(
                       notifHistoric.address,
-                      style: const TextStyle(
+                      style:  GoogleFonts.amiri(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey,
@@ -282,7 +283,7 @@ class _HistoricCard extends StatelessWidget {
                 child: Text(
                   whatsapFormatOnlyTime(
                       notifHistoric.createdAt.add(const Duration(hours: 1))),
-                  style: TextStyle(
+                  style: GoogleFonts.amiri(
                     color: Colors.grey[700],
                   ),
                 ),

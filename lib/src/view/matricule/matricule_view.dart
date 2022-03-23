@@ -25,8 +25,9 @@ class MatriculeView extends StatelessWidget {
 }
 
 class MatriculeDataView extends StatelessWidget {
-  const MatriculeDataView({Key? key}) : super(key: key);
 
+  const MatriculeDataView({Key? key}) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     MatriculeProvider matriculeProvider =

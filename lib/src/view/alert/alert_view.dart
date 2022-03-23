@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/device_size.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/widgets/badge_icon.dart';
@@ -181,12 +182,12 @@ class _AlertCatd extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               alertItem.label,
-              style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w500),
+              style:  GoogleFonts.amiri(fontSize: 11, fontWeight: FontWeight.w500),
             ),
             const SizedBox(height: 8),
             if (alertItem.inDev)
-              const Text('En cours...',
-                  style: TextStyle(
+               Text('En cours...',
+                  style: GoogleFonts.amiri(
                       fontSize: 9,
                       fontWeight: FontWeight.w500,
                       color: Colors.red)),

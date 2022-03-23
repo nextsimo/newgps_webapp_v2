@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
 import 'package:newgps/src/widgets/buttons/log_out_button.dart';
@@ -107,7 +108,7 @@ class _BuildGestionCard extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               item.label,
-              style: const TextStyle(
+              style:  GoogleFonts.amiri(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
               ),

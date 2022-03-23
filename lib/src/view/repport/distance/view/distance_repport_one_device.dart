@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:provider/provider.dart';
@@ -44,11 +45,11 @@ class DistanceRepportOneDevice extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            const Expanded(
+                             Expanded(
                               child: Center(
                                 child: Text(
                                   'Total distance parcorue:',
-                                  style: TextStyle(color: Colors.white),
+                                  style: GoogleFonts.amiri(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -58,7 +59,7 @@ class DistanceRepportOneDevice extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   "${provider.totalDistance}",
-                                  style: const TextStyle(color: Colors.white),
+                                  style:  GoogleFonts.amiri(color: Colors.white),
                                 ),
                               ),
                             )

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/models/info_model.dart';
 import 'package:newgps/src/services/device_provider.dart';
@@ -157,7 +158,7 @@ class CardInfoView extends StatelessWidget {
           flex: 1,
           child: Text(
             content,
-            style: const TextStyle(
+            style:  GoogleFonts.amiri(
               color: AppConsts.mainColor,
             ),
           ),
@@ -231,17 +232,17 @@ class OdometreWidget extends StatelessWidget {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style: const TextStyle(
+                  style:  GoogleFonts.amiri(
                     fontSize: 19,
-                    color: Color(0xff639FCE),
+                    color: const Color(0xff639FCE),
                     fontWeight: FontWeight.bold,
                   ),
                   text: '${device.speedKph}\n',
-                  children: const [
+                  children:  [
                     TextSpan(
                       text: 'km/h',
-                      style: TextStyle(
-                        color: Color(0xff639FCE),
+                      style: GoogleFonts.amiri(
+                        color: const Color(0xff639FCE),
                       ),
                     ),
                   ],

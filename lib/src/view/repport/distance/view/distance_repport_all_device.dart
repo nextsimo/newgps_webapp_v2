@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import '../../../../models/device.dart';
 import '../../../../utils/styles.dart';
@@ -60,11 +61,11 @@ class _DistanceRepportAllDeviceViewState
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          const Expanded(
+                           Expanded(
                             child: Center(
                               child: Text(
                                 'Total distance parcorue:',
-                                style: TextStyle(color: Colors.white),
+                                style: GoogleFonts.amiri(color: Colors.white),
                               ),
                             ),
                           ),
@@ -74,7 +75,7 @@ class _DistanceRepportAllDeviceViewState
                             child: Center(
                               child: Text(
                                 "${provider.distanceSum == 0 ? '...' : provider.distanceSum}",
-                                style: const TextStyle(color: Colors.white),
+                                style:  GoogleFonts.amiri(color: Colors.white),
                               ),
                             ),
                           )

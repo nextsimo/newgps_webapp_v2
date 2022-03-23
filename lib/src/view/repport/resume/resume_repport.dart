@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/models/repport_resume_model.dart';
 import 'package:newgps/src/services/newgps_service.dart';
@@ -140,12 +141,12 @@ class BuildHead extends StatelessWidget {
             isUp: repportProvider.orderByDateActualisation,
           ),
           const BuildDivider(),
-          const SizedBox(
+           SizedBox(
               width: 126,
               child: Center(
                 child: Text(
                   'Redémarrer boitier',
-                  style: TextStyle(fontSize: 14),
+                  style:  GoogleFonts.amiri(fontSize: 14),
                 ),
               )),
           const BuildDivider(),

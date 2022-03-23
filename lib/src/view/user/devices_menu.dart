@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +45,7 @@ class DeviceListItem extends StatelessWidget {
           onChanged: (_) {},
         ),
         const SizedBox(width: 10),
-        Text(device.description, style: const TextStyle(fontSize: 10))
+        Text(device.description, style:  GoogleFonts.amiri(fontSize: 10))
       ],
     );
   }

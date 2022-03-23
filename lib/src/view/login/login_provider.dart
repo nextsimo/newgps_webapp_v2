@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
@@ -86,8 +85,6 @@ class LoginProvider with ChangeNotifier {
         password: passwordController.text,
       );
       if (account != null) {
-        final HistoricProvider historicProvider =
-            Provider.of<HistoricProvider>(context, listen: false);
         final LastPositionProvider lastPositionProvider =
             Provider.of<LastPositionProvider>(context, listen: false);
         final SavedAcountProvider savedAcountProvider =
@@ -121,8 +118,6 @@ class LoginProvider with ChangeNotifier {
       underAccountLogin: underCompteController.text,
     );
     if (account != null) {
-      final HistoricProvider historicProvider =
-          Provider.of<HistoricProvider>(context, listen: false);
       final SavedAcountProvider savedAcountProvider =
           Provider.of<SavedAcountProvider>(context, listen: false);
       final LastPositionProvider lastPositionProvider =

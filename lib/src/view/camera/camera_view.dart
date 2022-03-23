@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';
@@ -99,7 +100,7 @@ class _BuildCameraCard extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         child: Text(
           device.description,
-          style: const TextStyle(
+          style:  GoogleFonts.amiri(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 10,

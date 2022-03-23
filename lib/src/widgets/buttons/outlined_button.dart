@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 
 class CustomOutlinedButton extends StatefulWidget {
@@ -44,7 +45,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
               )
             : Text(
                 widget.label,
-                style: const TextStyle(color: AppConsts.mainColor),
+                style: GoogleFonts.amiri(color: AppConsts.mainColor),
               ),
       ),
     );

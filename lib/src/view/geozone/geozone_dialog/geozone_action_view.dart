@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/newgps_service.dart';
@@ -285,7 +286,7 @@ class _InnerOuterWigdet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(label,
-                      style: TextStyle(
+                      style: GoogleFonts.amiri(
                         color: isSelected ? Colors.white : Colors.black,
                       )),
                   if (isSelected)

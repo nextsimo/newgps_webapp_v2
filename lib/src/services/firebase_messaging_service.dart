@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -67,13 +68,18 @@ class FirebaseMessagingService {
   }
  */
   Future<void> saveUserMessagingToken() async {
+    await messaging.requestPermission(
+        alert: true,
+        badge: true,
+        sound: true,
+        announcement: true,
+        criticalAlert: true);
+
     String? token = await messaging.getToken();
-
     Account? account = shared.getAccount();
-
     String? deviceId = await _getDeviceToken();
     // save the new token to database
-
+    log(deviceId.toString());
     String res = await api.post(
       url: '/update/notification',
       body: {
@@ -85,7 +91,7 @@ class FirebaseMessagingService {
     if (res.isNotEmpty) {
       notificationID = json.decode(res);
     }
-    //debugPrint("Token update $res\nToken : $token");
+    log("Token update $res\nToken : $token");
   }
 
   Future<String?> _getDeviceToken() async {

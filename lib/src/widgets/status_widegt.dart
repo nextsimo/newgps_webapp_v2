@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 
 class StatusWidget extends StatelessWidget {
@@ -21,7 +22,7 @@ class StatusWidget extends StatelessWidget {
       child: Center(
         child: Text(
           device.statut,
-          style: const TextStyle(
+          style:  GoogleFonts.amiri(
             color: Colors.white,
           ),
         ),

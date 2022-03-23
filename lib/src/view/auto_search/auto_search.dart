@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/utils/styles.dart';
@@ -211,7 +212,7 @@ class _BuildStatuWidget extends StatelessWidget {
       ),
       child: Text(
         device.statut,
-        style: const TextStyle(color: Colors.white),
+        style:  GoogleFonts.amiri(color: Colors.white),
       ),
     );
   }

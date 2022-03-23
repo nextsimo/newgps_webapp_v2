@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +95,7 @@ class _BuildConnectedWidget extends StatelessWidget {
               children: [
                 Text(
                   mode.phoneNumber,
-                  style: const TextStyle(
+                  style:  GoogleFonts.amiri(
                     decoration: TextDecoration.underline,
                   ),
                 ),

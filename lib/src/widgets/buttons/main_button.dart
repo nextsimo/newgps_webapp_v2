@@ -1,5 +1,5 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 
 class MainButton extends StatefulWidget {
@@ -71,7 +71,7 @@ class _MainButtonState extends State<MainButton> {
                       padding: const EdgeInsets.only(right: 10),
                       child: Icon(widget.icon, color: Colors.white, size: 21),
                     ),
-                  Text(widget.label, style: TextStyle(color: widget.textColor, fontWeight: FontWeight.w400)),
+                  Text(widget.label, style: GoogleFonts.amiri(color: widget.textColor, fontWeight: FontWeight.w400)),
                 ],
               ),
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/utils/functions.dart';
@@ -30,7 +31,7 @@ class PlayCard extends StatelessWidget {
           Center(
             child: Text(
               deviceProvider.selectedDevice.description,
-              style: const TextStyle(color: Colors.blue,fontWeight: FontWeight.bold),
+              style:  GoogleFonts.amiri(color: Colors.blue,fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 13),
@@ -97,7 +98,7 @@ class PlayCard extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           '$title:',
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style:  GoogleFonts.amiri(fontWeight: FontWeight.w600),
         ),
         const SizedBox(width: 6),
         Text(label),

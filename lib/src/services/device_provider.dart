@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/device.dart';
@@ -70,8 +71,8 @@ class DeviceProvider with ChangeNotifier {
                     const Icon(Icons.check_circle_outline,
                         color: Colors.green, size: 45),
                     const SizedBox(height: 10),
-                    const Text('Terminé',
-                        style: TextStyle(fontWeight: FontWeight.w700)),
+                     Text('Terminé',
+                        style: GoogleFonts.amiri(fontWeight: FontWeight.w700)),
                     const SizedBox(height: 10),
                     Text('$message du véhicule a réussi'),
                     const SizedBox(height: 10),
@@ -97,8 +98,8 @@ class DeviceProvider with ChangeNotifier {
                     const SizedBox(height: 10),
                     const Icon(Icons.warning, color: Colors.red, size: 45),
                     const SizedBox(height: 10),
-                    const Text('Terminé',
-                        style: TextStyle(fontWeight: FontWeight.w700)),
+                     Text('Terminé',
+                        style: GoogleFonts.amiri(fontWeight: FontWeight.w700)),
                     const SizedBox(height: 10),
                     Text('$message du véhicule a échouer'),
                     const SizedBox(height: 10),

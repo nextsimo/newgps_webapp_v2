@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 
 import '../../navigation/top_app_bar.dart';
@@ -100,22 +101,22 @@ class HistoALertGeozoneCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            children: const [
-              Text('Véhicule:'),
-              SizedBox(width: 10),
+            children:  [
+              const Text('Véhicule:'),
+              const SizedBox(width: 10),
               Text('Omaar FMB1212',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: GoogleFonts.amiri(fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 14),
           RichText(
-              text: const TextSpan(
-                  style: TextStyle(color: Colors.black),
+              text:  TextSpan(
+                  style: GoogleFonts.amiri(color: Colors.black),
                   text: 'Est sortie de geozone ',
                   children: [
                 TextSpan(
                   text: 'Bueno car',
-                  style: TextStyle(
+                  style: GoogleFonts.amiri(
                     color: AppConsts.mainColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -123,22 +124,22 @@ class HistoALertGeozoneCard extends StatelessWidget {
               ])),
           const SizedBox(height: 14),
           Row(
-            children: const [
+            children:  [
               Text('Date:'),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text('22/10/2022 10:10:10',
-                  style: TextStyle(fontWeight: FontWeight.bold)),
+                  style: GoogleFonts.amiri(fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 14),
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
+            children:  [
               Text('Adresse:'),
-              SizedBox(width: 10),
-              Expanded(
+             const SizedBox(width: 10),
+                Expanded(
                 child: Text('Casablanca Bourgoune Mosque hassane 2',
-                    style: TextStyle(fontWeight: FontWeight.bold)),
+                    style: GoogleFonts.amiri(fontWeight: FontWeight.bold)),
               ),
             ],
           ),

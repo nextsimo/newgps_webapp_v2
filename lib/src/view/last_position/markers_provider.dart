@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/models/device.dart';
@@ -273,7 +274,7 @@ Future<BitmapDescriptor> _getClusterBitmap(String text,
   TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
   painter.text = TextSpan(
     text: text,
-    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.normal),
+    style:  GoogleFonts.amiri(color: Colors.white, fontWeight: FontWeight.normal),
   );
   painter.layout();
   painter.paint(canvas,

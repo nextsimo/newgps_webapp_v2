@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -11,7 +12,7 @@ class CallServiceView extends StatelessWidget {
       children: [
         Text(
           "Service après vente".toUpperCase(),
-          style: const TextStyle(
+          style:  GoogleFonts.amiri(
             letterSpacing: 1.25,
           ),
         ),
@@ -35,7 +36,7 @@ class CallServiceView extends StatelessWidget {
         children: [
           Text(
             tel,
-            style: const TextStyle(
+            style:  GoogleFonts.amiri(
               color: AppConsts.mainColor,
               decoration: TextDecoration.underline,
             ),

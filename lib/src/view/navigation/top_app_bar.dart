@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
@@ -144,7 +145,7 @@ class _BuildAccountName extends StatelessWidget {
       ),
       child: Text(
         name.toUpperCase(),
-        style: const TextStyle(
+        style:  GoogleFonts.amiri(
           color: Colors.black,
           fontSize: 10,
           //fontWeight: FontWeight.w700,

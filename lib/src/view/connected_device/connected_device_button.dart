@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,7 @@ class ConnectedDeviceButton extends StatelessWidget {
           ),
           Text(
             '$count connecté',
-            style:const TextStyle(
+            style: GoogleFonts.amiri(
               color: Colors.black,
               fontSize: 10,
               //fontWeight: FontWeight.w700,

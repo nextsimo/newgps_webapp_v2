@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class BuildClickableTextCell extends StatelessWidget {
   final void Function(int? index)? ontap;
@@ -36,7 +37,7 @@ class BuildClickableTextCell extends StatelessWidget {
                     content,
                     textAlign: TextAlign.center,
                     maxLines: 1,
-                    style: const TextStyle(
+                    style: GoogleFonts.amiri(
                       fontWeight: FontWeight.w500,
                     ),
                   ),

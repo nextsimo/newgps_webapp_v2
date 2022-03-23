@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../utils/styles.dart';
 import 'select_devices_view.dart';
@@ -48,7 +49,7 @@ class ShowAllDevicesWidget extends StatelessWidget {
             if (shortText)
               Text(
                 'Véhicules ${"(${selectedDevices.length})"}',
-                style: const TextStyle(
+                style:  GoogleFonts.amiri(
                   fontSize: 11,
                   color: Colors.black,
                   fontWeight: FontWeight.w400,

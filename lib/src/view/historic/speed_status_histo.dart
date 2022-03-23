@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class SpeedStatusHisto extends StatelessWidget {
               child: Center(
                 child: Text(
                   'x ${index + 1}',
-                  style: const TextStyle(
+                  style:  GoogleFonts.amiri(
                       fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ),
