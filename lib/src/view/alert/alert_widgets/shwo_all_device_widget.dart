@@ -49,7 +49,7 @@ class ShowAllDevicesWidget extends StatelessWidget {
             if (shortText)
               Text(
                 'Véhicules ${"(${selectedDevices.length})"}',
-                style:  GoogleFonts.amiri(
+                style:  GoogleFonts.roboto(
                   fontSize: 11,
                   color: Colors.black,
                   fontWeight: FontWeight.w400,

@@ -181,14 +181,13 @@ class _AlertCatd extends StatelessWidget {
             Icon(alertItem.icon, color: AppConsts.mainColor, size: 17),
             const SizedBox(height: 10),
             Text(
-              alertItem.label,
-              style:  GoogleFonts.amiri(fontSize: 11, fontWeight: FontWeight.w500),
+                alertItem.label,
+              style:  GoogleFonts.roboto(fontWeight:FontWeight.w500),
             ),
             const SizedBox(height: 8),
             if (alertItem.inDev)
                Text('En cours...',
-                  style: GoogleFonts.amiri(
-                      fontSize: 9,
+                  style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w500,
                       color: Colors.red)),
           ],

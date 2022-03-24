@@ -56,10 +56,10 @@ class _BuildHead extends StatelessWidget {
     TripsProvider provider = Provider.of<TripsProvider>(context);
 
     var borderSide = const BorderSide(
-        color: AppConsts.mainColor, width: AppConsts.borderWidth);
+        color: Colors.black, width: AppConsts.borderWidth);
     return Container(
       decoration: BoxDecoration(
-        color: AppConsts.mainColor.withOpacity(0.2),
+        color: Colors.black.withOpacity(0.2),
         border: Border(bottom: borderSide, top: borderSide),
       ),
       child: Row(
@@ -143,7 +143,7 @@ class _RepportRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppConsts.mainColor,
+            color: Colors.black,
             width: AppConsts.borderWidth,
           ),
         ),

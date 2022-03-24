@@ -286,7 +286,7 @@ class _InnerOuterWigdet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(label,
-                      style: GoogleFonts.amiri(
+                      style: GoogleFonts.roboto(
                         color: isSelected ? Colors.white : Colors.black,
                       )),
                   if (isSelected)

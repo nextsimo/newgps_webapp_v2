@@ -83,10 +83,10 @@ class _BuildHead extends StatelessWidget {
     RepportDetailsProvider repportDetailsProvider =
         Provider.of<RepportDetailsProvider>(context);
     var borderSide = const BorderSide(
-        color: AppConsts.mainColor, width: AppConsts.borderWidth);
+        color: Colors.black, width: AppConsts.borderWidth);
     return Container(
       decoration: BoxDecoration(
-        color: AppConsts.mainColor.withOpacity(0.2),
+        color: Colors.black.withOpacity(0.2),
         border: Border(bottom: borderSide, top: borderSide),
       ),
       child: Row(
@@ -193,7 +193,7 @@ class _RepportRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppConsts.mainColor,
+            color: Colors.black,
             width: AppConsts.borderWidth,
           ),
         ),
@@ -203,7 +203,7 @@ class _RepportRow extends StatelessWidget {
           const BuildDivider(),
           BuildTextCell(formatSimpleDate(repport.timestamp), flex: 2),
           const BuildDivider(),
-          BuildTextCell(formatToTime(repport.timestamp), flex: 2),
+          BuildTextCell(formatToTimeWithSeconds(repport.timestamp), flex: 2),
           const BuildDivider(),
           BuildTextCell(repport.address, flex: 4),
           const BuildDivider(),

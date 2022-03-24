@@ -23,7 +23,7 @@ class DateWidget extends StatelessWidget {
           ),
           child: Text(
             formatDeviceDate(provider.lastDateFetchDevices),
-            style:  GoogleFonts.amiri(color: Colors.white),
+            style:  GoogleFonts.roboto(color: Colors.white),
           ),
         ),
       );

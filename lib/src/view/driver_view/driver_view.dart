@@ -116,7 +116,7 @@ class _BuildDriverCard extends StatelessWidget {
     return RichText(
       text: TextSpan(
           text: '$note',
-          style:  GoogleFonts.amiri(
+          style:  GoogleFonts.roboto(
             fontSize: 55,
             color: AppConsts.mainColor,
             fontWeight: FontWeight.w500,
@@ -125,7 +125,7 @@ class _BuildDriverCard extends StatelessWidget {
           children:  [
             TextSpan(
               text: '/20',
-              style: GoogleFonts.amiri(
+              style: GoogleFonts.roboto(
                 fontSize: 14,
                 color: Colors.grey,
                 fontWeight: FontWeight.w500,

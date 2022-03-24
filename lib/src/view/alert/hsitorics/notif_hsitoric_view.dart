@@ -106,7 +106,7 @@ class NotifHistoricView extends StatelessWidget {
            const SizedBox(height: 10),
             Text(
               'Historiques',
-              style: GoogleFonts.amiri(fontWeight: FontWeight.w700, fontSize: 20),
+              style: GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 20),
             ),
           ],
         ),
@@ -146,7 +146,7 @@ class _HistoricCard extends StatelessWidget {
                       color: AppConsts.mainColor, size: 19),
                   const SizedBox(height: 6),
                   Text(provider.getLabel(notifHistoric.type),
-                      style:  GoogleFonts.amiri(
+                      style:  GoogleFonts.roboto(
                           fontSize: 11, fontWeight: FontWeight.w500)),
                 ],
               ),
@@ -158,7 +158,7 @@ class _HistoricCard extends StatelessWidget {
                 children: [
                   Text(
                     notifHistoric.device,
-                    style:  GoogleFonts.amiri(
+                    style:  GoogleFonts.roboto(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -166,7 +166,7 @@ class _HistoricCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     notifHistoric.message,
-                    style:  GoogleFonts.amiri(
+                    style:  GoogleFonts.roboto(
                         color: Colors.grey,
                         fontWeight: FontWeight.w500,
                         fontSize: 13),
@@ -183,7 +183,7 @@ class _HistoricCard extends StatelessWidget {
                   Text(
                     whatsapFormatOnlyTime(
                         notifHistoric.createdAt.add(const Duration(hours: 1))),
-                    style: GoogleFonts.amiri(
+                    style: GoogleFonts.roboto(
                       color: Colors.grey[700],
                     ),
                   ),
@@ -198,7 +198,7 @@ class _HistoricCard extends StatelessWidget {
                           fit: BoxFit.fitWidth,
                           child: Text(
                             '${notifHistoric.countNotRead}',
-                            style:  GoogleFonts.amiri(
+                            style:  GoogleFonts.roboto(
                                 color: Colors.white,
                                 fontSize: 12,
                                 fontWeight: FontWeight.w400),
@@ -214,7 +214,7 @@ class _HistoricCard extends StatelessWidget {
                       ),
                       child: Text(
                         '${notifHistoric.countNotRead}',
-                        style: const GoogleFonts.amiri(
+                        style: const GoogleFonts.roboto(
                           color: Colors.white,
                           fontSize: 12,
                           fontWeight: FontWeight.w500,

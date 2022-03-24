@@ -95,7 +95,7 @@ class _BuildConnectedWidget extends StatelessWidget {
               children: [
                 Text(
                   mode.phoneNumber,
-                  style:  GoogleFonts.amiri(
+                  style:  GoogleFonts.roboto(
                     decoration: TextDecoration.underline,
                   ),
                 ),

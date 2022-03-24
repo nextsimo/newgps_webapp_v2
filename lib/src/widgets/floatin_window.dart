@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
@@ -10,6 +12,7 @@ import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'buttons/outlined_button.dart';
 
@@ -87,11 +90,11 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                           if (widget.device.description.isNotEmpty)
                             Text(
                               widget.device.description,
-                              style:  GoogleFonts.amiri(
+                              style: GoogleFonts.roboto(
                                   color: AppConsts.blue,
                                   fontWeight: FontWeight.bold),
                             ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
                           Row(
                             children: [
                               const Icon(Icons.commute, color: AppConsts.blue),
@@ -99,13 +102,13 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               RichText(
                                   text: TextSpan(
                                       text: "État: ",
-                                      style: GoogleFonts.amiri(
+                                      style: GoogleFonts.roboto(
                                         color: Colors.black.withOpacity(0.7),
                                       ),
                                       children: [
                                     TextSpan(
                                         text: widget.device.statut,
-                                        style:  GoogleFonts.amiri(
+                                        style: GoogleFonts.roboto(
                                             color: Colors.black54))
                                   ])),
                             ],
@@ -121,14 +124,14 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                                 child: RichText(
                                     text: TextSpan(
                                         text: "Date: ",
-                                        style: GoogleFonts.amiri(
+                                        style: GoogleFonts.roboto(
                                           color: Colors.black.withOpacity(0.7),
                                         ),
                                         children: [
                                       TextSpan(
                                           text: formatDeviceDate(
                                               widget.device.dateTime),
-                                          style:  GoogleFonts.amiri(
+                                          style: GoogleFonts.roboto(
                                             color: Colors.black54,
                                           ))
                                     ])),
@@ -145,7 +148,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               RichText(
                                   text: TextSpan(
                                 text: "Vitesse: ",
-                                style: GoogleFonts.amiri(
+                                style: GoogleFonts.roboto(
                                     color: Colors.black.withOpacity(0.7)),
                                 children: [
                                   TextSpan(
@@ -165,13 +168,13 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                                 child: RichText(
                                     text: TextSpan(
                                         text: "Adresse: ",
-                                        style: GoogleFonts.amiri(
+                                        style: GoogleFonts.roboto(
                                             color:
                                                 Colors.black.withOpacity(0.7)),
                                         children: [
                                       TextSpan(
                                           text: widget.device.address,
-                                          style:  GoogleFonts.amiri(
+                                          style: GoogleFonts.roboto(
                                               color: Colors.black54))
                                     ])),
                               ),
@@ -187,12 +190,13 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               RichText(
                                   text: TextSpan(
                                       text: "Kilométrage: ",
-                                      style: GoogleFonts.amiri(
+                                      style: GoogleFonts.roboto(
                                           color: Colors.black.withOpacity(0.7)),
                                       children: [
                                     TextSpan(
-                                        text: "${widget.device.odometerKm.toInt()} Km",
-                                        style:  GoogleFonts.amiri(
+                                        text:
+                                            "${widget.device.odometerKm.toInt()} Km",
+                                        style: GoogleFonts.roboto(
                                             color: Colors.black54))
                                   ])),
                             ],
@@ -246,6 +250,37 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                             )),
                           ],
                         ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: MainButton(
+                              height: 35,
+                              onPressed: () async {
+                                Position pos = await GeolocatorPlatform.instance
+                                    .getCurrentPosition();
+                                launch(
+                                    'https://www.google.com/maps/dir/${pos.latitude},${pos.longitude}/${widget.device.latitude},${widget.device.longitude}');
+                              },
+                              label: 'Iténiraire',
+                              icon: Icons.directions,
+                              backgroundColor: Colors.blue,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                              child: MainButton(
+                            height: 35,
+                            onPressed: () async {
+                              Clipboard.setData(ClipboardData(
+                                  text:
+                                      'http://maps.google.com/?q=${widget.device.latitude},${widget.device.longitude}'));
+                            },
+                            label: 'Copie localision',
+                            backgroundColor: Colors.blueAccent,
+                          )),
+                        ],
+                      ),
                     ],
                   ),
                 ],

@@ -46,7 +46,7 @@ class SuiviWidget extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   'Itinéraire',
-                  style: GoogleFonts.amiri(
+                  style: GoogleFonts.roboto(
                     color: isEmpty ? Colors.white : Colors.blue,
                   ),
                 ),

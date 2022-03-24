@@ -45,7 +45,7 @@ class _CustomOutlinedButtonState extends State<CustomOutlinedButton> {
               )
             : Text(
                 widget.label,
-                style: GoogleFonts.amiri(color: AppConsts.mainColor),
+                style: GoogleFonts.roboto(color: AppConsts.mainColor),
               ),
       ),
     );

@@ -108,7 +108,7 @@ class _BuildGestionCard extends StatelessWidget {
             const SizedBox(height: 10),
             Text(
               item.label,
-              style:  GoogleFonts.amiri(
+              style:  GoogleFonts.roboto(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
               ),

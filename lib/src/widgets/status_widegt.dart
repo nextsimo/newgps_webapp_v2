@@ -22,7 +22,7 @@ class StatusWidget extends StatelessWidget {
       child: Center(
         child: Text(
           device.statut,
-          style:  GoogleFonts.amiri(
+          style:  GoogleFonts.roboto(
             color: Colors.white,
           ),
         ),

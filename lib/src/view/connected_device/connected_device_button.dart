@@ -28,7 +28,7 @@ class ConnectedDeviceButton extends StatelessWidget {
           ),
           Text(
             '$count connecté',
-            style: GoogleFonts.amiri(
+            style: GoogleFonts.roboto(
               color: Colors.black,
               fontSize: 10,
               //fontWeight: FontWeight.w700,

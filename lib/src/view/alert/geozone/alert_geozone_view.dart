@@ -105,18 +105,18 @@ class HistoALertGeozoneCard extends StatelessWidget {
               const Text('Véhicule:'),
               const SizedBox(width: 10),
               Text('Omaar FMB1212',
-                  style: GoogleFonts.amiri(fontWeight: FontWeight.bold)),
+                  style: GoogleFonts.roboto(fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 14),
           RichText(
               text:  TextSpan(
-                  style: GoogleFonts.amiri(color: Colors.black),
+                  style: GoogleFonts.roboto(color: Colors.black),
                   text: 'Est sortie de geozone ',
                   children: [
                 TextSpan(
                   text: 'Bueno car',
-                  style: GoogleFonts.amiri(
+                  style: GoogleFonts.roboto(
                     color: AppConsts.mainColor,
                     fontWeight: FontWeight.bold,
                   ),
@@ -128,7 +128,7 @@ class HistoALertGeozoneCard extends StatelessWidget {
               Text('Date:'),
               const SizedBox(width: 10),
               Text('22/10/2022 10:10:10',
-                  style: GoogleFonts.amiri(fontWeight: FontWeight.bold)),
+                  style: GoogleFonts.roboto(fontWeight: FontWeight.bold)),
             ],
           ),
           const SizedBox(height: 14),
@@ -139,7 +139,7 @@ class HistoALertGeozoneCard extends StatelessWidget {
              const SizedBox(width: 10),
                 Expanded(
                 child: Text('Casablanca Bourgoune Mosque hassane 2',
-                    style: GoogleFonts.amiri(fontWeight: FontWeight.bold)),
+                    style: GoogleFonts.roboto(fontWeight: FontWeight.bold)),
               ),
             ],
           ),

@@ -22,11 +22,9 @@ class GeozoneProvider with ChangeNotifier {
 
   List<GeozoneModel> get geozones => _geozones;
 
-
   GeozoneSttingsAlert? geozoneSttingsAlert;
 
   final GeozoneDialogProvider geozoneDialogProvider = GeozoneDialogProvider();
-
 
   String _errorText = '';
 
@@ -42,9 +40,8 @@ class GeozoneProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  GeozoneProvider({FirebaseMessagingService? m}) {
-    firebaseMessagingService = m;
-    if (m != null) init();
+  GeozoneProvider() {
+    init();
   }
 
   void init() {
@@ -53,11 +50,12 @@ class GeozoneProvider with ChangeNotifier {
   }
 
   Future<void> _fetchAlertSettings() async {
-    int notifID = firebaseMessagingService!.notificationID;
-
     String res = await api.post(
       url: '/alert/geozone/settings',
-      body: {'notification_id': notifID},
+      body: {
+        'notification_id': NewgpsService.messaging.notificationID,
+        'account_id': shared.getAccount()?.account.accountId
+      },
     );
 
     if (res.isNotEmpty) {
@@ -67,13 +65,11 @@ class GeozoneProvider with ChangeNotifier {
   }
 
   Future<void> updateSettings(bool newValue) async {
-    int notifID = firebaseMessagingService!.notificationID;
-
     await api.post(
       url: '/alert/geozone/update',
       body: {
-        'notification_id': notifID,
         'is_active': newValue,
+        'notification_id': NewgpsService.messaging.notificationID
       },
     );
 
@@ -157,13 +153,14 @@ class GeozoneProvider with ChangeNotifier {
     // nav.back();
   }
 
-  Future<void> onClickUpdate(GeozoneModel geozone, BuildContext context, {bool readOnly = false}) async {
+  Future<void> onClickUpdate(GeozoneModel geozone, BuildContext context,
+      {bool readOnly = false}) async {
     geozoneDialogProvider.onClickUpdate(geozone);
     bool? saved = await showDialog(
       context: context,
       builder: (_) => Dialog(
           child: GeozoneActionView(
-            readonly: readOnly,
+        readonly: readOnly,
         geozoneDialogProvider: geozoneDialogProvider,
       )),
     );

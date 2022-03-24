@@ -44,7 +44,7 @@ class SpeedStatusHisto extends StatelessWidget {
               child: Center(
                 child: Text(
                   'x ${index + 1}',
-                  style:  GoogleFonts.amiri(
+                  style:  GoogleFonts.roboto(
                       fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/widgets/badge_icon.dart';
@@ -123,7 +124,7 @@ class _BuildTabBarItem extends StatelessWidget {
         color: isSelected
             ? AppConsts.mainColor.withOpacity(0.2)
             : Colors.transparent,
-        border: Border.all(color: AppConsts.mainColor, width: 2.0),
+        border: Border.all(color: AppConsts.mainColor, width: 1.5),
       ),
       child: Center(
         child: Column(
@@ -131,10 +132,14 @@ class _BuildTabBarItem extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.network('https://api.newgps.ma/api/icons/${item.icon}.svg',
-                height: 16),
+                height: 12),
             Text(
               item.label,
               maxLines: 1,
+              style: GoogleFonts.roboto(
+                //fontSize: 11,
+                //fontWeight: FontWeight.w500,
+              ),
             ),
           ],
         ),
@@ -179,12 +184,13 @@ class _AlertTabBarItem extends StatelessWidget {
             children: [
               Image.network(
                 'https://api.newgps.ma/api/icons/${item.icon}.svg',
-                height: 16,
+                height: 12,
               ),
-              const SizedBox(height: 5),
               Text(
                 item.label,
                 maxLines: 1,
+                style: GoogleFonts.roboto(
+                ),
               ),
             ],
           ),

@@ -176,7 +176,7 @@ class HistoricProvider with ChangeNotifier {
       return;
     }
     // clear all markers
-    int _index = stopedIndex -1 ;
+    int _index = stopedIndex - 1;
     bool _init = true;
     for (Device device in historicModel.devices!
         .getRange(stopedIndex, historicModel.devices!.length)) {
@@ -339,6 +339,7 @@ class HistoricProvider with ChangeNotifier {
 
   Future<void> fetchHistorics(String deviceID,
       [int page = 1, bool init = false]) async {
+    debugPrint("-----> historic called");
     histoLine.clear();
 
     if (init) {

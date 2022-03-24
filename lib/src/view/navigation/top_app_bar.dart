@@ -145,7 +145,7 @@ class _BuildAccountName extends StatelessWidget {
       ),
       child: Text(
         name.toUpperCase(),
-        style:  GoogleFonts.amiri(
+        style:  GoogleFonts.roboto(
           color: Colors.black,
           fontSize: 10,
           //fontWeight: FontWeight.w700,

@@ -39,9 +39,9 @@ class DistanceRepportOneDevice extends StatelessWidget {
                     if (provider.repportsPerDevice.length > 1)
                       Container(
                         padding: const EdgeInsets.symmetric(vertical: 8),
-                        decoration: BoxDecoration(
-                          color: AppConsts.mainColor.withOpacity(0.8),
-                        ),
+                      decoration: const BoxDecoration(
+                          color: AppConsts.mainColor,
+                      ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -49,7 +49,7 @@ class DistanceRepportOneDevice extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   'Total distance parcorue:',
-                                  style: GoogleFonts.amiri(color: Colors.white),
+                                  style: GoogleFonts.roboto(color: Colors.white),
                                 ),
                               ),
                             ),
@@ -59,7 +59,7 @@ class DistanceRepportOneDevice extends StatelessWidget {
                               child: Center(
                                 child: Text(
                                   "${provider.totalDistance}",
-                                  style:  GoogleFonts.amiri(color: Colors.white),
+                                  style:  GoogleFonts.roboto(color: Colors.white),
                                 ),
                               ),
                             )
@@ -98,10 +98,10 @@ class _BuildHead extends StatelessWidget {
     DistanceRepportProvider provider =
         Provider.of<DistanceRepportProvider>(context);
     var borderSide = const BorderSide(
-        color: AppConsts.mainColor, width: AppConsts.borderWidth);
+        color: Colors.black, width: AppConsts.borderWidth);
     return Container(
       decoration: BoxDecoration(
-        color: AppConsts.mainColor.withOpacity(0.2),
+        color: Colors.black.withOpacity(0.2),
         border: Border(bottom: borderSide, top: borderSide),
       ),
       child: Row(
@@ -158,7 +158,7 @@ class _RepportRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppConsts.mainColor,
+            color: Colors.black,
             width: AppConsts.borderWidth,
           ),
         ),

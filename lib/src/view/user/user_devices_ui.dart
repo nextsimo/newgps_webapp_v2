@@ -104,7 +104,7 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
                     const SizedBox(width: 8),
                     Text(
                       'Ajouter vehicule',
-                      style: GoogleFonts.amiri(
+                      style: GoogleFonts.roboto(
                         fontSize: 10,
                         color: Colors.grey[400],
                       ),
@@ -308,7 +308,7 @@ class CheckedMatricule extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           device,
-          style: GoogleFonts.amiri(
+          style: GoogleFonts.roboto(
             color: deviceID.isEmpty ? Colors.red : Colors.grey,
           ),
         ),

@@ -25,9 +25,8 @@ class MatriculeView extends StatelessWidget {
 }
 
 class MatriculeDataView extends StatelessWidget {
-
   const MatriculeDataView({Key? key}) : super(key: key);
-  
+
   @override
   Widget build(BuildContext context) {
     MatriculeProvider matriculeProvider =
@@ -64,22 +63,38 @@ class MatriculeDataView extends StatelessWidget {
             Expanded(
                 child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Column(
+              child: Stack(
                 children: [
-                  const BuildHead(),
-                  Expanded(
-                    child: SizedBox(
-                      width: size.width,
-                      child: ListView.builder(
-                        itemCount: matricules.length,
-                        itemBuilder: (_, int index) {
-                          MatriculeModel matricule =
-                              matricules.elementAt(index);
-                          return MatriculeRowContent(matricule: matricule);
-                        },
+                  Column(
+                    children: [
+                      const BuildHead(),
+                      Expanded(
+                        child: SizedBox(
+                          width: size.width,
+                          child: ListView.builder(
+                            controller: matriculeProvider.scrollController,
+                            itemCount: matricules.length,
+                            itemBuilder: (_, int index) {
+                              MatriculeModel matricule =
+                                  matricules.elementAt(index);
+                              return MatriculeRowContent(matricule: matricule);
+                            },
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  if (matriculeProvider.loadding)
+                    Material(
+                      color: Colors.transparent.withOpacity(0.2),
+                      child: const Center(
+                        child: SizedBox(
+                          width: 30,
+                          height: 30,
+                          child: CircularProgressIndicator(),
+                        ),
                       ),
                     ),
-                  )
                 ],
               ),
             ))
@@ -99,10 +114,10 @@ class BuildHead extends StatelessWidget {
         .userDroits
         .droits[7];
     var borderSide = const BorderSide(
-        color: AppConsts.mainColor, width: AppConsts.borderWidth);
+        color: Colors.black, width: AppConsts.borderWidth);
     return Container(
       decoration: BoxDecoration(
-        color: AppConsts.mainColor.withOpacity(0.2),
+        color: Colors.black.withOpacity(0.1),
         border: Border(bottom: borderSide, top: borderSide),
       ),
       child: Row(
@@ -162,7 +177,7 @@ class MatriculeRowContent extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppConsts.mainColor,
+            color:Colors.black,
             width: AppConsts.borderWidth,
           ),
         ),
@@ -257,7 +272,7 @@ class BuildDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: AppConsts.borderWidth,
-      color: AppConsts.mainColor,
+      color: Colors.black,
       height: 48,
     );
   }

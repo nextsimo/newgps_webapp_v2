@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
+
+import '../view/login/login_as/save_account_provider.dart';
 
 class BadgeIcon extends StatelessWidget {
   const BadgeIcon({Key? key}) : super(key: key);
@@ -13,25 +13,20 @@ class BadgeIcon extends StatelessWidget {
       builder: (_, int count, __) {
         if (count == 0) {
           return const SizedBox();
-        } else if (count > 99) {
-          return CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.red,
-            child: Center(
-              child: Text(
-                '$count+',
-                style: GoogleFonts.amiri(color: Colors.white, fontSize: 12),
-              ),
-            ),
-          );
         }
+
         return CircleAvatar(
-          radius: 13,
+          radius: 15,
           backgroundColor: Colors.red,
-          child: Center(
-            child: Text(
-              '$count',
-              style: GoogleFonts.amiri(color: Colors.white, fontSize: 12),
+          child: Padding(
+            padding: const EdgeInsets.all(4),
+            child: FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                '$count',
+                style: const TextStyle(
+                    color: Colors.white),
+              ),
             ),
           ),
         );

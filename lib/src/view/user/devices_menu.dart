@@ -45,7 +45,7 @@ class DeviceListItem extends StatelessWidget {
           onChanged: (_) {},
         ),
         const SizedBox(width: 10),
-        Text(device.description, style:  GoogleFonts.amiri(fontSize: 10))
+        Text(device.description, style:  GoogleFonts.roboto(fontSize: 10))
       ],
     );
   }

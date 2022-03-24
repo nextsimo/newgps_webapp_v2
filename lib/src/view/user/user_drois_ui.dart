@@ -93,7 +93,7 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
                     const SizedBox(width: 4),
                     Text(
                       'Modifier les droits',
-                      style: GoogleFonts.amiri(
+                      style: GoogleFonts.roboto(
                         fontSize: 10,
                         color: Colors.grey[400],
                       ),
@@ -293,7 +293,7 @@ class _CheckedDroitsState extends State<CheckedDroits> {
             const SizedBox(width: 10),
             Text(
               '${widget.element}:',
-              style: GoogleFonts.amiri(color: widget.color),
+              style: GoogleFonts.roboto(color: widget.color),
             ),
             const SizedBox(width: 10),
           ],
@@ -305,7 +305,7 @@ class _CheckedDroitsState extends State<CheckedDroits> {
               children: [
                  Text(
                   'Lire',
-                  style: GoogleFonts.amiri(color: Colors.grey),
+                  style: GoogleFonts.roboto(color: Colors.grey),
                 ),
                 Checkbox(
                   value: widget.droit.read,
@@ -323,7 +323,7 @@ class _CheckedDroitsState extends State<CheckedDroits> {
                 ),
                  Text(
                   'Modifier',
-                  style: GoogleFonts.amiri(color: Colors.grey),
+                  style: GoogleFonts.roboto(color: Colors.grey),
                 ),
                 Checkbox(
                   value: widget.droit.write,

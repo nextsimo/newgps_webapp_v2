@@ -10,7 +10,7 @@ class BuildDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: AppConsts.borderWidth,
-      color: AppConsts.mainColor,
+      color: Colors.black,
       height: 48,
     );
   }

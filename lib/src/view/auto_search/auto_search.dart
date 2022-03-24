@@ -212,7 +212,7 @@ class _BuildStatuWidget extends StatelessWidget {
       ),
       child: Text(
         device.statut,
-        style:  GoogleFonts.amiri(color: Colors.white),
+        style:  GoogleFonts.roboto(color: Colors.white),
       ),
     );
   }

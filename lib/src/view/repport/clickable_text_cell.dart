@@ -37,7 +37,7 @@ class BuildClickableTextCell extends StatelessWidget {
                     content,
                     textAlign: TextAlign.center,
                     maxLines: 1,
-                    style: GoogleFonts.amiri(
+                    style: GoogleFonts.roboto(
                       fontWeight: FontWeight.w500,
                     ),
                   ),

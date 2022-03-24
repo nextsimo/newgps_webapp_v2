@@ -13,7 +13,7 @@ class GeozoneNavigation extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<FirebaseMessagingService,
             GeozoneProvider>(
-        update: (_, m, u) => GeozoneProvider(m: m),
+        update: (_, m, u) => GeozoneProvider(),
         create: (_) => GeozoneProvider(),
         builder: (context, snapshot) {
           return Navigator(

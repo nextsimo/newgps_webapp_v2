@@ -65,6 +65,18 @@ String formatToTime(DateTime dateTime) {
   return formatted;
 }
 
+String formatToTimeWithSeconds(DateTime dateTime) {
+  final DateFormat validFormatter = DateFormat('HH:mm:ss');
+  String formatted;
+  try {
+    formatted = validFormatter.format(dateTime);
+  } catch (e) {
+    return '';
+  }
+  return formatted;
+}
+
+
 class FormValidatorService {
   static String? isNotEmpty(String? value) {
     if (value!.isEmpty) {

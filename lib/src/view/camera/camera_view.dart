@@ -100,7 +100,7 @@ class _BuildCameraCard extends StatelessWidget {
         margin: const EdgeInsets.all(5),
         child: Text(
           device.description,
-          style:  GoogleFonts.amiri(
+          style:  GoogleFonts.roboto(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 10,

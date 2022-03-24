@@ -57,7 +57,7 @@ class NewGpsApp extends StatelessWidget {
             child: child!),
         title: 'NEW GPS',
         theme: ThemeData(
-          textTheme: GoogleFonts.amiriTextTheme(),
+          //textTheme: GoogleFonts.amiriTextTheme(),
           primaryColor: AppConsts.mainColor,
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(

@@ -12,7 +12,7 @@ class CallServiceView extends StatelessWidget {
       children: [
         Text(
           "Service après vente".toUpperCase(),
-          style:  GoogleFonts.amiri(
+          style:  GoogleFonts.roboto(
             letterSpacing: 1.25,
           ),
         ),
@@ -36,7 +36,7 @@ class CallServiceView extends StatelessWidget {
         children: [
           Text(
             tel,
-            style:  GoogleFonts.amiri(
+            style:  GoogleFonts.roboto(
               color: AppConsts.mainColor,
               decoration: TextDecoration.underline,
             ),

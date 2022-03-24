@@ -245,7 +245,7 @@ class OptionItem extends StatelessWidget {
         ),
         child: Text(
           device.statut,
-          style: const GoogleFonts.amiri(
+          style: const GoogleFonts.roboto(
             color: Colors.white,
             fontSize: 10,
             fontWeight: FontWeight.w500,

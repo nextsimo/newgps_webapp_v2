@@ -156,7 +156,7 @@ class _BuildTextFieldState extends State<BuildTextField> {
           suffixText: widget.focusNode.hasFocus
               ? ''
               : '${deviceProvider.devices.length}',
-          suffixStyle: GoogleFonts.amiri(color: Colors.grey),
+          suffixStyle: GoogleFonts.roboto(color: Colors.grey),
           border: widget.outlineInputBorder,
           focusedBorder: widget.outlineInputBorder,
           enabledBorder: widget.outlineInputBorder,
@@ -318,7 +318,7 @@ class _BuildStatuWidget extends StatelessWidget {
       ),
       child: Text(
         device.statut,
-        style: GoogleFonts.amiri(color: Colors.white),
+        style: GoogleFonts.roboto(color: Colors.white),
       ),
     );
   }

@@ -158,7 +158,7 @@ class CardInfoView extends StatelessWidget {
           flex: 1,
           child: Text(
             content,
-            style:  GoogleFonts.amiri(
+            style:  GoogleFonts.roboto(
               color: AppConsts.mainColor,
             ),
           ),
@@ -232,7 +232,7 @@ class OdometreWidget extends StatelessWidget {
               child: RichText(
                 textAlign: TextAlign.center,
                 text: TextSpan(
-                  style:  GoogleFonts.amiri(
+                  style:  GoogleFonts.roboto(
                     fontSize: 19,
                     color: const Color(0xff639FCE),
                     fontWeight: FontWeight.bold,
@@ -241,7 +241,7 @@ class OdometreWidget extends StatelessWidget {
                   children:  [
                     TextSpan(
                       text: 'km/h',
-                      style: GoogleFonts.amiri(
+                      style: GoogleFonts.roboto(
                         color: const Color(0xff639FCE),
                       ),
                     ),

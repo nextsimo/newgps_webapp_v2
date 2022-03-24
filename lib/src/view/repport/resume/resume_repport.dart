@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:newgps/src/models/device.dart';
-import 'package:newgps/src/models/repport_resume_model.dart';
-import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/utils/locator.dart';
-import 'package:newgps/src/utils/styles.dart';
-import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
-import 'package:newgps/src/view/repport/resume/loading/resume_repport_loading.dart';
-import 'package:newgps/src/view/repport/resume/resume_repport_provider.dart';
-import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/device.dart';
+import '../../../models/repport_resume_model.dart';
+import '../../../services/newgps_service.dart';
+import '../../../utils/functions.dart';
+import '../../../utils/locator.dart';
+import '../../../utils/styles.dart';
+import '../../../widgets/buttons/main_button.dart';
+import '../../driver_phone/driver_phone_provider.dart';
 import '../clickable_text_cell.dart';
 import '../custom_devider.dart';
 import '../rapport_provider.dart';
 import '../text_cell.dart';
+import 'loading/resume_repport_loading.dart';
+import 'resume_repport_provider.dart';
 
 class BuildHead extends StatelessWidget {
   const BuildHead({
@@ -25,13 +25,13 @@ class BuildHead extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var borderSide = const BorderSide(
-        color: AppConsts.mainColor, width: AppConsts.borderWidth);
+        color: Colors.black, width: AppConsts.borderWidth);
     ResumeRepportProvider repportProvider =
         Provider.of<ResumeRepportProvider>(context);
 
     return Container(
       decoration: BoxDecoration(
-        color: AppConsts.mainColor.withOpacity(0.2),
+        color: Colors.black.withOpacity(0.2),
         border: Border(bottom: borderSide, top: borderSide),
       ),
       child: Row(
@@ -63,7 +63,7 @@ class BuildHead extends StatelessWidget {
           const BuildDivider(),
           BuildClickableTextCell(
             'Km actuel',
-            flex: 2,
+            flex: 1,
             ontap: repportProvider.updateByCurrentDistance,
             isSlected: repportProvider.selectedIndex == 3,
             isUp: repportProvider.odrderByCurrentDistance,
@@ -119,7 +119,7 @@ class BuildHead extends StatelessWidget {
           const BuildDivider(),
           BuildClickableTextCell(
             'Adresse',
-            flex: 4,
+            flex: 6,
             ontap: repportProvider.updateByAdresse,
             isSlected: repportProvider.selectedIndex == 10,
             isUp: repportProvider.orderByAdresse,
@@ -135,7 +135,7 @@ class BuildHead extends StatelessWidget {
           const BuildDivider(),
           BuildClickableTextCell(
             'Date actualisation',
-            flex: 4,
+            flex: 3,
             ontap: repportProvider.updateByDateActualisation,
             isSlected: repportProvider.selectedIndex == 12,
             isUp: repportProvider.orderByDateActualisation,
@@ -146,7 +146,7 @@ class BuildHead extends StatelessWidget {
               child: Center(
                 child: Text(
                   'Redémarrer boitier',
-                  style:  GoogleFonts.amiri(fontSize: 14),
+                  style:  GoogleFonts.roboto(fontSize: 14),
                 ),
               )),
           const BuildDivider(),
@@ -234,7 +234,7 @@ class RepportRow extends StatelessWidget {
       decoration: const BoxDecoration(
         border: Border(
           bottom: BorderSide(
-            color: AppConsts.mainColor,
+            color: Colors.black,
             width: AppConsts.borderWidth,
           ),
         ),
@@ -277,7 +277,7 @@ class RepportRow extends StatelessWidget {
           const BuildDivider(),
           BuildTextCell(repport.driverName, flex: 2),
           const BuildDivider(),
-          BuildTextCell('${repport.lastOdometerKm}', flex: 2),
+          BuildTextCell('${repport.lastOdometerKm}', flex: 1),
           const BuildDivider(),
           BuildTextCell(
             '${repport.lastValidSpeedKph}',
@@ -296,11 +296,11 @@ class RepportRow extends StatelessWidget {
           const BuildDivider(),
           BuildTextCell(repport.drivingTime, flex: 2),
           const BuildDivider(),
-          BuildTextCell(repport.adresse, flex: 4),
+          BuildTextCell(repport.adresse, flex: 6),
           const BuildDivider(),
           BuildTextCell(repport.city, flex: 2),
           const BuildDivider(),
-          BuildTextCell(formatDeviceDate(repport.lastValideDate), flex: 4),
+          BuildTextCell(formatDeviceDate(repport.lastValideDate), flex: 3),
           const BuildDivider(),
           Padding(
             padding: const EdgeInsets.all(3),

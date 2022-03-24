@@ -80,7 +80,7 @@ class LoginView extends StatelessWidget {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         error,
-                        style:  GoogleFonts.amiri(
+                        style:  GoogleFonts.roboto(
                           color: Colors.red,
                         ),
                       ),

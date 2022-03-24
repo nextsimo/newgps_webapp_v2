@@ -118,7 +118,7 @@ class NotifHistorisDetails extends StatelessWidget {
             const SizedBox(height: 13),
             Text(
               'Historiques ${porvider.getLabel(type)}',
-              style:  GoogleFonts.amiri(fontWeight: FontWeight.w700, fontSize: 20),
+              style:  GoogleFonts.roboto(fontWeight: FontWeight.w700, fontSize: 20),
             ),
           ],
         ),
@@ -153,7 +153,7 @@ class GroupSeparatorBuilderWidget extends StatelessWidget {
           child: Text(
             whatsapFormat(groupByValue),
             textAlign: TextAlign.center,
-            style: GoogleFonts.amiri(
+            style: GoogleFonts.roboto(
                 fontSize: 11,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[800]),
@@ -186,7 +186,7 @@ class _HistoricCard extends StatelessWidget {
                   children: [
                     Text(
                       notifHistoric.device,
-                      style:  GoogleFonts.amiri(
+                      style:  GoogleFonts.roboto(
                         fontWeight: FontWeight.bold,
                         fontSize: 11,
                       ),
@@ -234,7 +234,7 @@ class _HistoricCard extends StatelessWidget {
                 children: [
                   Text(
                     notifHistoric.message,
-                    style:  GoogleFonts.amiri(
+                    style:  GoogleFonts.roboto(
                         color: Colors.white,
                         fontWeight: FontWeight.w500,
                         fontSize: 13),
@@ -248,7 +248,7 @@ class _HistoricCard extends StatelessWidget {
                 child: Text(
                   whatsapFormatOnlyTime(
                       notifHistoric.createdAt.add(const Duration(hours: 1))),
-                  style: GoogleFonts.amiri(
+                  style: GoogleFonts.roboto(
                     color: Colors.grey[700],
                   ),
                 ),
@@ -268,7 +268,7 @@ class _HistoricCard extends StatelessWidget {
                     padding: const EdgeInsets.only(right: 4),
                     child: Text(
                       notifHistoric.address,
-                      style:  GoogleFonts.amiri(
+                      style:  GoogleFonts.roboto(
                         fontSize: 10,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey,
@@ -283,7 +283,7 @@ class _HistoricCard extends StatelessWidget {
                 child: Text(
                   whatsapFormatOnlyTime(
                       notifHistoric.createdAt.add(const Duration(hours: 1))),
-                  style: GoogleFonts.amiri(
+                  style: GoogleFonts.roboto(
                     color: Colors.grey[700],
                   ),
                 ),

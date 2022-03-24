@@ -16,16 +16,13 @@ class GeozoneView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return ChangeNotifierProxyProvider<FirebaseMessagingService,
-            GeozoneProvider>(
-        update: (_, m, u) => GeozoneProvider(m: m),
+    return ChangeNotifierProvider<GeozoneProvider>(
         create: (_) => GeozoneProvider(),
         builder: (context, snapshot) {
-              var droit = Provider.of<SavedAcountProvider>(context, listen: false)
-        .userDroits
-        .droits[5];
-    GeozoneProvider provider = Provider.of<GeozoneProvider>(context);
+          var droit = Provider.of<SavedAcountProvider>(context, listen: false)
+              .userDroits
+              .droits[5];
+          GeozoneProvider provider = Provider.of<GeozoneProvider>(context);
           return Scaffold(
             appBar: const CustomAppBar(
               actions: [],
@@ -66,19 +63,14 @@ class GeozoneView extends StatelessWidget {
                             children: [
                               const Text('Activer alerte geozone'),
                               const SizedBox(width: 6),
-                              Selector<GeozoneProvider, GeozoneSttingsAlert?>(
-                                builder: (_, settings, __) {
-                                  if (settings == null) return const SizedBox();
-                                  return Switch(
-                                      value: settings.isActive,
-                                      onChanged: droit.write
-                                          ? provider.updateSettings
-                                          : null,
-                                      activeColor: AppConsts.mainColor);
-                                },
-                                selector: (_, provider) =>
-                                    provider.geozoneSttingsAlert,
-                              ),
+                              Switch(
+                                  value:
+                                      provider.geozoneSttingsAlert?.isActive ??
+                                          false,
+                                  onChanged: droit.write
+                                      ? provider.updateSettings
+                                      : null,
+                                  activeColor: AppConsts.mainColor),
                             ],
                           ),
                         ),

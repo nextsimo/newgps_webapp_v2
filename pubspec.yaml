@@ -37,6 +37,7 @@ dependencies:
   shared_preferences: ^2.0.8
   syncfusion_flutter_gauges: ^19.2.62
   url_launcher: ^6.0.20
+  share_plus: ^4.0.3
 
 dev_dependencies:
   flutter_lints: ^1.0.0

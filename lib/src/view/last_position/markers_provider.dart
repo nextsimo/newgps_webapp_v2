@@ -274,7 +274,7 @@ Future<BitmapDescriptor> _getClusterBitmap(String text,
   TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
   painter.text = TextSpan(
     text: text,
-    style:  GoogleFonts.amiri(color: Colors.white, fontWeight: FontWeight.normal),
+    style:  GoogleFonts.roboto(color: Colors.white, fontWeight: FontWeight.normal),
   );
   painter.layout();
   painter.paint(canvas,

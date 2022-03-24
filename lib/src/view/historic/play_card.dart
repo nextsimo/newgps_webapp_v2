@@ -31,7 +31,7 @@ class PlayCard extends StatelessWidget {
           Center(
             child: Text(
               deviceProvider.selectedDevice.description,
-              style:  GoogleFonts.amiri(color: Colors.blue,fontWeight: FontWeight.bold),
+              style:  GoogleFonts.roboto(color: Colors.blue,fontWeight: FontWeight.bold),
             ),
           ),
           const SizedBox(height: 13),
@@ -98,7 +98,7 @@ class PlayCard extends StatelessWidget {
         const SizedBox(width: 6),
         Text(
           '$title:',
-          style:  GoogleFonts.amiri(fontWeight: FontWeight.w600),
+          style:  GoogleFonts.roboto(fontWeight: FontWeight.w600),
         ),
         const SizedBox(width: 6),
         Text(label),

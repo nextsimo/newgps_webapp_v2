@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
+import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:provider/provider.dart';
-
 import '../../connected_device/connected_device_provider.dart';
 
 class LoginAsView extends StatelessWidget {
@@ -76,7 +78,8 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)))),
         onPressed: () async {
-          // //log('Bearer ${savedAccount.key}');
+          LoginProvider loginProvider = Provider.of<LoginProvider>(context, listen: false);
+          // log('Bearer ${savedAccount.key}');
           setState(() => loading = true);
           Account? account;
           if (widget.savedAccount.underUser != null &&
@@ -93,13 +96,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
             );
           }
           if (account != null) {
-            final LastPositionProvider lastPositionProvider =
-                Provider.of<LastPositionProvider>(context, listen: false);
-            lastPositionProvider.fresh();
-            await shared.saveAccount(account);
-             fetchInitData(
-                lastPositionProvider: lastPositionProvider,
-                context: context);
+            shared.saveAccount(account);
             setState(() => loading = false);
             ConnectedDeviceProvider connectedDeviceProvider =
                 Provider.of(context, listen: false);
@@ -107,26 +104,19 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
             connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
             Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
           } else {
-            ///errorText = 'Mot de passe ou account est inccorect';
+            int? isActive = json.decode(await api.post(url: '/isactive', body: {
+              'account_id': widget.savedAccount.user,
+            }));
+
+            if (isActive == 1 || isActive == null) {
+              loginProvider.errorText = 'Mot de passe ou compte est inccorect';
+            } else if (isActive == 0) {
+              loginProvider.errorText = 'Votre compte est suspendu';
+            }
           }
-/*           String src = await api.post(
-              body: {
-                'accountId': savedAccount.user,
-                'userID': savedAccount.underUser,
-              },
-              url: '/profile',
-              newHeader: {
-                HttpHeaders.authorizationHeader: 'Bearer ${savedAccount.key}'
-              });
-          Account? account = accountFromMap(src);
-          account!.token = savedAccount.key;
-          final HistoricProvider historicProvider =
-              Provider.of<HistoricProvider>(context, listen: false);
-                        final LastPositionProvider lastPositionProvider =
-              Provider.of<LastPositionProvider>(context, listen: false);
-          shared.saveAccount(account);
-          fetchInitData(historicProvider: historicProvider,lastPositionProvider: lastPositionProvider, context: context);
-          nav.pushNamedAndRemoveUntil(Routes.customNavigationView); */
+
+          setState(() => loading = false);
+
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
