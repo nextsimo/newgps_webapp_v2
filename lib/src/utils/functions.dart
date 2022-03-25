@@ -147,9 +147,7 @@ Future<void> fetchInitData(
 void fetchInitData(
     {required LastPositionProvider lastPositionProvider,
     required BuildContext context}) async {
-  SavedAcountProvider savedAcountProvider =
-      Provider.of<SavedAcountProvider>(context, listen: false);
-  savedAcountProvider.fetchUserDroits();
+
   deviceProvider.init(context);
   lastPositionProvider.init(context);
 }
@@ -171,7 +169,7 @@ Future<String> _getLastReadDate(String type) async {
     url: '/alert/historic/read',
     body: {
       'type': type,
-      'device_token': await _getDeviceToken(),
+      'device_token': await getDeviceToken(),
       'account_id': account?.account.accountId,
     },
   );
@@ -182,7 +180,7 @@ Future<String> _getLastReadDate(String type) async {
 final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
 
 
-  Future<String?> _getDeviceToken() async {
+  Future<String?> getDeviceToken() async {
     WebBrowserInfo webBrowserInfo = await _deviceInfo.webBrowserInfo;
     return "${webBrowserInfo.appName}-${webBrowserInfo.platform}-${webBrowserInfo.productSub}";
   }

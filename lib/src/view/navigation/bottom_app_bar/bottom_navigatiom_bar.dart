@@ -79,9 +79,10 @@ class _CustomBottomNavigatioBarState extends State<CustomBottomNavigatioBar> {
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 10,
-                crossAxisSpacing: 8,
-                childAspectRatio: 3.0,
+          crossAxisCount: 10,
+          childAspectRatio: 4.0,
+          crossAxisSpacing: 6,
+          mainAxisSpacing: 6,
               ),
               children: _items.map((item) {
                 return InkWell(

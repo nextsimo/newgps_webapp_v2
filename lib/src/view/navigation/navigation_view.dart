@@ -1,61 +1,61 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:newgps/src/models/account.dart';
-import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/utils/device_size.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
-
+import '../../services/newgps_service.dart';
+import '../../utils/device_size.dart';
+import '../login/login_as/save_account_provider.dart';
 import 'bottom_app_bar/bottom_navigatiom_bar.dart';
 import 'bottom_app_bar/user_bottom_navigation_bar.dart';
 
-class CustomNavigationView extends StatefulWidget {
-  final bool alert;
-  const CustomNavigationView({Key? key, this.alert = false}) : super(key: key);
-
-  @override
-  State<CustomNavigationView> createState() => _CustomNavigationViewState();
-}
-
-class _CustomNavigationViewState extends State<CustomNavigationView> {
-  late PageController _pageController;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: 0);
-    NewgpsService.resumeRepportProvider.fetchDataFromOutside();
-    if (widget.alert) {
-      _pageController = PageController(initialPage: 3);
-      deviceProvider.initAlertRoute = 'historics';
-    }
-  }
-
+class CustomNavigationView extends StatelessWidget {
+  CustomNavigationView({Key? key}) : super(key: key);
+  final PageController myController = PageController();
   @override
   Widget build(BuildContext context) {
     DeviceSize.init(context);
-    SavedAcountProvider pro =
-        Provider.of<SavedAcountProvider>(context, listen: false);
+
+    navigationViewProvider.pageController = myController;
+    Account? account = shared.getAccount();
+    NewgpsService.resumeRepportProvider.fetchDataFromOutside();
+
     NewgpsService.messaging.init();
 
-    Account? account = shared.getAccount();
-    return Provider.value(
-        value: NewgpsService.messaging,
-        builder: (context, snapshot) {
+    return WillPopScope(
+      onWillPop: () async {
+        SystemNavigator.pop();
+        return false;
+      },
+      child: MultiProvider(
+        providers: [
+          Provider.value(value: NewgpsService.messaging),
+          Provider.value(value: navigationViewProvider),
+        ],
+        builder: (BuildContext context, __) {
+          SavedAcountProvider pro =
+              Provider.of<SavedAcountProvider>(context, listen: false);
+          pro.checkNotifcation();
           return Scaffold(
+            backgroundColor: Colors.transparent,
+            extendBody: true,
+            extendBodyBehindAppBar: true,
+            resizeToAvoidBottomInset: false,
             body: PageView(
               physics: const NeverScrollableScrollPhysics(),
-              controller: _pageController,
+              controller: myController,
               children: pro.buildPages(),
             ),
-            bottomNavigationBar: account!.account.userID == null
+            bottomNavigationBar: (account!.account.userID == null ||
+                    account.account.userID!.isEmpty)
                 ? CustomBottomNavigatioBar(
-                    pageController: _pageController,
-                    alert: widget.alert,
+                    pageController: myController,
                   )
                 : UserCustomBottomNavigatioBar(
-                    pageController: _pageController,
+                    pageController: myController,
                   ),
           );
-        });
+        },
+      ),
+    );
   }
 }

@@ -10,7 +10,6 @@ import 'imobility_alert_provider.dart';
 
 class ImobilityAlertView extends StatelessWidget {
   const ImobilityAlertView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProxyProvider<FirebaseMessagingService,
@@ -102,6 +101,10 @@ class _BuilTextFieldHour extends StatelessWidget {
                   textAlignVertical: TextAlignVertical.top,
                   decoration: const InputDecoration(
                     labelText: 'Heures',
+                    labelStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500
+                    ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
                         width: 1.6,

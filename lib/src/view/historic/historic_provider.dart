@@ -346,8 +346,10 @@ class HistoricProvider with ChangeNotifier {
       markers.clear();
       historicModel.devices?.clear();
       fetchInfoData();
+      _loading = true;
+    } else {
+      loading = true;
     }
-    loading = true;
     Account? account = shared.getAccount();
     String res = await api.post(
       url: '/historic',
@@ -403,10 +405,36 @@ class HistoricProvider with ChangeNotifier {
         }));
       }
       _loading = false;
+      _setMapFitToTour(markers);
       notifyListeners();
       await Future.delayed(const Duration(seconds: 1));
       //moveCamera(markers.first.position);
     }
+  }
+
+  void _setMapFitToTour(Set<Marker> p) {
+    double minLat = p.first.position.latitude;
+    double minLong = p.first.position.longitude;
+    double maxLat = p.first.position.latitude;
+    double maxLong = p.first.position.longitude;
+    for (var point in p) {
+      if (point.position.latitude < minLat) minLat = point.position.latitude;
+      if (point.position.latitude > maxLat) maxLat = point.position.latitude;
+      if (point.position.longitude < minLong) {
+        minLong = point.position.longitude;
+      }
+      if (point.position.longitude > maxLong) {
+        maxLong = point.position.longitude;
+      }
+    }
+
+    controller.future.then((c) {
+      c.moveCamera(CameraUpdate.newLatLngBounds(
+          LatLngBounds(
+              southwest: LatLng(minLat, minLong),
+              northeast: LatLng(maxLat, maxLong)),
+          90));
+    });
   }
 
   void onTapEnter(String val) {

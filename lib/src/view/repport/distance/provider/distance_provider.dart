@@ -13,6 +13,7 @@ class DistanceRepportProvider with ChangeNotifier {
     repports: [],
   );
 
+
   int distanceSum = 0;
 
   List<Repport> repportsPerDevice = [];
@@ -21,11 +22,14 @@ class DistanceRepportProvider with ChangeNotifier {
 
   bool up = true;
 
-  bool loading = false;
 
   late ScrollController scrollController;
 
   bool _stopPagination = false;
+
+  bool loading = false;
+
+
 
   void initContrtoller(ScrollController s) {
     scrollController = s;
@@ -44,6 +48,11 @@ class DistanceRepportProvider with ChangeNotifier {
       if (!_stopPagination) fetchForAllDevices();
     }
   }
+
+
+
+  
+
 
   void _init() {
     repport = RepportDistanceModel(distanceSum: 0, repports: []);
@@ -117,6 +126,9 @@ class DistanceRepportProvider with ChangeNotifier {
     }
     //_init();
     Account? account = shared.getAccount();
+    loading =true;
+          notifyListeners();
+
     String res = await api.post(
       url: '/repport/distance/all',
       body: {
@@ -129,6 +141,7 @@ class DistanceRepportProvider with ChangeNotifier {
         'page': page
       },
     );
+    loading =false;
 
     if (res.isNotEmpty) {
       RepportDistanceModel r = repportDistanceModelFromJson(res);
@@ -149,7 +162,7 @@ class DistanceRepportProvider with ChangeNotifier {
 
   Future<void> fetchOnDevice() async {
     _init();
-  
+
     for (DateTime i = provider.dateFrom;
         i.isBefore(provider.dateTo);
         i = i.add(const Duration(days: 1))) {

@@ -1,28 +1,28 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/alert/alert_navigation.dart';
-import 'package:newgps/src/view/camera/camera_view.dart';
-import 'package:newgps/src/view/driver_view/driver_view.dart';
-import 'package:newgps/src/view/geozone/geozone_navigation.dart';
-import 'package:newgps/src/view/geozone/geozone_view.dart';
-import 'package:newgps/src/view/gestion/gestion_view.dart';
-import 'package:newgps/src/view/historic/historic_view.dart';
-import 'package:newgps/src/view/last_position/last_position_view.dart';
-import 'package:newgps/src/view/matricule/matricule_view.dart';
-import 'package:newgps/src/view/repport/repport_view.dart';
-import 'package:newgps/src/view/user/user_view.dart';
 
-import '../../sone_view.dart';
+import 'package:newgps/src/utils/functions.dart';
+import '../../alert/alert_navigation.dart';
+import '../../camera/camera_view.dart';
+import '../../driver_view/driver_view.dart';
+import '../../geozone/geozone_view.dart';
+import '../../gestion/gestion_view.dart';
+import '../../historic/historic_view.dart';
+import '../../last_position/last_position_view.dart';
+import '../../matricule/matricule_view.dart';
+import '../../repport/repport_view.dart';
+import '../../user/user_view.dart';
 import '../../user_empty_page.dart';
 
 class SavedAcountProvider with ChangeNotifier {
   List<SavedAccount> _savedAcounts = [];
+
   int _numberOfNotif = 0;
 
   int get numberOfNotif => _numberOfNotif;
@@ -32,11 +32,14 @@ class SavedAcountProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+
+
   Future<void> checkNotifcation() async {
     String res = await api.post(
-      url: '/notification/historics/count',
+      url: '/notification/historics/count2',
       body: await getBody()
-        ..addAll({'device_id': await _getDeviceToken()}),
+        ..addAll({'device_id': await getDeviceToken(), 'notification_id': NewgpsService.messaging.notificationID}),
     );
 
     if (res.isNotEmpty) {
@@ -62,12 +65,24 @@ class SavedAcountProvider with ChangeNotifier {
     ],
   );
 
-  Widget buildPageView(BuildContext _, int index) {
-    Account? account = shared.getAccount();
-    if (account!.account.userID == null) {
-      return _buildAccountPageView(index);
-    }
-    return _buildUserPageView(index);
+  void initUserDroit() {
+    userDroits = UserDroits(
+      id: 0,
+      userId: '',
+      accountId: '',
+      droits: [
+        Droit(read: true, write: true, index: 0),
+        Droit(read: true, write: true, index: 1),
+        Droit(read: true, write: true, index: 2),
+        Droit(read: true, write: true, index: 3),
+        Droit(read: true, write: true, index: 4),
+        Droit(read: true, write: true, index: 5),
+        Droit(read: true, write: true, index: 6),
+        Droit(read: true, write: true, index: 7),
+        Droit(read: true, write: true, index: 8),
+        Droit(read: true, write: true, index: 9),
+      ],
+    );
   }
 
   final List<Widget> _accountWidget = [
@@ -82,12 +97,6 @@ class SavedAcountProvider with ChangeNotifier {
     const GestionView(),
     const DriverView(),
   ];
-
-  Future<String?> _getDeviceToken() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    WebBrowserInfo webBrowserInfo = await deviceInfo.webBrowserInfo;
-    return "${webBrowserInfo.appName}-${webBrowserInfo.platform}-${webBrowserInfo.productSub}";
-  }
 
   List<Widget> buildPages() {
     Account? account = shared.getAccount();
@@ -113,51 +122,11 @@ class SavedAcountProvider with ChangeNotifier {
     return _userPages;
   }
 
-  Widget _buildAccountPageView(int index) {
-    switch (index) {
-      case 0:
-        return const LastPositionView();
-      case 1:
-        return const HistoricView();
-      case 2:
-        return const RepportView();
-      case 3:
-        return const AlertNavigation();
-      case 4:
-        return const GeozoneNavigation();
-      case 5:
-        return const UsersView();
-      case 6:
-        return const MatriculeView();
-      default:
-        return const SoonPage();
-    }
-  }
-
-  Widget _buildUserPageView(int index) {
-    switch (index) {
-      case 0:
-        return const LastPositionView();
-      case 1:
-        return const HistoricView();
-      case 2:
-        return const RepportView();
-      case 3:
-        return const AlertNavigation();
-      case 4:
-        return const GeozoneNavigation();
-      case 5:
-        return const UsersView();
-      case 6:
-        return const MatriculeView();
-      default:
-        return const SoonPage();
-    }
-  }
-
   Future<void> fetchUserDroits() async {
     Account? account = shared.getAccount();
-    if (account!.account.userID == null) return;
+    if (account!.account.userID == null || account.account.userID!.isEmpty) {
+      return;
+    }
     String res = await api.post(url: '/user/droits/show', body: {
       'account_id': account.account.accountId,
       'user_id': account.account.userID,
@@ -226,6 +195,22 @@ class SavedAcountProvider with ChangeNotifier {
     }
   }
 
+  List<SavedAccount> fetchSavedAccount() {
+    List<String> strings = shared.getAcountsList(acountsKey);
+    if (strings.isNotEmpty) {
+      return List<SavedAccount>.from(strings
+          .map<SavedAccount>(
+            (e) => SavedAccount(
+              user: e.split(',').first,
+              key: e.split(',').elementAt(1),
+              underUser: e.split(',').last,
+            ),
+          )
+          .toList());
+    }
+    return [];
+  }
+
   SavedAccount? getAccount(String? accontID) {
     List<String> strings = shared.getAcountsList(acountsKey);
     if (strings.isNotEmpty) {
@@ -244,10 +229,15 @@ class SavedAcountProvider with ChangeNotifier {
     return null;
   }
 
-  void deleteAcount(String? user) {
+  void deleteAcount(String? user, {bool disableSetting = false}) {
     savedAcounts.removeWhere((ac) => ac.user == user);
     saveAcountsList(savedAcounts);
+    if (disableSetting) disapleAllNotification(user);
     notifyListeners();
+  }
+
+  void disapleAllNotification(String? account) {
+    NewgpsService.messaging.disableAllSettings(account);
   }
 
   void saveAcountsList(List<SavedAccount> acounts) {

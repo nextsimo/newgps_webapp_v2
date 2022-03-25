@@ -69,7 +69,7 @@ class LoginProvider with ChangeNotifier {
     }
   }
 
-  Future<void> login(BuildContext context) async { 
+  Future<void> login(BuildContext context) async {
     errorText = '';
     if (formKey.currentState!.validate()) {
       // request login
@@ -89,18 +89,18 @@ class LoginProvider with ChangeNotifier {
             Provider.of<LastPositionProvider>(context, listen: false);
         final SavedAcountProvider savedAcountProvider =
             Provider.of<SavedAcountProvider>(context, listen: false);
+        savedAcountProvider.initUserDroit();
         savedAcountProvider.savedAcount(
             account.account.accountId, passwordController.text);
         await shared.saveAccount(account);
-         fetchInitData(
-            lastPositionProvider: lastPositionProvider,
-            context: context);
+        fetchInitData(
+            lastPositionProvider: lastPositionProvider, context: context);
         compteController.text = '';
         passwordController.text = '';
-              final ConnectedDeviceProvider connectedDeviceProvider =
-          Provider.of<ConnectedDeviceProvider>(context, listen: false);
-      connectedDeviceProvider.init();
-      connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
+        final ConnectedDeviceProvider connectedDeviceProvider =
+            Provider.of<ConnectedDeviceProvider>(context, listen: false);
+        connectedDeviceProvider.init();
+        connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/navigation', (_) => false);
       } else {
@@ -128,9 +128,10 @@ class LoginProvider with ChangeNotifier {
         account.account.userID,
       );
       shared.saveAccount(account);
-       fetchInitData(
-          context: context,
-          lastPositionProvider: lastPositionProvider);
+      await savedAcountProvider.fetchUserDroits();
+
+      fetchInitData(
+          context: context, lastPositionProvider: lastPositionProvider);
       final ConnectedDeviceProvider connectedDeviceProvider =
           Provider.of<ConnectedDeviceProvider>(context, listen: false);
       connectedDeviceProvider.init();

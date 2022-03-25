@@ -6,6 +6,14 @@ import 'package:newgps/src/view/repport/rapport_provider.dart';
 
 class FuelRepportProvider with ChangeNotifier {
   List<FuelRepportData> repports = [];
+  bool _loading = false;
+
+  bool get loading => _loading;
+
+  set loading(bool loading) {
+    _loading = loading;
+    notifyListeners();
+  }
 
   Future<void> fetchRepports(String deviceId, RepportProvider repportProvider,
       {bool fromInside = false}) async {
@@ -14,7 +22,7 @@ class FuelRepportProvider with ChangeNotifier {
       day = 0;
     }
     Account? account = shared.getAccount();
-
+    loading = true;
     for (DateTime i = repportProvider.dateFrom;
         i.isBefore(repportProvider.dateTo);
         i = i.add(const Duration(days: 1))) {
@@ -41,6 +49,8 @@ class FuelRepportProvider with ChangeNotifier {
         notifyListeners();
       }
     }
+
+    loading = false;
   }
 
   int day = 0;

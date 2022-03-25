@@ -36,7 +36,8 @@ class _DistanceRepportAllDeviceViewState
   Widget build(BuildContext context) {
     context.select<RepportProvider, Device>((p) => p.selectedDevice);
     context.select<RepportProvider, DateTime>((p) => p.dateFrom);
-    context.select<RepportProvider, DateTime>((p) => p.dateTo);    DistanceRepportProvider provider =
+    context.select<RepportProvider, DateTime>((p) => p.dateTo);
+    DistanceRepportProvider provider =
         Provider.of<DistanceRepportProvider>(context, listen: false);
     provider.fetchForAllDevices(p: 1);
 
@@ -45,58 +46,80 @@ class _DistanceRepportAllDeviceViewState
         right: false,
         bottom: false,
         top: false,
-        child: Column(
+        child: Stack(
           children: [
-            const _BuildHead(),
-            Expanded(
-              child: Consumer<DistanceRepportProvider>(
-                  builder: (context, provider, _) {
-                return Column(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      decoration: const BoxDecoration(
-                          color: AppConsts.mainColor,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                           Expanded(
-                            child: Center(
-                              child: Text(
-                                'Total distance parcorue:',
-                                style: GoogleFonts.roboto(color: Colors.white),
-                              ),
-                            ),
+            Column(
+              children: [
+                const _BuildHead(),
+                Expanded(
+                  child: Consumer<DistanceRepportProvider>(
+                      builder: (context, provider, _) {
+                    return Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          decoration: const BoxDecoration(
+                            color: AppConsts.mainColor,
                           ),
-                          const Expanded(child: SizedBox()),
-                          const Expanded(child: SizedBox()),
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                "${provider.distanceSum == 0 ? '...' : provider.distanceSum}",
-                                style:  GoogleFonts.roboto(color: Colors.white),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    'Total distance parcorue:',
+                                    style:
+                                        GoogleFonts.roboto(color: Colors.white),
+                                  ),
+                                ),
                               ),
-                            ),
-                          )
-                        ],
-                      ),
+                              const Expanded(child: SizedBox()),
+                              const Expanded(child: SizedBox()),
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    "${provider.distanceSum == 0 ? '...' : provider.distanceSum}",
+                                    style:
+                                        GoogleFonts.roboto(color: Colors.white),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            controller: _scrollController,
+                            physics: const ClampingScrollPhysics(),
+                            itemCount: provider.repport.repports.length,
+                            itemBuilder: (_, int index) {
+                              return _RepportRow(
+                                model:
+                                    provider.repport.repports.elementAt(index),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }),
+                ),
+              ],
+            ),
+            Selector<DistanceRepportProvider, bool>(
+              selector: (_, p) => p.loading,
+              builder: (_, bool loading, __) {
+                if (loading) {
+                  return const Center(
+                    child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Center(child: CircularProgressIndicator()),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        physics: const ClampingScrollPhysics(),
-                        itemCount: provider.repport.repports.length,
-                        itemBuilder: (_, int index) {
-                          return _RepportRow(
-                            model: provider.repport.repports.elementAt(index),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                );
-              }),
+                  );
+                }
+                return const SizedBox();
+              },
             ),
           ],
         ),
@@ -114,8 +137,8 @@ class _BuildHead extends StatelessWidget {
   Widget build(BuildContext context) {
     DistanceRepportProvider provider =
         Provider.of<DistanceRepportProvider>(context);
-    var borderSide = const BorderSide(
-        color: Colors.black, width: AppConsts.borderWidth);
+    var borderSide =
+        const BorderSide(color: Colors.black, width: AppConsts.borderWidth);
     return Container(
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.2),

@@ -7,8 +7,7 @@ import '../../services/newgps_service.dart';
 import '../../utils/functions.dart';
 import '../connected_device/connected_device_provider.dart';
 import '../last_position/last_position_provider.dart';
-
-
+import '../login/login_as/save_account_provider.dart';
 
 class SplashViewModel with ChangeNotifier {
   Future<void> init(BuildContext context) async {
@@ -23,15 +22,21 @@ class SplashViewModel with ChangeNotifier {
         'account_id': shared.getAccount()?.account.accountId,
       }));
 
+      SavedAcountProvider savedAcountProvider =
+          Provider.of<SavedAcountProvider>(context, listen: false);
+
       if (isActive == 1) {
         LastPositionProvider lastPositionProvider =
             Provider.of<LastPositionProvider>(context, listen: false);
-
+        savedAcountProvider.initUserDroit();
 /*         SavedAcountProvider savedAcountProvider =
             Provider.of<SavedAcountProvider>(context, listen: false);
         savedAcountProvider.initUserDroit(); */
-
-         fetchInitData(
+        String userID = shared.getAccount()?.account.userID ?? '';
+        if (userID.isNotEmpty) {
+          await savedAcountProvider.fetchUserDroits();
+        }
+        fetchInitData(
           lastPositionProvider: lastPositionProvider,
           context: context,
         );
@@ -39,6 +44,7 @@ class SplashViewModel with ChangeNotifier {
         final ConnectedDeviceProvider connectedDeviceProvider =
             Provider.of<ConnectedDeviceProvider>(context, listen: false);
         connectedDeviceProvider.init();
+
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/navigation', (_) => false);
       } else {

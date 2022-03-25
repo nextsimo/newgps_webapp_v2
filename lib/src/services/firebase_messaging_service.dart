@@ -31,6 +31,15 @@ class FirebaseMessagingService {
     });
   }
 
+  Future<void> disableAllSettings(String? account) async {
+    Account? account = shared.getAccount();
+    String? deviceUID = await _getDeviceToken();
+    await api.post(
+      url: '/disable/alert',
+      body: {'account_id': account, 'device_uid': deviceUID, 'state': false},
+    );
+  }
+
   Future<void> _initmessage() async {
     RemoteMessage? remoteMessage = await messaging.getInitialMessage();
     if (remoteMessage != null) {

@@ -55,7 +55,8 @@ class RepportDataView extends StatelessWidget {
               Row(
                 children: [
                   const SizedBox(width: 10),
-                  const AutoSearchField(),
+                  if (repportProvider.selectedRepport.index != 5)
+                    const AutoSearchField(),
                   const AutoSearchType(),
                   if (repportProvider.selectedRepport.index != 0)
                     DateTimePicker(

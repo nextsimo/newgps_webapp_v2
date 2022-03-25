@@ -47,9 +47,10 @@ class MatriculeModel {
       vehicleModel: json["vehicleModel"],
       phone1: json["phone1"],
       phone2: json["phone2"],
-      driverName: json["driverName"],
+      driverName: json["driverName"] ?? "",
       index: json["index"],
-      deviceID: json["deviceID"]);
+      deviceID: json["deviceID"]
+      );
 
   Map<String, dynamic> toJson() => {
         "vehicleID": vehicleId,

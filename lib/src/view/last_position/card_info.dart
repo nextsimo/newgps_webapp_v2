@@ -24,7 +24,7 @@ class CardInfoView extends StatelessWidget {
         (deviceProvider.selectedTabIndex == 1 && infoModel != null)) {
       Device device = deviceProvider.selectedDevice;
       return Positioned(
-        bottom: 2,
+        bottom: 60,
         left: AppConsts.outsidePadding,
         right:  AppConsts.outsidePadding,
         child: SizedBox(

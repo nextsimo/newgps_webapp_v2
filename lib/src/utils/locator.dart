@@ -6,6 +6,7 @@ import '../services/firebase_messaging_service.dart';
 import '../services/location_service.dart';
 import '../services/shared_preferences_service.dart';
 import '../view/driver_phone/driver_phone_provider.dart';
+import '../view/navigation/bottom_app_bar/navigation_provider.dart';
 import '../view/repport/resume/resume_repport_provider.dart';
 
 final locator = GetIt.instance;
@@ -20,4 +21,6 @@ void setup() {
   locator.registerSingleton<ResumeRepportProvider>(ResumeRepportProvider());
   locator
       .registerSingleton<FirebaseMessagingService>(FirebaseMessagingService());
+
+  locator.registerSingleton<NavigationProvider>(NavigationProvider());
 }

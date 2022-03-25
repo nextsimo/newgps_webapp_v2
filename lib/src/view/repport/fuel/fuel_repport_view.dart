@@ -30,22 +30,43 @@ class FuelRepportView extends StatelessWidget {
         context.select<RepportProvider, Device>((p) => p.selectedDevice);
 
         return Material(
-          child: Column(
+          child: Stack(
             children: [
-              const _BuildHead(),
-              Consumer<FuelRepportProvider>(
-                  builder: (context, __, ____) {
-                return Expanded(
-                  child: ListView.builder(
-                    itemCount: fuelRepportProvider.repports.length,
-                    itemBuilder: (_, int index) {
-                      return _RepportRow(
-                          repport:
-                              fuelRepportProvider.repports.elementAt(index));
-                    },
-                  ),
-                );
-              }),
+              Column(
+                children: [
+                  const _BuildHead(),
+                  Consumer<FuelRepportProvider>(
+                      builder: (context, __, ____) {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: fuelRepportProvider.repports.length,
+                        itemBuilder: (_, int index) {
+                          return _RepportRow(
+                              repport:
+                                  fuelRepportProvider.repports.elementAt(index));
+                        },
+                      ),
+                    );
+                  }),
+                ],
+              ),
+            Selector<FuelRepportProvider, bool>(
+              selector: (_, p) => p.loading,
+              builder: (_, bool loading, __) {
+                if (loading) {
+                  return const Center(
+                    child: SizedBox(
+                      width: 100,
+                      height: 100,
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
+            ),
+
+
             ],
           ),
         );
