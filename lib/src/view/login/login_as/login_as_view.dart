@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:provider/provider.dart';
@@ -86,13 +84,13 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
               widget.savedAccount.underUser!.isNotEmpty) {
             account = await api.underAccountLogin(
               accountId: widget.savedAccount.user ?? "",
-              password: widget.savedAccount.key ?? "",
+              password: widget.savedAccount.password,
               underAccountLogin: widget.savedAccount.underUser ?? "",
             );
           } else {
             account = await api.login(
               accountId: widget.savedAccount.user ?? "",
-              password: widget.savedAccount.key ?? "",
+              password: widget.savedAccount.password ,
             );
           }
           if (account != null) {
@@ -106,10 +104,12 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
           } else {
             int? isActive = json.decode(await api.post(url: '/isactive', body: {
               'account_id': widget.savedAccount.user,
+              'password': widget.savedAccount.password,
+              'user' : widget.savedAccount.underUser,
             }));
 
-            if (isActive == 1 || isActive == null) {
-              loginProvider.errorText = 'Mot de passe ou compte est inccorect';
+            if (isActive == -1 ) {
+              loginProvider.errorText = 'Le propriétaire du compte peut avoir changé le mot de passe';
             } else if (isActive == 0) {
               loginProvider.errorText = 'Votre compte est suspendu';
             }

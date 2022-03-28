@@ -49,7 +49,7 @@ class DeviceProvider with ChangeNotifier {
       body: {
         'command': command,
         'account_id': account.account.accountId,
-        'password': savedAccount!.key,
+        'password': savedAccount?.password,
         'device_id': device.deviceId
       },
     );

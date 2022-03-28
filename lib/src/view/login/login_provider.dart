@@ -91,8 +91,14 @@ class LoginProvider with ChangeNotifier {
             Provider.of<SavedAcountProvider>(context, listen: false);
         savedAcountProvider.initUserDroit();
         savedAcountProvider.savedAcount(
-            account.account.accountId, passwordController.text);
-        await shared.saveAccount(account);
+            account.account.accountId, passwordController.text, );
+        await shared.saveAccount(Account(
+            account: AccountClass(
+                accountId: compteController.text,
+                userID: underCompteController.text,
+                password: passwordController.text,
+                description: account.account.description),
+            token: passwordController.text));
         fetchInitData(
             lastPositionProvider: lastPositionProvider, context: context);
         compteController.text = '';

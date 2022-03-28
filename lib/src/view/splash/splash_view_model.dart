@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:newgps/src/models/account.dart';
 import 'package:provider/provider.dart';
 
 import '../../services/newgps_service.dart';
@@ -16,10 +17,11 @@ class SplashViewModel with ChangeNotifier {
 
   void checkIfUserIsAuth(BuildContext context) async {
     await Future.delayed(const Duration(seconds: 1));
-
-    if (shared.getAccount() != null) {
+    Account? account = shared.getAccount();
+    if (account != null) {
       int? isActive = json.decode(await api.post(url: '/isactive', body: {
-        'account_id': shared.getAccount()?.account.accountId,
+        'account_id': account.account.accountId,
+        'password': account.account.password,
       }));
 
       SavedAcountProvider savedAcountProvider =

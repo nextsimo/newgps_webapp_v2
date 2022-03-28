@@ -8,7 +8,7 @@ import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 
 class NavigationProvider {
-   PageController pageController = PageController();
+  PageController pageController = PageController();
 
   String initAlertRoute = 'alert';
 
@@ -22,11 +22,13 @@ class NavigationProvider {
         .fetchSavedAccount()
         .firstWhere((ac) => ac.user == accountId);
     shared.saveAccount(Account(
-        account: AccountClass(
-            accountId: accounts.user,
-            userID: accounts.underUser,
-            description: ''),
-        token: ''));
+      account: AccountClass(
+        password: accounts.password,
+          accountId: accounts.user,
+          userID: accounts.underUser,
+          description: ''),
+      token: accounts.password,
+    ));
     fetchInitData(
         lastPositionProvider: lastPositionProvider, context: DeviceSize.c);
     pageController.jumpToPage(3);

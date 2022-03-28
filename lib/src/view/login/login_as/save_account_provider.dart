@@ -163,13 +163,13 @@ class SavedAcountProvider with ChangeNotifier {
     return res;
   }
 
-  void savedAcount(String? user, String? key, [String? underUser = '']) {
+  void savedAcount(String? user, String password, [String? underUser = '']) {
     if (underUser!.isNotEmpty) {
       deleteUserAccount(underUser, user);
     } else {
       deleteAcount(user);
     }
-    _savedAcounts.add(SavedAccount(user: user, key: key, underUser: underUser));
+    _savedAcounts.add(SavedAccount(user: user, password: password, underUser: underUser));
     saveAcountsList(_savedAcounts);
   }
 
@@ -187,7 +187,7 @@ class SavedAcountProvider with ChangeNotifier {
           .map<SavedAccount>(
             (e) => SavedAccount(
               user: e.split(',').first,
-              key: e.split(',').elementAt(1),
+              password: e.split(',').elementAt(1),
               underUser: e.split(',').last,
             ),
           )
@@ -202,7 +202,7 @@ class SavedAcountProvider with ChangeNotifier {
           .map<SavedAccount>(
             (e) => SavedAccount(
               user: e.split(',').first,
-              key: e.split(',').elementAt(1),
+              password: e.split(',').elementAt(1),
               underUser: e.split(',').last,
             ),
           )
@@ -219,7 +219,7 @@ class SavedAcountProvider with ChangeNotifier {
               .map<SavedAccount>(
                 (e) => SavedAccount(
                   user: e.split(',').first,
-                  key: e.split(',').elementAt(1),
+                  password: e.split(',').elementAt(1),
                   underUser: e.split(',').last,
                 ),
               )
@@ -243,7 +243,7 @@ class SavedAcountProvider with ChangeNotifier {
   void saveAcountsList(List<SavedAccount> acounts) {
     _savedAcounts = acounts;
     List<String> newListAcounts = List<String>.from(
-        acounts.map((e) => '${e.user},${e.key},${e.underUser}').toList());
+        acounts.map((e) => '${e.user},${e.password},${e.underUser}').toList());
     shared.setStringList(acountsKey, newListAcounts);
   }
 }
@@ -251,7 +251,7 @@ class SavedAcountProvider with ChangeNotifier {
 class SavedAccount {
   final String? user;
   final String? underUser;
-  final String? key;
+  final String password;
 
-  SavedAccount({required this.user, required this.key, this.underUser = ''});
+  SavedAccount({required this.user, required this.password, this.underUser = ''});
 }
