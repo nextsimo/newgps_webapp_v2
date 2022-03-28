@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,6 +19,8 @@ import 'package:provider/provider.dart';
 import 'date_map_picker/time_range_widget.dart';
 
 class HistoricProvider with ChangeNotifier {
+
+  
   late Set<Marker> markers = {};
 
   late DateTime dateFrom;
@@ -405,14 +408,17 @@ class HistoricProvider with ChangeNotifier {
         }));
       }
       _loading = false;
-      _setMapFitToTour(markers);
+
+      _setMapFitToTour(markers, init: init);
       notifyListeners();
-      await Future.delayed(const Duration(seconds: 1));
       //moveCamera(markers.first.position);
     }
   }
 
-  void _setMapFitToTour(Set<Marker> p) {
+  Future<void> _setMapFitToTour(Set<Marker> p, {bool init = false}) async {
+    log('--------> $init');
+    if( init ){
+    await Future.delayed(const Duration(seconds: 1));}
     double minLat = p.first.position.latitude;
     double minLong = p.first.position.longitude;
     double maxLat = p.first.position.latitude;
@@ -428,13 +434,13 @@ class HistoricProvider with ChangeNotifier {
       }
     }
 
-    controller.future.then((c) {
-      c.moveCamera(CameraUpdate.newLatLngBounds(
+
+      googleMapController?.moveCamera(CameraUpdate.newLatLngBounds(
           LatLngBounds(
               southwest: LatLng(minLat, minLong),
               northeast: LatLng(maxLat, maxLong)),
           90));
-    });
+  
   }
 
   void onTapEnter(String val) {
