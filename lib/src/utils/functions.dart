@@ -7,9 +7,7 @@ import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:intl/intl.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
-import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
-import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 const String fuelLocalDataKey = 'fuel';

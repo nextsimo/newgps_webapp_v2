@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/device_provider.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/functions.dart';
+
 import 'package:newgps/src/utils/locator.dart';
 import 'package:provider/provider.dart';
 
@@ -94,8 +94,7 @@ class NotifHistoricPorvider with ChangeNotifier {
     String res = await api.post(url: '/alert/position', body: {
       'account_id': account?.account.accountId,
       'device_id': deviceId,
-      'timestamp': timestamp,
-      'is_web': true,
+      'timestamp': timestamp
     });
 
     if (res.isNotEmpty) {
@@ -209,7 +208,7 @@ class NotifHistoricPorvider with ChangeNotifier {
     _loadingDeatailsHisto = true;
     Account? account = shared.getAccount();
     String res = await api.post(
-      url: '/notification/historics/details2',
+      url: '/notification/historics/details/extra',
       body: {
         'type': type,
         'device_id': deviceId,
@@ -236,24 +235,20 @@ class NotifHistoricPorvider with ChangeNotifier {
       url: '/alert/historic/read/save',
       body: {
         'type': type,
-        'device_token': await _getDeviceToken(),
+        'device_token': await getDeviceToken(),
         'account_id': account?.account.accountId,
       },
     );
   }
 
-  final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
-  Future<String?> _getDeviceToken() async {
-    WebBrowserInfo webBrowserInfo = await _deviceInfo.webBrowserInfo;
-    return "${webBrowserInfo.appName}-${webBrowserInfo.platform}-${webBrowserInfo.productSub}";
-  }
+
 
   bool loading = false;
 
   Future<void> fetchHisto() async {
     loading = true;
     String res = await api.post(
-      url: '/notification/historics2',
+      url: '/notification/historics/extra',
       body: await getBody()
         ..addAll({
           'notification_id': NewgpsService.messaging.notificationID,

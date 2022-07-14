@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newgps/src/models/geozne_sttings_alert.dart';
 import 'package:newgps/src/models/geozone.dart';
-import 'package:newgps/src/services/firebase_messaging_service.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:newgps/src/view/navigation/top_app_bar.dart';

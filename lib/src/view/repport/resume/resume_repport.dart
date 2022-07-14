@@ -63,7 +63,7 @@ class BuildHead extends StatelessWidget {
           const BuildDivider(),
           BuildClickableTextCell(
             'Km actuel',
-            flex: 1,
+            flex: 2,
             ontap: repportProvider.updateByCurrentDistance,
             isSlected: repportProvider.selectedIndex == 3,
             isUp: repportProvider.odrderByCurrentDistance,
@@ -277,7 +277,7 @@ class RepportRow extends StatelessWidget {
           const BuildDivider(),
           BuildTextCell(repport.driverName, flex: 2),
           const BuildDivider(),
-          BuildTextCell('${repport.lastOdometerKm}', flex: 1),
+          BuildTextCell('${repport.lastOdometerKm}', flex: 2),
           const BuildDivider(),
           BuildTextCell(
             '${repport.lastValidSpeedKph}',

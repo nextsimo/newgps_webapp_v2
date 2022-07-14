@@ -19,14 +19,12 @@ class SharedPrefrencesService {
   Future<void> saveAccount(Account account) async {
     String myAccount = accountToMap(account);
 
-   await  sharedPreferences.setString('account', myAccount);
+    await sharedPreferences.setString('account', myAccount);
   }
 
   dynamic getKey(String key) {
     sharedPreferences.get(key);
   }
-
-
 
   List<String> getAcountsList(String key) {
     return sharedPreferences.getStringList(key) ?? const [];
@@ -41,5 +39,6 @@ class SharedPrefrencesService {
     if (res != null) {
       return accountFromMap(res);
     }
+    return null;
   }
 }

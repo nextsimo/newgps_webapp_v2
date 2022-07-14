@@ -5,6 +5,7 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/utils/device_size.dart';
+import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 import 'newgps_service.dart';
@@ -32,8 +33,7 @@ class FirebaseMessagingService {
   }
 
   Future<void> disableAllSettings(String? account) async {
-    Account? account = shared.getAccount();
-    String? deviceUID = await _getDeviceToken();
+    String? deviceUID = await getDeviceToken();
     await api.post(
       url: '/disable/alert',
       body: {'account_id': account, 'device_uid': deviceUID, 'state': false},

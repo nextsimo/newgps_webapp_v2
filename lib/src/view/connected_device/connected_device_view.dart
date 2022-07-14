@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'connected_device_model.dart';
 import 'connected_device_provider.dart';
@@ -77,6 +78,8 @@ class _BuildConnectedWidget extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 5),
+                    if (mode.phoneNumber.isEmpty)
+
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -95,16 +98,19 @@ class _BuildConnectedWidget extends StatelessWidget {
               children: [
                 Text(
                   mode.phoneNumber,
-                  style:  GoogleFonts.roboto(
+                  style: GoogleFonts.roboto(
                     decoration: TextDecoration.underline,
                   ),
                 ),
                 const SizedBox(width: 5),
                 MainButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    launch('tel:${mode.phoneNumber}',
+                        webOnlyWindowName: '_self');
+                  },
                   label: 'Appeler',
                   height: 25,
-                  width: 77,
+                  width: 130,
                   icon: Icons.call,
                 ),
               ],

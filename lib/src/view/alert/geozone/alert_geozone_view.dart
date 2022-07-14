@@ -125,7 +125,7 @@ class HistoALertGeozoneCard extends StatelessWidget {
           const SizedBox(height: 14),
           Row(
             children:  [
-              Text('Date:'),
+              const Text('Date:'),
               const SizedBox(width: 10),
               Text('22/10/2022 10:10:10',
                   style: GoogleFonts.roboto(fontWeight: FontWeight.bold)),
@@ -135,7 +135,7 @@ class HistoALertGeozoneCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children:  [
-              Text('Adresse:'),
+              const Text('Adresse:'),
              const SizedBox(width: 10),
                 Expanded(
                 child: Text('Casablanca Bourgoune Mosque hassane 2',

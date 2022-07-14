@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
-import 'package:newgps/src/view/alert/speed/speed_alert_model.dart';
 import 'package:newgps/src/services/firebase_messaging_service.dart';
 import 'package:newgps/src/services/newgps_service.dart';
+
+import 'speed_alert_model.dart';
 
 class SpeedAlertProvider with ChangeNotifier {    
   SpeedAlertSettings? model;

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +36,12 @@ class SavedAcountProvider with ChangeNotifier {
 
   Future<void> checkNotifcation() async {
     String res = await api.post(
-      url: '/notification/historics/count2',
+      url: '/notification/historics/count/extra',
       body: await getBody()
-        ..addAll({'device_id': await getDeviceToken(), 'notification_id': NewgpsService.messaging.notificationID}),
+        ..addAll({
+          'device_id': await getDeviceToken(),
+          'notification_id': NewgpsService.messaging.notificationID
+        }),
     );
 
     if (res.isNotEmpty) {

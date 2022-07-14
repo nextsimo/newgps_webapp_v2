@@ -139,7 +139,7 @@ class LastPositionProvider with ChangeNotifier {
       if (markersProvider.fetchGroupesDevices) {
         await fetchDevices();
       } else {
-        await fetchDevice(deviceProvider.selectedDevice.deviceId);
+        await fetchDevice(deviceProvider.selectedDevice.deviceId, isSelected: true);
       }
     }
     _init = true;

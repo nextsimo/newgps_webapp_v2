@@ -58,7 +58,7 @@ class _LastpositionMapState extends State<LastpositionMap> {
                 provider.markersProvider.textMarkerManager.updateMap();
               },
               initialCameraPosition: const CameraPosition(
-                  target: LatLng(31.7917, -7.0926), zoom: 6.5),
+                  target: LatLng(31.7917, -7.0926), zoom: 6),
             ),
           );
         });
