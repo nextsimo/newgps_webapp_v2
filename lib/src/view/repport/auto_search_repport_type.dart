@@ -119,7 +119,7 @@ class OptionViewBuilderWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        FocusScope.of(context).requestFocus(FocusNode());
         repportProvider.handleRepportType();
       },
       child: Material(
@@ -171,7 +171,7 @@ class OptionItem extends StatelessWidget {
       ),
       onTap: () async {
         onSelectDevice(repportTypeModel);
-        FocusScope.of(context).unfocus();
+        FocusScope.of(context).requestFocus(FocusNode());
         if (repportTypeModel.index == 0 && !repportProvider.selectAllDevices) {
           repportProvider.selectAllDevices = true;
           repportProvider.handleSelectDevice();

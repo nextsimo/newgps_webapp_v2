@@ -16,10 +16,10 @@ class FirebaseMessagingService {
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
 
-  void init() {
-    saveUserMessagingToken();
+  Future<void> init() async {
     SavedAcountProvider acountProvider =
         Provider.of<SavedAcountProvider>(DeviceSize.c, listen: false);
+    await saveUserMessagingToken();
     _initmessage();
     FirebaseMessaging.onMessage.listen((message) {
       //debugPrint('onMessage');

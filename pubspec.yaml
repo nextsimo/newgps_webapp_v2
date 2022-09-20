@@ -6,41 +6,42 @@ version: 1.0.0+1
 environment:
   sdk: ">=2.12.0 <3.0.0"
 dependencies:
-  device_info_plus: ^3.1.0
-  dio: ^4.0.3
+  device_info_plus: ^4.1.2
+  dio: ^4.0.6
   download: ^0.0.1+1
   editable: ^2.0.0
   faker: ^2.0.0
-  firebase_core: ^1.11.0
-  firebase_dynamic_links: ^4.0.4
-  firebase_messaging: ^11.2.5
+  firebase_core: ^1.22.0
+  firebase_dynamic_links: ^4.3.7
+  firebase_messaging: ^13.0.2
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
   flutter_polyline_points: ^1.0.0
-  flutter_tts: ^3.2.2
-  geolocator: ^7.6.2
+  flutter_tts: ^3.5.3
+  fluttertoast: ^8.0.9
+  geolocator: ^9.0.1
   get_it: ^7.2.0
-  google_fonts: ^2.3.1
+  google_fonts: ^3.0.1
   google_maps_cluster_manager: ^3.0.0+1
-  google_maps_flutter: ^2.1.2
-  google_maps_flutter_web: ^0.3.2+1
-  grouped_list: ^4.1.0
-  http: ^0.13.3
+  google_maps_flutter: ^2.2.0
+  google_maps_flutter_web: ^0.4.0+2
+  grouped_list: ^5.1.2
+  http: ^0.13.5
   image: ^3.0.5
   intl: ^0.17.0
   loadmore: ^2.0.1
   month_picker_dialog: ^0.4.0
-  provider: null
-  search_choices: ^2.0.14
-  shared_preferences: ^2.0.8
-  syncfusion_flutter_gauges: ^19.2.62
-  url_launcher: ^6.0.20
-  share_plus: ^4.0.3
+  provider: ^6.0.3
+  search_choices: ^2.1.1
+  share_plus: ^4.2.0
+  shared_preferences: ^2.0.15
+  syncfusion_flutter_gauges: ^20.2.50
+  url_launcher: ^6.1.5
 
 dev_dependencies:
-  flutter_lints: ^1.0.0
+  flutter_lints: ^2.0.1
   flutter_test:
     sdk: flutter
 

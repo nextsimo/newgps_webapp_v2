@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/models/account.dart';
@@ -10,15 +11,35 @@ import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
+import '../models/device_icon_model.dart';
+import '../utils/device_size.dart';
+
 class DeviceProvider with ChangeNotifier {
   late List<Device> _devices = [];
+  List<DeviceIconModel> icons = [];
 
   List<Device> get devices => _devices;
+
+  DeviceProvider() {
+    _fetchDevicesIconsList();
+  }
 
   set devices(List<Device> devices) {
     _devices = devices;
     notifyListeners();
   }
+
+  // fetch list of icons from server
+  Future<void> _fetchDevicesIconsList() async {
+    String res = await api.get(
+      url: '/devices/icons',
+    );
+
+    if (res.isEmpty) return;
+
+    icons = deviceIconFromJson(res);
+  }
+
   String initAlertRoute = '/';
 
   InfoModel? _infoModel;
@@ -28,6 +49,29 @@ class DeviceProvider with ChangeNotifier {
   set infoModel(InfoModel? infoModel) {
     _infoModel = infoModel;
     notifyListeners();
+  }
+
+  // change icon for device
+  Future<void> changeIcon(
+      {required String name,
+      required String deviceId,
+      required BuildContext context}) async {
+        Navigator.of(context).pop();
+        Navigator.of(context).pop();
+    final accoutId = shared.getAccount()?.account.accountId;
+    await api.get(url: '/device/change/$deviceId/$accoutId/$name');
+    // show toast message in french
+    Fluttertoast.showToast(
+      msg:
+          'Icone changé avec succès! votre changement sera visible dans quelques secondes',
+      backgroundColor: Colors.green,
+      textColor: Colors.white,
+      fontSize: 16.0,
+      toastLength: Toast.LENGTH_LONG,
+      timeInSecForIosWeb: 7,
+     webBgColor: '#4caf50',
+      webShowClose: true,
+    );
   }
 
   late MapType mapType = MapType.normal;
@@ -54,12 +98,15 @@ class DeviceProvider with ChangeNotifier {
       },
     );
 
+
+
     if (res.isNotEmpty) {
+      // ignore: use_build_context_synchronously
       Navigator.of(context).pop();
       bool isStart = command == 'IgnitionEnable:TCP';
       String message = isStart ? 'Le démarrage' : "L'arrêt";
 
-      if ( res == 'success') {
+      if (res == 'success') {
         showDialog(
             context: context,
             builder: (_) {
@@ -71,7 +118,7 @@ class DeviceProvider with ChangeNotifier {
                     const Icon(Icons.check_circle_outline,
                         color: Colors.green, size: 45),
                     const SizedBox(height: 10),
-                     Text('Terminé',
+                    Text('Terminé',
                         style: GoogleFonts.roboto(fontWeight: FontWeight.w700)),
                     const SizedBox(height: 10),
                     Text('$message du véhicule a réussi'),
@@ -98,7 +145,7 @@ class DeviceProvider with ChangeNotifier {
                     const SizedBox(height: 10),
                     const Icon(Icons.warning, color: Colors.red, size: 45),
                     const SizedBox(height: 10),
-                     Text('Terminé',
+                    Text('Terminé',
                         style: GoogleFonts.roboto(fontWeight: FontWeight.w700)),
                     const SizedBox(height: 10),
                     Text('$message du véhicule a échouer'),
@@ -142,6 +189,7 @@ class DeviceProvider with ChangeNotifier {
       deviceProvider.selectedDevice = device;
     }
   }
+
 /* 
   Future<Marker> getPositionMarker() async {
     var myPos = await GeolocatorPlatform.instance.getCurrentPosition();

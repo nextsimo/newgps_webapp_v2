@@ -186,7 +186,7 @@ class OptionItem extends StatelessWidget {
 
         onSelectDevice(device);
         deviceProvider.selectedDevice = device;
-        FocusScope.of(context).unfocus();
+        FocusScope.of(context).requestFocus(FocusNode());
         onSelectDevice(device);
       },
       minVerticalPadding: 0,

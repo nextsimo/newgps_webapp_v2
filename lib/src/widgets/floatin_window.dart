@@ -14,6 +14,7 @@ import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../view/icon_change/change_icon_view.dart';
 import 'buttons/outlined_button.dart';
 
 class FloatingGroupWindowInfo extends StatefulWidget {
@@ -87,13 +88,24 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Matricule
-                          if (widget.device.description.isNotEmpty)
-                            Text(
-                              widget.device.description,
-                              style: GoogleFonts.roboto(
-                                  color: AppConsts.blue,
-                                  fontWeight: FontWeight.bold),
-                            ),
+                          if(widget.device.description.isNotEmpty)
+                          Row(
+                            children: [
+                              Text(
+                                widget.device.description,
+                                style: GoogleFonts.roboto(
+                                    color: AppConsts.blue,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(width: 10),
+                              IconChangeView(
+                                selectedDevice: widget.device,
+                                closeIconChangeView: () {
+                                  widget.onClose!();
+                                },
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 20),
                           Row(
                             children: [

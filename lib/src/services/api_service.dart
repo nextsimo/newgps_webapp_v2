@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:newgps/src/models/account.dart';
 
@@ -23,6 +24,31 @@ class ApiService {
     Account? account = accountFromMap(res);
     return account;
   }
+
+
+
+  Future<String> get(
+      {required String url, Map<String, String> newHeader = const {}}) async {
+    header.addAll(newHeader);
+
+    try {
+      Response response =
+          await _client.get(Uri.parse(_baseUrl + url), headers: header);
+
+      debugPrint(_baseUrl + url);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        debugPrint('$url succes');
+        return response.body;
+      }
+      debugPrint('$url filed ${response.body}');
+      return '';
+    } catch (e) {
+      debugPrint('$url failed $e');
+      return '';
+    }
+  }
+
 
   Future<Account?> underAccountLogin(
       {required String accountId,
