@@ -26,6 +26,22 @@ class FuelRepportProvider with ChangeNotifier {
     for (DateTime i = repportProvider.dateFrom;
         i.isBefore(repportProvider.dateTo);
         i = i.add(const Duration(days: 1))) {
+      debugPrint(
+        {
+          'account_id': account?.account.accountId,
+          'device_id': deviceId,
+          'year': i.year,
+          'month': i.month,
+          'day': i.day,
+          'date_from': 0,
+          'date_to': 0,
+          'hour_from': repportProvider.dateFrom.hour + 1,
+          'minute_from': repportProvider.dateFrom.minute,
+          'hour_to': repportProvider.dateTo.hour,
+          'minute_to': repportProvider.dateTo.minute,
+          'download': false,
+        }.toString(),
+      );
       String res = await api.post(
         url: '/repport/resume/fuelbydate',
         body: {

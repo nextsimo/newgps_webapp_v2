@@ -12,7 +12,6 @@ import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
 import '../models/device_icon_model.dart';
-import '../utils/device_size.dart';
 
 class DeviceProvider with ChangeNotifier {
   late List<Device> _devices = [];
