@@ -14,7 +14,6 @@ import 'user_devices_ui.dart';
 
 class UsersView extends StatelessWidget {
   const UsersView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<UserProvider>(
@@ -38,7 +37,7 @@ class UserDataView extends StatelessWidget {
     'Droits utilisateur',
     'Véhicules',
     'Enregistrement',
-    'Supression',
+    'Supression'
   ];
 
   @override
@@ -82,7 +81,7 @@ class UserDataView extends StatelessWidget {
                   const SizedBox(height: 8),
                   Expanded(
                     child: ScrollConfiguration(
-                      behavior:  MyCustomScrollBehavior(),
+                      behavior: MyCustomScrollBehavior(),
                       child: SingleChildScrollView(
                         padding: const EdgeInsets.only(
                           bottom: 100,
@@ -171,12 +170,6 @@ class UserDataView extends StatelessWidget {
                 ],
               ),
             ),
-
-/*         const SizedBox(
-
-            width: ,
-
-        ), */
           ],
         ));
   }
