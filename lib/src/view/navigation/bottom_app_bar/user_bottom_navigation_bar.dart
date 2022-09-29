@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newgps/src/utils/styles.dart';
+import 'package:newgps/src/utils/utils.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -131,7 +132,7 @@ class _BuildTabBarItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-            Image.network('https://api.newgps.ma/api/icons/${item.icon}.svg',
+            Image.network('${Utils.baseUrl}/icons/${item.icon}.svg',
                 height: 12),
           const SizedBox(height: 5),
           Text(
@@ -173,7 +174,7 @@ class AlertTabBarItem extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Image.network(
-                    'https://api.newgps.ma/api/icons/${item.icon}.svg',
+                    '${Utils.baseUrl}/icons/${item.icon}.svg',
                     height: 12),
                 const SizedBox(height: 5),
                 Text(

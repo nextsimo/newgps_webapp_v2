@@ -205,11 +205,6 @@ class DeviceProvider with ChangeNotifier {
     markerIcon = await BitmapDescriptor.fromAssetImage(
         const ImageConfiguration(size: Size(35, 35)),
         'assets/icons/position.png');
-
-/*     var request = await http
-        .get(Uri.parse('https://api.newgps.ma/api/icons/position.png'));
-    var bytes = request.bodyBytes;
-    markerIcon = BitmapDescriptor.fromBytes(bytes); */
     devices = await fetchDevices();
     selectedDevice = devices.first;
     autoSearchController =

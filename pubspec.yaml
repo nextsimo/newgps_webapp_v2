@@ -11,13 +11,16 @@ dependencies:
   download: ^0.0.1+1
   editable: ^2.0.0
   faker: ^2.0.0
+  firebase_analytics: ^9.3.6
   firebase_core: ^1.22.0
   firebase_dynamic_links: ^4.3.7
   firebase_messaging: ^13.0.2
+  firebase_remote_config: ^2.0.18
   flutter:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  flutter_native_splash: ^2.2.10+1
   flutter_polyline_points: ^1.0.0
   flutter_tts: ^3.5.3
   fluttertoast: ^8.0.9
@@ -39,6 +42,7 @@ dependencies:
   shared_preferences: ^2.0.15
   syncfusion_flutter_gauges: ^20.2.50
   url_launcher: ^6.1.5
+  video_player: ^2.4.7
 
 dev_dependencies:
   flutter_lints: ^2.0.1

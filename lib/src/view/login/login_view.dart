@@ -7,6 +7,7 @@ import 'package:newgps/src/widgets/buttons/outlined_button.dart';
 import 'package:newgps/src/widgets/inputs/main_input.dart';
 import 'package:newgps/src/widgets/inputs/password_input.dart';
 import 'package:provider/provider.dart';
+import '../../utils/utils.dart';
 import 'call_service_view.dart';
 import 'change_password_view.dart';
 import 'login_as/login_as_view.dart';
@@ -29,7 +30,7 @@ class LoginView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.network('https://api.newgps.ma/api/icons/logo.svg',
+                Image.network('${Utils.baseUrl}/icons/logo.svg',
                     width: 100),
                 const SizedBox(height: 20),
                 MainInput(

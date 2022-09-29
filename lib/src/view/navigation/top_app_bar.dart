@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/utils/styles.dart';
+import 'package:newgps/src/utils/utils.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,7 +35,7 @@ class CustomAppBar extends PreferredSize {
           backgroundColor: Colors.white,
           leading: Row(
             children: [
-              Image.network('https://api.newgps.ma/api/icons/logo.svg'),
+              Image.network('${Utils.baseUrl}/icons/logo.svg'),
             ],
           ),
           title: Column(

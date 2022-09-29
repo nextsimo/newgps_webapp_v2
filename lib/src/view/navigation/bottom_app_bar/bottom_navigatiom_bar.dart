@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/utils/styles.dart';
+import 'package:newgps/src/utils/utils.dart';
 import 'package:newgps/src/widgets/badge_icon.dart';
 
 class CustomBottomNavigatioBar extends StatefulWidget {
@@ -132,7 +133,7 @@ class _BuildTabBarItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.network('https://api.newgps.ma/api/icons/${item.icon}.svg',
+            Image.network('${Utils.baseUrl}/icons/${item.icon}.svg',
                 height: 12),
             Text(
               item.label,
@@ -184,7 +185,7 @@ class _AlertTabBarItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.network(
-                'https://api.newgps.ma/api/icons/${item.icon}.svg',
+                '${Utils.baseUrl}{/icons/${item.icon}.svg',
                 height: 12,
               ),
               Text(

@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:newgps/src/models/account.dart';
+import 'package:newgps/src/utils/utils.dart';
 
 class ApiService {
   final Client _client = Client();
-
-  final String _baseUrl = 'https://api.newgps.ma/api';
 
   final Map<String, String> header = {
     'Content-Type': 'application/json',
@@ -18,24 +18,32 @@ class ApiService {
 
   Future<Account?> login(
       {required String accountId, required String password}) async {
-    Map<String, dynamic> body = {"accountId": accountId, "password": password}; 
+    Map<String, dynamic> body = {"accountId": accountId, "password": password};
     String res = await post(url: '/login', body: body);
     if (res.isEmpty) return null;
     Account? account = accountFromMap(res);
     return account;
   }
 
-
+  // fetch token from firaebase config
+  Future<String> _fetchToken() async {
+    final FirebaseRemoteConfig remoteConfig = FirebaseRemoteConfig.instance;
+    await remoteConfig.fetchAndActivate();
+    return remoteConfig.getString('token');
+  }
 
   Future<String> get(
       {required String url, Map<String, String> newHeader = const {}}) async {
     header.addAll(newHeader);
-
+    header.addAll(newHeader);
+    String token = await _fetchToken();
+    header.addAll(newHeader);
+    header['Authorization'] = 'Bearer $token';
     try {
       Response response =
-          await _client.get(Uri.parse(_baseUrl + url), headers: header);
+          await _client.get(Uri.parse(Utils.baseUrl + url), headers: header);
 
-      debugPrint(_baseUrl + url);
+      debugPrint(Utils.baseUrl + url);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         debugPrint('$url succes');
@@ -48,7 +56,6 @@ class ApiService {
       return '';
     }
   }
-
 
   Future<Account?> underAccountLogin(
       {required String accountId,
@@ -70,12 +77,15 @@ class ApiService {
       required Map<String, dynamic> body,
       Map<String, String> newHeader = const {}}) async {
     header.addAll(newHeader);
-
+    header.addAll(newHeader);
+    String token = await _fetchToken();
+    header.addAll(newHeader);
+    header['Authorization'] = 'Bearer $token';
     try {
-      Response response = await _client.post(Uri.parse(_baseUrl + url),
+      Response response = await _client.post(Uri.parse(Utils.baseUrl + url),
           body: json.encode(body), headers: header);
 
-      //debugPrint(_baseUrl + url);
+      //debugPrint(Utils.baseUrl + url);
 
       if (response.statusCode == 200) {
         //debugPrint('$url succes');
@@ -94,14 +104,18 @@ class ApiService {
       required Map<String, dynamic> body,
       Map<String, String> newHeader = const {}}) async {
     try {
-      Response response = await _client.post(Uri.parse(_baseUrl + url),
+      header.addAll(newHeader);
+      String token = await _fetchToken();
+      header.addAll(newHeader);
+      header['Authorization'] = 'Bearer $token';
+      Response response = await _client.post(Uri.parse(Utils.baseUrl + url),
           body: json.encode(body),
           headers: {
             'Content-Type': 'application/octet-stream',
             'Accept': 'application/json',
           });
 
-      //log(_baseUrl + url);
+      //log(Utils.baseUrl + url);
 
       if (response.statusCode == 200) {
         //log('$url succes');
@@ -119,12 +133,13 @@ class ApiService {
       required Map<String, dynamic> body,
       Map<String, String> newHeader = const {}}) async {
     headerFile.addAll(newHeader);
-
+    String token = await _fetchToken();
+    header['Authorization'] = 'Bearer $token';
     try {
-      Response response = await _client.post(Uri.parse(_baseUrl + url),
+      Response response = await _client.post(Uri.parse(Utils.baseUrl + url),
           body: json.encode(body), headers: headerFile);
 
-      //log(_baseUrl + url);
+      //log(Utils.baseUrl + url);
 
       if (response.statusCode == 200) {
         //log('$url succes');
@@ -142,7 +157,7 @@ class ApiService {
       {required String url, required Map<String, dynamic> body}) async {
     try {
       Response response = await _client.post(
-        Uri.parse(_baseUrl + url),
+        Uri.parse(Utils.baseUrl + url),
         body: json.encode(body),
         headers: header,
       );
