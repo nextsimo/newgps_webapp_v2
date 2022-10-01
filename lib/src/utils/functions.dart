@@ -78,7 +78,7 @@ String formatToTimeWithSeconds(DateTime dateTime) {
 class FormValidatorService {
   static String? isNotEmpty(String? value) {
     if (value!.isEmpty) {
-      return "Champs requis";
+      return "Champs obligatoire";
     }
     return null;
   }

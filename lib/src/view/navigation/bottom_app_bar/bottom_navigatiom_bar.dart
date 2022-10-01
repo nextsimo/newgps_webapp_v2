@@ -185,7 +185,7 @@ class _AlertTabBarItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Image.network(
-                '${Utils.baseUrl}{/icons/${item.icon}.svg',
+                '${Utils.baseUrl}/icons/${item.icon}.svg',
                 height: 12,
               ),
               Text(

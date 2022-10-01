@@ -66,7 +66,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
     final SavedAcountProvider provider =
         Provider.of<SavedAcountProvider>(context, listen: false);
     return SizedBox(
-      width: 195,
+      width: 225,
       child: ElevatedButton(
         style: ButtonStyle(
             padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.zero),

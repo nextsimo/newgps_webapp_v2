@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/styles.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class CallServiceView extends StatelessWidget {
   const CallServiceView({Key? key}) : super(key: key);
@@ -29,7 +29,7 @@ class CallServiceView extends StatelessWidget {
   Widget _buildPhone({required String tel, required String phone}) {
     return GestureDetector(
       onTap: () {
-        launch('tel:$phone', webOnlyWindowName: '_self');
+        launchUrlString('tel:$phone', webOnlyWindowName: '_self');
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

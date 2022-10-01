@@ -29,6 +29,17 @@ class LoginProvider with ChangeNotifier {
     notifyListeners();
   }
 
+    bool isUnderCompte = false;
+
+  // set under user checkbox value
+  void setUnderCompte(bool? value) {
+    if (value != null) {
+      underCompteController.text = '';
+      isUnderCompte = value;
+      notifyListeners();
+    }
+  }
+
   Future<void> updatePassword(BuildContext context) async {
     if (updateFormKey.currentState!.validate()) {
       String res = await api.simplePost(
