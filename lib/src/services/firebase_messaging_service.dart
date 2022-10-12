@@ -44,6 +44,7 @@ class FirebaseMessagingService {
     RemoteMessage? remoteMessage = await messaging.getInitialMessage();
     if (remoteMessage != null) {
       SavedAcountProvider acountProvider =
+          // ignore: use_build_context_synchronously
           Provider.of<SavedAcountProvider>(DeviceSize.c, listen: false);
       acountProvider.checkNotifcation();
     }
