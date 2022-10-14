@@ -5,7 +5,8 @@ import 'package:newgps/src/utils/styles.dart';
 
 class UserDroitsUi extends StatefulWidget {
   final UserDroits userDroits;
-  const UserDroitsUi({Key? key, required this.userDroits}) : super(key: key);
+  final int flex;
+  const UserDroitsUi({Key? key, required this.userDroits, required this.flex}) : super(key: key);
 
   @override
   State<UserDroitsUi> createState() => _UserDroitsUiState();
@@ -61,57 +62,47 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        InkWell(
-          onTap: () {
-            if (isMenuOpen) {
-              closeMenu();
-            } else {
-              openMenu();
-            }
-          },
-          child: Container(
-            key: _key,
-            width: 360,
-            height: 35,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                  color: AppConsts.mainColor, width: AppConsts.borderWidth),
-              borderRadius: BorderRadius.circular(AppConsts.mainradius),
-            ),
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.only(left: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(width: 4),
-                    Text(
-                      'Modifier les droits',
-                      style: GoogleFonts.roboto(
-                        fontSize: 10,
-                        color: Colors.grey[400],
-                      ),
+    return Expanded(
+      flex: widget.flex,
+      child: InkWell(
+        onTap: () {
+          if (isMenuOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        },
+        child: Container(
+          key: _key,
+          height: 35,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+                color: AppConsts.mainColor, width: AppConsts.borderWidth),
+            borderRadius: BorderRadius.circular(AppConsts.mainradius),
+          ),
+          alignment: Alignment.centerLeft,
+          margin: const EdgeInsets.only(left: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 4),
+                  Text(
+                    'Modifier les droits',
+                    style: GoogleFonts.roboto(
+                      fontSize: 10,
+                      color: Colors.grey[400],
                     ),
-                  ],
-                ),
-                const Icon(Icons.arrow_drop_down, color: Colors.grey)
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const Icon(Icons.arrow_drop_down, color: Colors.grey)
+            ],
           ),
         ),
-
-/*         const SizedBox(width: 10),
-        Text(
-          '${widget.user.devices.length} Selectioné',
-          textAlign: TextAlign.center,
-        ), */
-      ],
+      ),
     );
   }
 }
@@ -129,7 +120,7 @@ class _ShowListDrois extends StatefulWidget {
 
 class _ShowListDroisState extends State<_ShowListDrois> {
   final List<String> _listStr = const [
-    'Tous les droits',
+    'Tous',
     'Position',
     'Historique',
     'Rapport',

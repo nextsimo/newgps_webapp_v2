@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 
 class UserDevicesUi extends StatefulWidget {
   final User user;
-  const UserDevicesUi({Key? key, required this.user}) : super(key: key);
+  final int flex;
+  const UserDevicesUi({Key? key, required this.user, required this.flex}) : super(key: key);
 
   @override
   State<UserDevicesUi> createState() => _UserDevicesUiState();
@@ -66,62 +67,53 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        InkWell(
-          onTap: () {
-            if (isMenuOpen) {
-              closeMenu();
-            } else {
-              openMenu();
-            }
-          },
-          child: Container(
-            key: _key,
-            width: 250,
-            height: 35,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              border: Border.all(
-                  color: AppConsts.mainColor, width: AppConsts.borderWidth),
-              borderRadius: BorderRadius.circular(AppConsts.mainradius),
-            ),
-            alignment: Alignment.centerLeft,
-            margin: const EdgeInsets.only(left: 6),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    const SizedBox(width: 4),
-                    Icon(
-                      Icons.search,
+    return Expanded(
+      flex: widget.flex,
+      child: InkWell(
+        onTap: () {
+          if (isMenuOpen) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
+        },
+        child: Container(
+          key: _key,
+          height: 35,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+                color: AppConsts.mainColor, width: AppConsts.borderWidth),
+            borderRadius: BorderRadius.circular(AppConsts.mainradius),
+          ),
+          alignment: Alignment.centerLeft,
+          margin: const EdgeInsets.only(left: 6),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  const SizedBox(width: 4),
+                  Icon(
+                    Icons.search,
+                    color: Colors.grey[400],
+                    size: 17,
+                  ),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Ajouter vehicule',
+                    style: GoogleFonts.roboto(
+                      fontSize: 10,
                       color: Colors.grey[400],
-                      size: 17,
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      'Ajouter vehicule',
-                      style: GoogleFonts.roboto(
-                        fontSize: 10,
-                        color: Colors.grey[400],
-                      ),
-                    ),
-                  ],
-                ),
-                const Icon(Icons.arrow_drop_down, color: Colors.grey)
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const Icon(Icons.arrow_drop_down, color: Colors.grey)
+            ],
           ),
         ),
-        const SizedBox(width: 10),
-        Text(
-          '${widget.user.devices.length} Selectioné',
-          textAlign: TextAlign.center,
-        ),
-      ],
+      ),
     );
   }
 }

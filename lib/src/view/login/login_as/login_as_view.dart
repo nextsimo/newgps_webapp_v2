@@ -6,7 +6,9 @@ import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:provider/provider.dart';
+import '../../../utils/functions.dart';
 import '../../connected_device/connected_device_provider.dart';
+import '../../last_position/last_position_provider.dart';
 
 class LoginAsView extends StatelessWidget {
   const LoginAsView({Key? key}) : super(key: key);
@@ -76,7 +78,8 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
                 RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10)))),
         onPressed: () async {
-          LoginProvider loginProvider = Provider.of<LoginProvider>(context, listen: false);
+          LoginProvider loginProvider =
+              Provider.of<LoginProvider>(context, listen: false);
           // log('Bearer ${savedAccount.key}');
           setState(() => loading = true);
           Account? account;
@@ -90,7 +93,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
           } else {
             account = await api.login(
               accountId: widget.savedAccount.user ?? "",
-              password: widget.savedAccount.password ,
+              password: widget.savedAccount.password,
             );
           }
           if (account != null) {
@@ -98,25 +101,45 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
             setState(() => loading = false);
             ConnectedDeviceProvider connectedDeviceProvider =
                 Provider.of(context, listen: false);
-            connectedDeviceProvider.updateConnectedDevice(true);
+
+            final SavedAcountProvider savedAcountProvider =
+                // ignore: use_build_context_synchronously
+                Provider.of<SavedAcountProvider>(context, listen: false);
+            final LastPositionProvider lastPositionProvider =
+                // ignore: use_build_context_synchronously
+                Provider.of<LastPositionProvider>(context, listen: false);
+            savedAcountProvider.savedAcount(
+              account.account.accountId,
+              account.account.password,
+              account.account.userID,
+            );
+            //await savedAcountProvider.fetchUserDroits();
+
+            fetchInitData(
+                context: context, lastPositionProvider: lastPositionProvider);
+
+            connectedDeviceProvider.init();
             connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
-            Navigator.of(context).pushNamedAndRemoveUntil('/', (_) => false);
+
+            // ignore: use_build_context_synchronously
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/navigation', (_) => false);
           } else {
             int? isActive = json.decode(await api.post(url: '/isactive', body: {
               'account_id': widget.savedAccount.user,
               'password': widget.savedAccount.password,
-              'user' : widget.savedAccount.underUser,
+              'user': widget.savedAccount.underUser,
             }));
 
-            if (isActive == -1 ) {
-              loginProvider.errorText = 'Le propriétaire du compte peut avoir changé le mot de passe';
+            if (isActive == -1) {
+              loginProvider.errorText =
+                  'Le propriétaire du compte peut avoir changé le mot de passe';
             } else if (isActive == 0) {
               loginProvider.errorText = 'Votre compte est suspendu';
             }
           }
 
           setState(() => loading = false);
-
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

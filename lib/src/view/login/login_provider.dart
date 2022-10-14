@@ -115,9 +115,11 @@ class LoginProvider with ChangeNotifier {
         compteController.text = '';
         passwordController.text = '';
         final ConnectedDeviceProvider connectedDeviceProvider =
+            // ignore: use_build_context_synchronously
             Provider.of<ConnectedDeviceProvider>(context, listen: false);
         connectedDeviceProvider.init();
         connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
+        // ignore: use_build_context_synchronously
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/navigation', (_) => false);
       } else {

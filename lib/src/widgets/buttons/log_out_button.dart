@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
@@ -22,7 +23,15 @@ class LogoutButton extends StatelessWidget {
         MainButton(
           height: 30,
           onPressed: () {
-            try {
+            shared.clear('account');
+
+            ConnectedDeviceProvider connectedDeviceProvider =
+                Provider.of(context, listen: false);
+            connectedDeviceProvider.updateConnectedDevice(false);
+            connectedDeviceProvider.createNewConnectedDeviceHistoric(false);
+            Phoenix.rebirth(context);
+
+/*             try {
               LastPositionProvider lastPositionProvider =
                   Provider.of(context, listen: false);
               HistoricProvider historicProvider =
@@ -40,7 +49,7 @@ class LogoutButton extends StatelessWidget {
             shared.clear('account');
 
             Navigator.of(context)
-                .pushNamedAndRemoveUntil('/login', (_) => false);
+                .pushNamedAndRemoveUntil('/login', (_) => false); */
           },
           label: 'Deconnexion',
           backgroundColor: Colors.red,

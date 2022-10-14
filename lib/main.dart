@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'app.dart';
 import 'firebase_options.dart';
 import 'src/utils/configure_web.dart';
@@ -17,5 +18,5 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   setup();
-  runApp(const NewGpsApp());
+  runApp(Phoenix(child: const NewGpsApp()));
 }

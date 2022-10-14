@@ -10,6 +10,8 @@ import 'package:newgps/src/widgets/buttons/log_out_button.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/loading_widget.dart';
+import '../matricule/matricule_view.dart';
 import 'user_devices_ui.dart';
 
 class UsersView extends StatelessWidget {
@@ -21,206 +23,242 @@ class UsersView extends StatelessWidget {
       builder: (BuildContext context, Widget? child) {
         return child ?? const SizedBox();
       },
-      child: UserDataView(),
+      child: const UserDataView(),
     );
   }
 }
 
 class UserDataView extends StatelessWidget {
-  UserDataView({Key? key}) : super(key: key);
-
-  final List<String> _items = [
-    'Utilisateur',
-    'Nom complet',
-    'Téléphone',
-    'Mot de passe utilisateur',
-    'Droits utilisateur',
-    'Véhicules',
-    'Enregistrement',
-    'Supression'
-  ];
+  const UserDataView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
     List<User> users = userProvider.users;
     return Scaffold(
-        appBar: const CustomAppBar(
-          actions: [],
-        ),
-        body: Stack(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      appBar: const CustomAppBar(
+        actions: [],
+      ),
+      body: userProvider.loading
+          ? const MyLoadingWidget()
+          : _body(context, userProvider, users),
+    );
+  }
+
+  Stack _body(
+      BuildContext context, UserProvider userProvider, List<User> users) {
+    return Stack(
+      children: [
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(height: 8),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: MainButton(
-                          width: 200,
-                          onPressed: () async {
-                            userProvider.addUserUi();
-                          },
-                          height: 30,
-                          label: 'Ajuoter utilisateur',
-                          backgroundColor: AppConsts.mainColor,
-                        ),
-                      ),
-                      const Padding(
-                        padding:
-                            EdgeInsets.only(right: AppConsts.outsidePadding),
-                        child: LogoutButton(),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  Expanded(
-                    child: ScrollConfiguration(
-                      behavior: MyCustomScrollBehavior(),
-                      child: SingleChildScrollView(
-                        padding: const EdgeInsets.only(
-                          bottom: 100,
-                        ),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                          child: Table(
-                            border: TableBorder.all(color: Colors.grey),
-                            defaultVerticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            defaultColumnWidth: const IntrinsicColumnWidth(),
-                            children: [
-                              TableRow(
-                                  decoration: BoxDecoration(
-                                      color:
-                                          AppConsts.mainColor.withOpacity(0.2)),
-                                  children: _items.map<Widget>((item) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15),
-                                      child: Text(
-                                        item,
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    );
-                                  }).toList()),
-                              ...users.map<TableRow>((user) {
-                                return TableRow(children: [
-                                  EditableCell(
-                                    content: user.userId,
-                                    autofocus: user.userId.isEmpty,
-                                    onchanged: (_) => user.newUserId = _,
-                                  ),
-                                  EditableCell(
-                                    content: user.displayName,
-                                    onchanged: (_) => user.displayName = _,
-                                  ),
-                                  EditableCell(
-                                    content: user.contactPhone,
-                                    onchanged: (_) => user.contactPhone = _,
-                                  ),
-                                  EditableCell(
-                                    content: user.password,
-                                    onchanged: (_) => user.password = _,
-                                  ),
-                                  UserDroitsUi(
-                                    userDroits: userProvider.userDroits
-                                        .elementAt(user.index),
-                                  ),
-                                  UserDevicesUi(
-                                    user: user,
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: MainButton(
-                                      onPressed: () async {
-                                        await userProvider.onSave(
-                                            user, context, user.index);
-                                      },
-                                      label: 'Enregistrer',
-                                      backgroundColor: Colors.green,
-                                      height: 30,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: MainButton(
-                                      onPressed: () async {
-                                        // Supprimer
-                                        await userProvider.deleteUser(user);
-                                      },
-                                      label: 'Supprimer',
-                                      backgroundColor: Colors.red,
-                                      height: 30,
-                                    ),
-                                  )
-                                ]);
-                              }).toList()
-                            ],
-                          ),
-                        ),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MainButton(
+                      width: 200,
+                      onPressed: () async {
+                        userProvider.addUserUi();
+                      },
+                      height: 30,
+                      label: 'Ajuoter utilisateur',
+                      backgroundColor: AppConsts.mainColor,
                     ),
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(right: AppConsts.outsidePadding),
+                    child: LogoutButton(),
                   ),
                 ],
               ),
-            ),
-          ],
-        ));
+              const SizedBox(height: 8),
+              Expanded(
+                child: Column(
+                  children: [
+                    const _BuildHeader(),
+                    Expanded(
+                      child: ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        padding: const EdgeInsets.only(bottom: 100),
+                        itemCount: users.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return RowContent(
+                            user: users[index],
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
 
-class EditableCell extends StatelessWidget {
-  final bool autofocus;
-  final String content;
-  final void Function(String val) onchanged;
-  EditableCell(
-      {Key? key,
-      required this.content,
-      required this.onchanged,
-      this.autofocus = false})
-      : super(key: key);
+class _BuildHeader extends StatelessWidget {
+  const _BuildHeader({
+    Key? key,
+  }) : super(key: key);
 
-  final TextEditingController _controller = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    _controller.text = content;
-    return TextField(
-      autofocus: autofocus,
-      controller: _controller,
-      onChanged: onchanged,
-      onTap: () => {
-        _controller.selection =
-            TextSelection(baseOffset: 0, extentOffset: _controller.text.length)
-      },
-      maxLines: 1,
-      textAlign: TextAlign.center,
-      decoration: const InputDecoration(
-        contentPadding: EdgeInsets.zero,
-        border: InputBorder.none,
+    var borderSide =
+        const BorderSide(color: Colors.black, width: AppConsts.borderWidth);
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.1),
+        border: Border(bottom: borderSide, top: borderSide),
+      ),
+      child: Row(
+        children: const [
+          BuildDivider(),
+          BuildTextCell('Utilisateur', flex: 2),
+          BuildDivider(),
+          BuildTextCell('Nom', flex: 2),
+          BuildDivider(),
+          BuildTextCell('Téléphone', flex: 2),
+          BuildDivider(),
+          BuildTextCell('Mot de passe', flex: 2),
+          BuildDivider(),
+          BuildTextCell('Droits', flex: 4),
+          BuildDivider(),
+          BuildTextCell('Véhicules', flex: 4),
+          BuildDivider(),
+          BuildTextCell('Actions', flex: 2),
+          BuildDivider(),
+        ],
       ),
     );
   }
 }
 
-class BuildTextCell extends StatelessWidget {
-  final String content;
-  final Color color;
+class RowContent extends StatelessWidget {
+  const RowContent({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
 
-  const BuildTextCell(this.content, {Key? key, this.color = Colors.black})
-      : super(key: key);
+  final User user;
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        content,
-        textAlign: TextAlign.center,
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
+    return Container(
+      decoration: const BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: Colors.black,
+            width: AppConsts.borderWidth,
+          ),
+        ),
+      ),
+      child: Row(
+        children: [
+          const BuildDivider(),
+          EditableCell(
+            content: user.userId,
+            onchanged: (_) => user.newUserId = _,
+            flex: 2,
+          ),
+          const BuildDivider(),
+          EditableCell(
+            content: user.displayName,
+            onchanged: (_) => user.displayName = _,
+            flex: 2,
+          ),
+          const BuildDivider(),
+          EditableCell(
+            content: user.contactPhone,
+            onchanged: (_) => user.contactPhone = _,
+            flex: 2,
+          ),
+          const BuildDivider(),
+          EditableCell(
+            content: user.password,
+            onchanged: (_) => user.password = _,
+            flex: 2,
+          ),
+          const BuildDivider(),
+          UserDroitsUi(
+            userDroits: userProvider.userDroits.elementAt(user.index),
+            flex: 4,
+          ),
+          const BuildDivider(),
+          UserDevicesUi(
+            user: user,
+            flex: 4,
+          ),
+          const BuildDivider(),
+          Expanded(
+            flex: 2,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () async {
+                        await userProvider.onSave(user, context, user.index);
+                      },
+                      icon: const Icon(Icons.save),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: Center(
+                    child: IconButton(
+                      onPressed: () async {
+                        await userProvider.deleteUser(user);
+                      },
+                      icon: const Icon(Icons.delete),
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+                
+
+              ],
+            ),
+          ),
+          const BuildDivider(),
+          /*  UserDevicesUi(
+            user: user,
+          ),
+          const BuildDivider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MainButton(
+              onPressed: () async {
+                await userProvider.onSave(user, context, user.index);
+              },
+              label: 'Enregistrer',
+              backgroundColor: Colors.green,
+              height: 30,
+            ),
+          ),
+          const BuildDivider(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: MainButton(
+              onPressed: () async {
+                // Supprimer
+                await userProvider.deleteUser(user);
+              },
+              label: 'Supprimer',
+              backgroundColor: Colors.red,
+              height: 30,
+            ),
+          ),
+          const BuildDivider(), */
+        ],
       ),
     );
   }

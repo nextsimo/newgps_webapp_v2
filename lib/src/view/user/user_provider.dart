@@ -93,13 +93,19 @@ class UserProvider with ChangeNotifier {
 
   Future<void> fetchUserDroits() async {
     Account? account = shared.getAccount();
-    for (var user in users) {
-      String res = await api.post(url: '/user/droits/show', body: {
-        'account_id': account!.account.accountId,
-        'user_id': user.userId,
-      });
-      userDroits.add(userDroitsFromJson(res));
+
+    // fetch all userDroits at once
+    String res = await api.post(url: '/user/droits/all', body: {
+      'account_id': account?.account.accountId,
+    });
+
+    if (res.isNotEmpty) {
+      List<dynamic> data = jsonDecode(res);
+      userDroits = data.map((e) => UserDroits.fromJson(e)).toList();
     }
+
+    // remove user drois for deleted users
+    //userDroits.removeWhere((e) => !_users.any((u) => u.userId == e.userId));
   }
 
   Future<bool> updateUser(User newUser, int index) async {
@@ -179,10 +185,15 @@ class UserProvider with ChangeNotifier {
   }
 
   UserProvider() {
-    fetchUsers();
+    fetchUsers(true);
   }
-
-  Future<void> fetchUsers() async {
+  bool loading = false;
+  Future<void> fetchUsers([bool mustLoading = false]) async {
+    if (mustLoading) {
+      if (loading) return;
+      loading = true;
+      notifyListeners();
+    }
     Account? account = shared.getAccount();
     String res;
     res = await api.post(
@@ -192,7 +203,8 @@ class UserProvider with ChangeNotifier {
     if (res.isNotEmpty) {
       _users = userFromJson(res);
       await fetchUserDroits();
-      notifyListeners();
     }
+    loading = false;
+    notifyListeners();
   }
 }
