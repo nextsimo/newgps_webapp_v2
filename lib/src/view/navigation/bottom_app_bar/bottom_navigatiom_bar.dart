@@ -81,10 +81,10 @@ class _CustomBottomNavigatioBarState extends State<CustomBottomNavigatioBar> {
               padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               physics: const NeverScrollableScrollPhysics(),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 10,
-                childAspectRatio: 4.0,
-                crossAxisSpacing: 6,
-                mainAxisSpacing: 6,
+          crossAxisCount: 10,
+          childAspectRatio: 4.0,
+          crossAxisSpacing: 6,
+          mainAxisSpacing: 6,
               ),
               children: _items.map((item) {
                 return InkWell(
@@ -193,8 +193,8 @@ class _AlertTabBarItem extends StatelessWidget {
                 item.label,
                 maxLines: 1,
                 style: GoogleFonts.roboto(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w500,
+                                  fontSize: 11,
+                fontWeight: FontWeight.w500,
                 ),
               ),
             ],

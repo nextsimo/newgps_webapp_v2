@@ -22,6 +22,7 @@ class SplashViewModel with ChangeNotifier {
       int? isActive = json.decode(await api.post(url: '/isactive', body: {
         'account_id': account.account.accountId,
         'password': account.account.password,
+        'user_id': account.account.userID,
       }));
 
       SavedAcountProvider savedAcountProvider =

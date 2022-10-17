@@ -7,6 +7,7 @@ import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 import '../../../utils/functions.dart';
 import '../../connected_device/connected_device_provider.dart';
 import '../../last_position/last_position_provider.dart';
@@ -148,7 +149,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
                 Icons.account_circle,
               ),
             Text(
-              widget.savedAccount.underUser!.isNotEmpty
+              (widget.savedAccount.underUser!.isNotEmpty)
                   ? widget.savedAccount.underUser!.toUpperCase()
                   : widget.savedAccount.user!.toUpperCase(),
             ),
@@ -172,7 +173,9 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
       underAccountLogin: widget.savedAccount.underUser ?? "",
     );
     if (account != null) {
-      final SavedAcountProvider savedAcountProvider =
+      await shared.saveAccount(account);
+
+/*       final SavedAcountProvider savedAcountProvider =
           // ignore: use_build_context_synchronously
           Provider.of<SavedAcountProvider>(context, listen: false);
       final LastPositionProvider lastPositionProvider =
@@ -188,11 +191,10 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
           Provider.of<ConnectedDeviceProvider>(context, listen: false);
       connectedDeviceProvider.init();
       connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
-      setState(() => loading = false);
+      setState(() => loading = false); */
 
       // ignore: use_build_context_synchronously
-      Navigator.of(context)
-          .pushReplacementNamed('/navigation');
+      Restart.restartApp();
     } else {
       Fluttertoast.showToast(
         msg: 'Mot de passe ou account est inccorect',

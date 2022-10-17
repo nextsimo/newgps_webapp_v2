@@ -33,7 +33,6 @@ class SavedAcountProvider with ChangeNotifier {
 
   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
 
-
   Future<void> checkNotifcation() async {
     String res = await api.post(
       url: '/notification/historics/count/extra',
@@ -109,15 +108,15 @@ class SavedAcountProvider with ChangeNotifier {
     List<Widget> userPages = [];
 
     userPages = [
-      if (userDroits.droits[0].read) const LastPositionView(),
-      if (userDroits.droits[1].read) const HistoricView(),
-      if (userDroits.droits[2].read) const RepportView(),
-      if (userDroits.droits[3].read) const AlertNavigation(),
-      if (userDroits.droits[4].read) const GeozoneView(),
-      if (userDroits.droits[6].read) const MatriculeView(),
-      if (userDroits.droits[7].read) const CameraView(),
-      if (userDroits.droits[8].read) const GestionView(),
-      if (userDroits.droits[9].read) const DriverView(),
+      if (userDroits.droits[1].read) const LastPositionView(),
+      if (userDroits.droits[2].read) const HistoricView(),
+      if (userDroits.droits[3].read) const RepportView(),
+      if (userDroits.droits[4].read) const AlertNavigation(),
+      if (userDroits.droits[5].read) const GeozoneView(),
+      if (userDroits.droits[7].read) const MatriculeView(),
+      if (userDroits.droits[8].read) const CameraView(),
+      if (userDroits.droits[9].read) const GestionView(),
+      if (userDroits.droits[10].read) const DriverView(),
     ];
 
     if (userPages.isEmpty) return [const UserEmptyPage()];
@@ -166,12 +165,13 @@ class SavedAcountProvider with ChangeNotifier {
   }
 
   void savedAcount(String? user, String password, [String? underUser = '']) {
-    if (underUser!.isNotEmpty) {
+    if (underUser != null && underUser.isNotEmpty) {
       deleteUserAccount(underUser, user);
     } else {
       deleteAcount(user);
     }
-    _savedAcounts.add(SavedAccount(user: user, password: password, underUser: underUser));
+    _savedAcounts.add(
+        SavedAccount(user: user, password: password, underUser: underUser));
     saveAcountsList(_savedAcounts);
   }
 
@@ -190,7 +190,7 @@ class SavedAcountProvider with ChangeNotifier {
             (e) => SavedAccount(
               user: e.split(',').first,
               password: e.split(',').elementAt(1),
-              underUser: e.split(',').last,
+              underUser: e.split(',').last == 'null' ? '' : e.split(',').last,
             ),
           )
           .toList());
@@ -205,7 +205,7 @@ class SavedAcountProvider with ChangeNotifier {
             (e) => SavedAccount(
               user: e.split(',').first,
               password: e.split(',').elementAt(1),
-              underUser: e.split(',').last,
+              underUser: e.split(',').last == 'null' ? '' : e.split(',').last,
             ),
           )
           .toList());
@@ -222,7 +222,8 @@ class SavedAcountProvider with ChangeNotifier {
                 (e) => SavedAccount(
                   user: e.split(',').first,
                   password: e.split(',').elementAt(1),
-                  underUser: e.split(',').last,
+              underUser: e.split(',').last == 'null' ? '' : e.split(',').last,
+
                 ),
               )
               .toList());
@@ -255,5 +256,6 @@ class SavedAccount {
   final String? underUser;
   final String password;
 
-  SavedAccount({required this.user, required this.password, this.underUser = ''});
+  SavedAccount(
+      {required this.user, required this.password, this.underUser = ''});
 }

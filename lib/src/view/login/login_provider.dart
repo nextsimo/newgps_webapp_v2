@@ -7,6 +7,7 @@ import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../connected_device/connected_device_provider.dart';
 
@@ -29,7 +30,7 @@ class LoginProvider with ChangeNotifier {
     notifyListeners();
   }
 
-    bool isUnderCompte = false;
+  bool isUnderCompte = false;
 
   // set under user checkbox value
   void setUnderCompte(bool? value) {
@@ -96,7 +97,18 @@ class LoginProvider with ChangeNotifier {
         password: passwordController.text,
       );
       if (account != null) {
-        final LastPositionProvider lastPositionProvider =
+        await shared.saveAccount(account);
+        SavedAcountProvider savedAcountProvider =
+            // ignore: use_build_context_synchronously
+            Provider.of<SavedAcountProvider>(context, listen: false);
+        savedAcountProvider.savedAcount(
+          account.account.accountId,
+          passwordController.text,
+          account.account.userID,
+        );
+        // ignore: use_build_context_synchronously
+        Restart.restartApp();
+        /*  final LastPositionProvider lastPositionProvider =
             // ignore: use_build_context_synchronously
             Provider.of<LastPositionProvider>(context, listen: false);
         final SavedAcountProvider savedAcountProvider =
@@ -104,7 +116,9 @@ class LoginProvider with ChangeNotifier {
             Provider.of<SavedAcountProvider>(context, listen: false);
         savedAcountProvider.initUserDroit();
         savedAcountProvider.savedAcount(
-            account.account.accountId, passwordController.text, );
+          account.account.accountId,
+          passwordController.text,
+        );
         await shared.saveAccount(Account(
             account: AccountClass(
                 accountId: compteController.text,
@@ -122,8 +136,7 @@ class LoginProvider with ChangeNotifier {
         connectedDeviceProvider.init();
         connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
         // ignore: use_build_context_synchronously
-        Navigator.of(context)
-            .pushReplacementNamed('/navigation');
+        Navigator.of(context).pushReplacementNamed('/navigation'); */
       } else {
         errorText = 'Mot de passe ou account est inccorect';
       }
@@ -139,7 +152,18 @@ class LoginProvider with ChangeNotifier {
       underAccountLogin: underCompteController.text,
     );
     if (account != null) {
-      final SavedAcountProvider savedAcountProvider =
+      await shared.saveAccount(account);
+      SavedAcountProvider savedAcountProvider =
+          // ignore: use_build_context_synchronously
+          Provider.of<SavedAcountProvider>(context, listen: false);
+      savedAcountProvider.savedAcount(
+        account.account.accountId,
+        passwordController.text,
+        account.account.userID,
+      );
+      Restart.restartApp();
+
+/*       final SavedAcountProvider savedAcountProvider =
           // ignore: use_build_context_synchronously
           Provider.of<SavedAcountProvider>(context, listen: false);
       final LastPositionProvider lastPositionProvider =
@@ -163,7 +187,7 @@ class LoginProvider with ChangeNotifier {
 
       // ignore: use_build_context_synchronously
       Navigator.of(context)
-          .pushReplacementNamed('/navigation');
+          .pushReplacementNamed('/navigation'); */
     } else {
       errorText = 'Mot de passe ou account est inccorect';
     }
