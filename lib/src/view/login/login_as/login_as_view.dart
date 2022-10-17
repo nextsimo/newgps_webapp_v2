@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
@@ -85,11 +86,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
           Account? account;
           if (widget.savedAccount.underUser != null &&
               widget.savedAccount.underUser!.isNotEmpty) {
-            account = await api.underAccountLogin(
-              accountId: widget.savedAccount.user ?? "",
-              password: widget.savedAccount.password,
-              underAccountLogin: widget.savedAccount.underUser ?? "",
-            );
+            return sousUtilisateur(widget.savedAccount);
           } else {
             account = await api.login(
               accountId: widget.savedAccount.user ?? "",
@@ -100,19 +97,11 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
             shared.saveAccount(account);
             setState(() => loading = false);
             ConnectedDeviceProvider connectedDeviceProvider =
-                Provider.of(context, listen: false);
-
-            final SavedAcountProvider savedAcountProvider =
                 // ignore: use_build_context_synchronously
-                Provider.of<SavedAcountProvider>(context, listen: false);
+                Provider.of(context, listen: false);
             final LastPositionProvider lastPositionProvider =
                 // ignore: use_build_context_synchronously
                 Provider.of<LastPositionProvider>(context, listen: false);
-            savedAcountProvider.savedAcount(
-              account.account.accountId,
-              account.account.password,
-              account.account.userID,
-            );
             //await savedAcountProvider.fetchUserDroits();
 
             fetchInitData(
@@ -172,5 +161,44 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
         ),
       ),
     );
+  }
+
+  // under login function
+  Future<void> sousUtilisateur(SavedAccount savedAccount) async {
+    // request login
+    Account? account = await api.underAccountLogin(
+      accountId: widget.savedAccount.user ?? "",
+      password: widget.savedAccount.password,
+      underAccountLogin: widget.savedAccount.underUser ?? "",
+    );
+    if (account != null) {
+      final SavedAcountProvider savedAcountProvider =
+          // ignore: use_build_context_synchronously
+          Provider.of<SavedAcountProvider>(context, listen: false);
+      final LastPositionProvider lastPositionProvider =
+          // ignore: use_build_context_synchronously
+          Provider.of<LastPositionProvider>(context, listen: false);
+      shared.saveAccount(account);
+      await savedAcountProvider.fetchUserDroits();
+
+      fetchInitData(
+          context: context, lastPositionProvider: lastPositionProvider);
+      final ConnectedDeviceProvider connectedDeviceProvider =
+          // ignore: use_build_context_synchronously
+          Provider.of<ConnectedDeviceProvider>(context, listen: false);
+      connectedDeviceProvider.init();
+      connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
+      setState(() => loading = false);
+
+      // ignore: use_build_context_synchronously
+      Navigator.of(context)
+          .pushReplacementNamed('/navigation');
+    } else {
+      Fluttertoast.showToast(
+        msg: 'Mot de passe ou account est inccorect',
+        timeInSecForIosWeb: 6,
+        webBgColor: '#e74c3c',
+      );
+    }
   }
 }

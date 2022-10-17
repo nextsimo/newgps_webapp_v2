@@ -314,6 +314,8 @@ class EditableCell extends StatelessWidget {
   }
 }
 
+
+
 class BuildTextCell extends StatelessWidget {
   final String content;
   final Color color;

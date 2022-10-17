@@ -4,6 +4,8 @@ import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
+import 'package:restart_app/restart_app.dart';
+import 'package:restart_app/restart_web.dart';
 
 import '../../services/newgps_service.dart';
 import '../../view/connected_device/connected_device_provider.dart';
@@ -29,7 +31,7 @@ class LogoutButton extends StatelessWidget {
                 Provider.of(context, listen: false);
             connectedDeviceProvider.updateConnectedDevice(false);
             connectedDeviceProvider.createNewConnectedDeviceHistoric(false);
-            Phoenix.rebirth(context);
+            Restart.restartApp();
 
 /*             try {
               LastPositionProvider lastPositionProvider =

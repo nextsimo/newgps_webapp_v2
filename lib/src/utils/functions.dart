@@ -9,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 const String fuelLocalDataKey = 'fuel';
 const String batteryLocalDataKey = 'battery';
@@ -91,8 +92,8 @@ class FormValidatorService {
   }
 
   static isUrl(String url) {
-    bool _validURL = url.split('.').length == 2 || url.split('.').length == 3;
-    if (!_validURL) return "Entrez une URL valide";
+    bool validURL = url.split('.').length == 2 || url.split('.').length == 3;
+    if (!validURL) return "Entrez une URL valide";
     return null;
   }
 
@@ -279,7 +280,7 @@ void showCallConducteurDialog(BuildContext context, Device device) {
               children: [
                 MainButton(
                   onPressed: () {
-                      launch('tel:${device.phone1}', webOnlyWindowName: '_self');
+                      launchUrlString('tel:${device.phone1}', webOnlyWindowName: '_self');
                   },
                   icon: Icons.phone_forwarded_rounded,
                   label: device.phone1,
@@ -288,7 +289,7 @@ void showCallConducteurDialog(BuildContext context, Device device) {
                 if (device.phone2.isNotEmpty)
                   MainButton(
                     onPressed: () {
-                      launch('tel:${device.phone2}', webOnlyWindowName: '_self');
+                      launchUrlString('tel:${device.phone2}', webOnlyWindowName: '_self');
                     },
                     icon: Icons.phone_forwarded_rounded,
                     label: device.phone2,

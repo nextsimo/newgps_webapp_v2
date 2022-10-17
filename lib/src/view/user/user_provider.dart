@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/models/user_model.dart';
@@ -28,7 +29,7 @@ class UserProvider with ChangeNotifier {
     return exist;
   }
 
-  Future<void> deleteUser(User user) async {
+  Future<void> _deleteUser(User user) async {
     if (user.userId.isEmpty) {
       _users.remove(user);
     } else {
@@ -40,13 +41,82 @@ class UserProvider with ChangeNotifier {
       });
 
       if (res.isNotEmpty) {
+        Fluttertoast.showToast(
+          msg: '${user.userId.toUpperCase()} supprimé avec succès',
+          timeInSecForIosWeb: 5,
+          // green
+          webBgColor: '#4caf50',
+        );
         _users.remove(user);
+      } else {
+        Fluttertoast.showToast(
+            msg:
+                'Erreur lors de la suppression de ${user.userId.toUpperCase()}! Veuillez réessayer ultérieurement.');
       }
     }
     notifyListeners();
   }
 
-  Future<void> onSave(User newUser, BuildContext context, int index) async {
+  // dialog to confirm save or delete user
+  void confirmDeleteUser(BuildContext context, User user) {
+    _showConfirmDialog(
+      context,
+      user,
+      'Voulez-vous vraiment supprimer ',
+      () => _deleteUser(user),
+      'Supprimer',
+    );
+  }
+
+  // confime save user
+  void confirmSaveUser(BuildContext context, User newUser, int index) {
+    _showConfirmDialog(
+      context,
+      newUser,
+      'Voulez-vous vraiment enregistrer ',
+      () => _onSave(newUser, context, index),
+      'Enregistrer',
+    );
+  }
+
+  // show confirm dialog
+  Future<void> _showConfirmDialog(BuildContext context, User user, String title,
+      void Function() onConfirme, String action) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirmation'),
+            content: Row(
+              children: [
+                Text(title),
+                Text(
+                  user.userId.toUpperCase(),
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                const Text(' ?'),
+              ],
+            ),
+            actions: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Annuler'),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  onConfirme.call();
+                  Navigator.of(context).pop();
+                },
+                child: Text(action),
+              ),
+            ],
+          );
+        });
+  }
+
+  Future<void> _onSave(User newUser, BuildContext context, int index) async {
     bool res = false;
     newUser.devices.removeWhere((e) => e.isEmpty);
     if (newUser.userId.isEmpty) {
@@ -56,19 +126,17 @@ class UserProvider with ChangeNotifier {
     }
 
     if (!res) {
-      showDialog(
-        context: context,
-        builder: (_) => AlertDialog(
-          title: const Text('Nom utilisateur déja exister'),
-          actions: [
-            MainButton(
-              onPressed: () => Navigator.of(context).pop(),
-              label: 'Fermer',
-            ),
-          ],
-        ),
+      Fluttertoast.showToast(
+        msg:
+            "Erreur lors de l'enregistrement ! Utilisateur déjà existant ou données incorrectes",
+        timeInSecForIosWeb: 6,
+        webBgColor: "#e74c3c",
       );
     } else {
+      Fluttertoast.showToast(
+        msg: '${newUser.newUserId.toUpperCase()} enregistré avec succès',
+        timeInSecForIosWeb: 5,
+      );
       fetchUsers();
     }
   }

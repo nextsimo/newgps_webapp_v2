@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/view/login/login_provider.dart';
@@ -20,7 +21,9 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     LoginProvider provider = Provider.of<LoginProvider>(context, listen: false);
     final loginButton = MainButton(
-        label: 'Se connecter', onPressed: () => provider.login(context));
+      label: 'Se connecter',
+      onPressed: () => provider.login(context),
+    );
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
@@ -45,8 +48,10 @@ class LoginView extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Image.network('${Utils.baseUrl}/icons/logo.svg',
-                      width: 100),
+                  SvgPicture.network(
+                    '${Utils.baseUrl}/icons/logo.svg',
+                    width: 100,
+                  ),
                   const SizedBox(height: 10),
                   MainInput(
                     icon: Icons.folder,
@@ -99,8 +104,7 @@ class LoginView extends StatelessWidget {
                     },
                     selector: (_, __) => __.errorText,
                   ),
-
-                   const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   const CallServiceView(),
                 ],
               ),

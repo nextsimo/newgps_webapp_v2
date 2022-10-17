@@ -16,8 +16,8 @@ class SplashViewModel with ChangeNotifier {
   }
 
   void checkIfUserIsAuth(BuildContext context) async {
-    await Future.delayed(const Duration(seconds: 1));
-    Account? account = shared.getAccount();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+          Account? account = shared.getAccount();
     if (account != null) {
       int? isActive = json.decode(await api.post(url: '/isactive', body: {
         'account_id': account.account.accountId,
@@ -25,10 +25,11 @@ class SplashViewModel with ChangeNotifier {
       }));
 
       SavedAcountProvider savedAcountProvider =
+          // ignore: use_build_context_synchronously
           Provider.of<SavedAcountProvider>(context, listen: false);
-
       if (isActive == 1) {
         LastPositionProvider lastPositionProvider =
+            // ignore: use_build_context_synchronously
             Provider.of<LastPositionProvider>(context, listen: false);
         savedAcountProvider.initUserDroit();
 /*         SavedAcountProvider savedAcountProvider =
@@ -44,16 +45,20 @@ class SplashViewModel with ChangeNotifier {
         );
 
         final ConnectedDeviceProvider connectedDeviceProvider =
+            // ignore: use_build_context_synchronously
             Provider.of<ConnectedDeviceProvider>(context, listen: false);
         connectedDeviceProvider.init();
 
+        // ignore: use_build_context_synchronously
         Navigator.of(context)
             .pushNamedAndRemoveUntil('/navigation', (_) => false);
       } else {
-        Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
+        // ignore: use_build_context_synchronously
+        Navigator.of(context).pushReplacementNamed('/login');
       }
     } else {
-      Navigator.of(context).pushNamedAndRemoveUntil('/login', (_) => false);
+      Navigator.of(context).pushReplacementNamed('/login');
     }
+    });
   }
 }

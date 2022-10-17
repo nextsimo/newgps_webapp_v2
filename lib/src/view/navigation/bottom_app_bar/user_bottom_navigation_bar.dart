@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/utils/utils.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
@@ -34,24 +35,24 @@ class _UserCustomBottomNavigatioBarState
     SavedAcountProvider pro =
         Provider.of<SavedAcountProvider>(context, listen: false);
     _items = [
-      if (pro.userDroits.droits[1].read)
+      if (pro.userDroits.droits[0].read)
         BottomAppBarItem(icon: 'last_position', label: 'Position', index: 0),
-      if (pro.userDroits.droits[2].read)
+      if (pro.userDroits.droits[1].read)
         BottomAppBarItem(
             icon: 'historic', label: 'Historique', index: 1),
-      if (pro.userDroits.droits[3].read)
+      if (pro.userDroits.droits[2].read)
         BottomAppBarItem(icon: 'report', label: 'Rapport', index: 2),
-      if (pro.userDroits.droits[4].read)
+      if (pro.userDroits.droits[3].read)
         BottomAppBarItem(icon: 'alert', label: 'Alerte', index: 3),
-      if (pro.userDroits.droits[5].read)
+      if (pro.userDroits.droits[4].read)
         BottomAppBarItem(icon: 'geozone', label: 'Géozone', index: 4),
-      if (pro.userDroits.droits[7].read)
+      if (pro.userDroits.droits[6].read)
         BottomAppBarItem(icon: 'matricule', label: 'Matricule', index: 5),
-      if (pro.userDroits.droits[8].read)
+      if (pro.userDroits.droits[7].read)
         BottomAppBarItem(icon: 'cam', label: 'Caméra', index: 6),
-      if (pro.userDroits.droits[9].read)
+      if (pro.userDroits.droits[8].read)
         BottomAppBarItem(icon: 'gestion', label: 'Gestion', index: 7),
-      if (pro.userDroits.droits[10].read)
+      if (pro.userDroits.droits[9].read)
         BottomAppBarItem(icon: 'driver', label: 'Conduite', index: 8),
     ];
 
@@ -132,7 +133,7 @@ class _BuildTabBarItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-            Image.network('${Utils.baseUrl}/icons/${item.icon}.svg',
+            SvgPicture.network('${Utils.baseUrl}/icons/${item.icon}.svg',
                 height: 12),
           const SizedBox(height: 5),
           Text(
@@ -173,7 +174,7 @@ class AlertTabBarItem extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Image.network(
+                SvgPicture.network(
                     '${Utils.baseUrl}/icons/${item.icon}.svg',
                     height: 12),
                 const SizedBox(height: 5),

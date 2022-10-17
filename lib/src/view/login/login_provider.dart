@@ -97,8 +97,10 @@ class LoginProvider with ChangeNotifier {
       );
       if (account != null) {
         final LastPositionProvider lastPositionProvider =
+            // ignore: use_build_context_synchronously
             Provider.of<LastPositionProvider>(context, listen: false);
         final SavedAcountProvider savedAcountProvider =
+            // ignore: use_build_context_synchronously
             Provider.of<SavedAcountProvider>(context, listen: false);
         savedAcountProvider.initUserDroit();
         savedAcountProvider.savedAcount(
@@ -121,7 +123,7 @@ class LoginProvider with ChangeNotifier {
         connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
         // ignore: use_build_context_synchronously
         Navigator.of(context)
-            .pushNamedAndRemoveUntil('/navigation', (_) => false);
+            .pushReplacementNamed('/navigation');
       } else {
         errorText = 'Mot de passe ou account est inccorect';
       }
@@ -138,8 +140,10 @@ class LoginProvider with ChangeNotifier {
     );
     if (account != null) {
       final SavedAcountProvider savedAcountProvider =
+          // ignore: use_build_context_synchronously
           Provider.of<SavedAcountProvider>(context, listen: false);
       final LastPositionProvider lastPositionProvider =
+          // ignore: use_build_context_synchronously
           Provider.of<LastPositionProvider>(context, listen: false);
       savedAcountProvider.savedAcount(
         account.account.accountId,
@@ -152,12 +156,14 @@ class LoginProvider with ChangeNotifier {
       fetchInitData(
           context: context, lastPositionProvider: lastPositionProvider);
       final ConnectedDeviceProvider connectedDeviceProvider =
+          // ignore: use_build_context_synchronously
           Provider.of<ConnectedDeviceProvider>(context, listen: false);
       connectedDeviceProvider.init();
       connectedDeviceProvider.createNewConnectedDeviceHistoric(true);
 
+      // ignore: use_build_context_synchronously
       Navigator.of(context)
-          .pushNamedAndRemoveUntil('/navigation', (route) => false);
+          .pushReplacementNamed('/navigation');
     } else {
       errorText = 'Mot de passe ou account est inccorect';
     }

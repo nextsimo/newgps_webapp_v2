@@ -106,22 +106,22 @@ class SavedAcountProvider with ChangeNotifier {
       return _accountWidget;
     }
 
-    List<Widget> _userPages = [];
+    List<Widget> userPages = [];
 
-    _userPages = [
-      if (userDroits.droits[1].read) const LastPositionView(),
-      if (userDroits.droits[2].read) const HistoricView(),
-      if (userDroits.droits[3].read) const RepportView(),
-      if (userDroits.droits[4].read) const AlertNavigation(),
-      if (userDroits.droits[5].read) const GeozoneView(),
-      if (userDroits.droits[7].read) const MatriculeView(),
-      if (userDroits.droits[8].read) const CameraView(),
-      if (userDroits.droits[9].read) const GestionView(),
-      if (userDroits.droits[10].read) const DriverView(),
+    userPages = [
+      if (userDroits.droits[0].read) const LastPositionView(),
+      if (userDroits.droits[1].read) const HistoricView(),
+      if (userDroits.droits[2].read) const RepportView(),
+      if (userDroits.droits[3].read) const AlertNavigation(),
+      if (userDroits.droits[4].read) const GeozoneView(),
+      if (userDroits.droits[6].read) const MatriculeView(),
+      if (userDroits.droits[7].read) const CameraView(),
+      if (userDroits.droits[8].read) const GestionView(),
+      if (userDroits.droits[9].read) const DriverView(),
     ];
 
-    if (_userPages.isEmpty) return [const UserEmptyPage()];
-    return _userPages;
+    if (userPages.isEmpty) return [const UserEmptyPage()];
+    return userPages;
   }
 
   Future<void> fetchUserDroits() async {

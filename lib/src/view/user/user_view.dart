@@ -182,7 +182,7 @@ class RowContent extends StatelessWidget {
             flex: 2,
           ),
           const BuildDivider(),
-          EditableCell(
+          EditableCellPassword(
             content: user.password,
             onchanged: (_) => user.password = _,
             flex: 2,
@@ -206,7 +206,7 @@ class RowContent extends StatelessWidget {
                   child: Center(
                     child: IconButton(
                       onPressed: () async {
-                        await userProvider.onSave(user, context, user.index);
+                        userProvider.confirmSaveUser(context, user, user.index);
                       },
                       icon: const Icon(Icons.save),
                     ),
@@ -216,15 +216,13 @@ class RowContent extends StatelessWidget {
                   child: Center(
                     child: IconButton(
                       onPressed: () async {
-                        await userProvider.deleteUser(user);
+                        userProvider.confirmDeleteUser(context, user);
                       },
                       icon: const Icon(Icons.delete),
                       color: Colors.red,
                     ),
                   ),
                 ),
-                
-
               ],
             ),
           ),
@@ -277,4 +275,67 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
 
         // etc.
       };
+}
+
+// editable cell password
+class EditableCellPassword extends StatefulWidget {
+  final String content;
+  final int flex;
+  final void Function(String val) onchanged;
+  const EditableCellPassword(
+      {Key? key, required this.content, required this.onchanged, this.flex = 1})
+      : super(key: key);
+
+  @override
+  State<EditableCellPassword> createState() => _EditableCellPasswordState();
+}
+
+class _EditableCellPasswordState extends State<EditableCellPassword> {
+  final TextEditingController _controller = TextEditingController();
+  bool _isObscure = true;
+
+  Widget _buildObscureButton() {
+    return IconButton(
+      icon: Icon(
+        _isObscure ? Icons.visibility : Icons.visibility_off,
+        color: Colors.grey,
+      ),
+      onPressed: () {
+        setState(() {
+          _isObscure = !_isObscure;
+        });
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    _controller.text = widget.content;
+    return Expanded(
+      flex: widget.flex,
+      child: Row(
+        children: [
+          Expanded(
+            child: TextField(
+              controller: _controller,
+              onChanged: widget.onchanged,
+              onTap: () => {
+                _controller.selection = TextSelection(
+                    baseOffset: 0, extentOffset: _controller.text.length)
+              },
+              maxLines: 1,
+              textAlign: TextAlign.center,
+              decoration: const InputDecoration(
+                contentPadding: EdgeInsets.zero,
+                border: InputBorder.none,
+                // add obscure button
+              ),
+              obscureText: _isObscure,
+            ),
+          ),
+          _buildObscureButton(),
+        ],
+      ),
+    );
+  }
 }

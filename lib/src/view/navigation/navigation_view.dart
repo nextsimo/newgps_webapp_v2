@@ -21,6 +21,7 @@ class CustomNavigationView extends StatelessWidget {
 
     NewgpsService.messaging.init();
 
+
     return WillPopScope(
       onWillPop: () async {
         SystemNavigator.pop();

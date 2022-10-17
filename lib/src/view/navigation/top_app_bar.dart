@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
@@ -35,7 +36,10 @@ class CustomAppBar extends PreferredSize {
           backgroundColor: Colors.white,
           leading: Row(
             children: [
-              Image.network('${Utils.baseUrl}/icons/logo.svg'),
+              SvgPicture.network(
+                '${Utils.baseUrl}/icons/logo.svg',
+                width: 40,
+              ),
             ],
           ),
           title: Column(
@@ -146,7 +150,7 @@ class _BuildAccountName extends StatelessWidget {
       ),
       child: Text(
         name.toUpperCase(),
-        style:  GoogleFonts.roboto(
+        style: GoogleFonts.roboto(
           color: Colors.black,
           fontSize: 10,
           //fontWeight: FontWeight.w700,
