@@ -28,7 +28,7 @@ class AutoSearchType extends StatelessWidget {
           width: 270,
           margin: const EdgeInsets.all(AppConsts.outsidePadding),
           child: Autocomplete<RepportTypeModel>(
-            initialValue: const TextEditingValue(text: 'Rapport résumer'),
+            initialValue: const TextEditingValue(text: 'Rapport résumé'),
             fieldViewBuilder: (BuildContext context, TextEditingController _,
                 FocusNode focusNode, Function onFieldSubmitted) {
               repportProvider.repportTextController = _;

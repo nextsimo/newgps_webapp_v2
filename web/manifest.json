@@ -1,11 +1,11 @@
 {
-  "name": "newgps_webapp_v2",
-  "short_name": "newgps_webapp_v2",
-  "start_url": ".",
+  "name": "NEW GPS",
+  "short_name": "NEW GPS",
+  "start_url": "https://geo1.newgps.ma",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#ffffff",
-  "description": "A new Flutter project.",
+  "description": "NEW GPS vous permet de tracker vos véhicules en temps réel.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
