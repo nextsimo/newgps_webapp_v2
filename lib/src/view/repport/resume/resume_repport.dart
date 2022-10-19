@@ -24,8 +24,8 @@ class BuildHead extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var borderSide = const BorderSide(
-        color: Colors.black, width: AppConsts.borderWidth);
+    var borderSide =
+        const BorderSide(color: Colors.black, width: AppConsts.borderWidth);
     ResumeRepportProvider repportProvider =
         Provider.of<ResumeRepportProvider>(context);
 
@@ -140,15 +140,6 @@ class BuildHead extends StatelessWidget {
             isSlected: repportProvider.selectedIndex == 12,
             isUp: repportProvider.orderByDateActualisation,
           ),
-          const BuildDivider(),
-           SizedBox(
-              width: 126,
-              child: Center(
-                child: Text(
-                  'Redémarrer boitier',
-                  style:  GoogleFonts.roboto(fontSize: 14),
-                ),
-              )),
           const BuildDivider(),
         ],
       ),
@@ -301,7 +292,7 @@ class RepportRow extends StatelessWidget {
           BuildTextCell(repport.city, flex: 2),
           const BuildDivider(),
           BuildTextCell(formatDeviceDate(repport.lastValideDate), flex: 3),
-          const BuildDivider(),
+/*           const BuildDivider(),
           Padding(
             padding: const EdgeInsets.all(3),
             child: MainButton(
@@ -311,7 +302,7 @@ class RepportRow extends StatelessWidget {
               backgroundColor: Colors.green,
               height: 30,
             ),
-          ),
+          ), */
           const BuildDivider(),
         ],
       ),
