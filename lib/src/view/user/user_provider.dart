@@ -5,7 +5,6 @@ import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/user_droits.dart';
 import 'package:newgps/src/models/user_model.dart';
 import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/widgets/buttons/main_button.dart';
 
 class UserProvider with ChangeNotifier {
   List<User> _users = [];
@@ -137,7 +136,7 @@ class UserProvider with ChangeNotifier {
         msg: '${newUser.newUserId.toUpperCase()} enregistré avec succès',
         timeInSecForIosWeb: 5,
       );
-      fetchUsers();
+      //fetchUsers();
     }
   }
 
@@ -193,7 +192,7 @@ class UserProvider with ChangeNotifier {
   Future<void> updateUserDroits(int index) async {
     UserDroits _userDroits =
         UserDroits.fromJson(userDroits.elementAt(index).toJson());
-    _userDroits.droits.removeAt(index);
+    _userDroits.droits.removeAt(0);
     await api.post(url: '/user/droits/update', body: {
       'droits': json.encode(_userDroits.toJson()),
     });

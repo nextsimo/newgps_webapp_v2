@@ -11,7 +11,8 @@ import 'package:provider/provider.dart';
 class UserDevicesUi extends StatefulWidget {
   final User user;
   final int flex;
-  const UserDevicesUi({Key? key, required this.user, required this.flex}) : super(key: key);
+  const UserDevicesUi({Key? key, required this.user, required this.flex})
+      : super(key: key);
 
   @override
   State<UserDevicesUi> createState() => _UserDevicesUiState();
@@ -31,15 +32,26 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
   }
 
   void openMenu() {
-    findButton();
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        child: _ShowListDevices(
+          closeMenu: closeMenu,
+          user: widget.user,
+        ),
+      ),
+    );
+/*     findButton();
     _overlayEntry = _overlayEntryBuilder();
     Overlay.of(context)!.insert(_overlayEntry!);
-    isMenuOpen = !isMenuOpen;
+    isMenuOpen = !isMenuOpen; */
   }
 
   void closeMenu() {
-    _overlayEntry?.remove();
-    isMenuOpen = !isMenuOpen;
+    Navigator.of(context).pop();
+
+/*     _overlayEntry?.remove();
+    isMenuOpen = !isMenuOpen; */
   }
 
   OverlayEntry _overlayEntryBuilder() {
@@ -175,19 +187,17 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
       markerTextPng: '');
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: AppConsts.mainColor, width: 1.5),
-          borderRadius: BorderRadius.circular(AppConsts.mainradius),
-        ),
-        child: Column(
-          children: [
-            _searchDevices(),
-            _devicesList(context),
-          ],
-        ),
+    return Container(
+      width: 600,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppConsts.mainColor, width: 1.5),
+        borderRadius: BorderRadius.circular(AppConsts.mainradius),
+      ),
+      child: Column(
+        children: [
+          _searchDevices(),
+          _devicesList(context),
+        ],
       ),
     );
   }

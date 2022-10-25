@@ -6,7 +6,8 @@ import 'package:newgps/src/utils/styles.dart';
 class UserDroitsUi extends StatefulWidget {
   final UserDroits userDroits;
   final int flex;
-  const UserDroitsUi({Key? key, required this.userDroits, required this.flex}) : super(key: key);
+  const UserDroitsUi({Key? key, required this.userDroits, required this.flex})
+      : super(key: key);
 
   @override
   State<UserDroitsUi> createState() => _UserDroitsUiState();
@@ -26,15 +27,25 @@ class _UserDroitsUiState extends State<UserDroitsUi> {
   }
 
   void openMenu() {
-    findButton();
+    showDialog(
+      context: context,
+      builder: (_) => Dialog(
+        child: _ShowListDrois(
+          closeMenu: closeMenu,
+          userDroits: widget.userDroits,
+        ),
+      ),
+    );
+/*     findButton();
     _overlayEntry = _overlayEntryBuilder();
     Overlay.of(context)!.insert(_overlayEntry!);
-    isMenuOpen = !isMenuOpen;
+    isMenuOpen = !isMenuOpen; */
   }
 
   void closeMenu() {
-    _overlayEntry?.remove();
-    isMenuOpen = !isMenuOpen;
+    Navigator.of(context).pop();
+/*     _overlayEntry?.remove();
+    isMenuOpen = !isMenuOpen; */
   }
 
   OverlayEntry _overlayEntryBuilder() {
@@ -144,25 +155,23 @@ class _ShowListDroisState extends State<_ShowListDrois> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.white,
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: AppConsts.mainColor, width: 1.5),
-          borderRadius: BorderRadius.circular(AppConsts.mainradius),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            CloseButton(
-              color: Colors.black,
-              onPressed: () {
-                widget.closeMenu();
-              },
-            ),
-            _devicesList(context),
-          ],
-        ),
+    return Container(
+      width: 600,
+      decoration: BoxDecoration(
+        border: Border.all(color: AppConsts.mainColor, width: 1.5),
+        borderRadius: BorderRadius.circular(AppConsts.mainradius),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          CloseButton(
+            color: Colors.black,
+            onPressed: () {
+              widget.closeMenu();
+            },
+          ),
+          _devicesList(context),
+        ],
       ),
     );
   }
@@ -175,64 +184,64 @@ class _ShowListDroisState extends State<_ShowListDrois> {
         Droit userDrois = widget.userDroits.droits.elementAt(index);
         return CheckedDroits(
           color: userDrois.index == 10 ? Colors.red : null,
-            onTapRead: (int _index) {
-              if (_index == 10) {
-                widget.userDroits.droits.first.read =
-                    !widget.userDroits.droits.first.read;
-                for (var d in widget.userDroits.droits) {
-                  d.read = widget.userDroits.droits.first.read;
-                }
-                if (widget.userDroits.droits.first.write &&
-                    !widget.userDroits.droits.first.read) {
-                  widget.userDroits.droits.first.write = false;
-                  for (var d in widget.userDroits.droits) {
-                    d.write = false;
-                  }
-                }
-
-                setState(() {});
-              } else {
-                widget.userDroits.droits.first.read = false;
-                widget.userDroits.droits[index].read =
-                    !widget.userDroits.droits[index].read;
-
-                if (widget.userDroits.droits[index].write &&
-                    !widget.userDroits.droits[index].read) {
-                  widget.userDroits.droits[index].write = false;
-                }
-                setState(() {});
+          onTapRead: (int _index) {
+            if (_index == 10) {
+              widget.userDroits.droits.first.read =
+                  !widget.userDroits.droits.first.read;
+              for (var d in widget.userDroits.droits) {
+                d.read = widget.userDroits.droits.first.read;
               }
-            },
+              if (widget.userDroits.droits.first.write &&
+                  !widget.userDroits.droits.first.read) {
+                widget.userDroits.droits.first.write = false;
+                for (var d in widget.userDroits.droits) {
+                  d.write = false;
+                }
+              }
+
+              setState(() {});
+            } else {
+              widget.userDroits.droits.first.read = false;
+              widget.userDroits.droits[index].read =
+                  !widget.userDroits.droits[index].read;
+
+              if (widget.userDroits.droits[index].write &&
+                  !widget.userDroits.droits[index].read) {
+                widget.userDroits.droits[index].write = false;
+              }
+              setState(() {});
+            }
+          },
           element: str,
           userDroits: widget.userDroits,
           droit: userDrois,
-            onTapWrite: (int _index) {
-              if (_index == 10) {
-                widget.userDroits.droits.first.write =
-                    !widget.userDroits.droits.first.write;
-                for (var d in widget.userDroits.droits) {
-                  d.write = widget.userDroits.droits.first.write;
-                }
-                if (widget.userDroits.droits.first.write &&
-                    !widget.userDroits.droits.first.read) {
-                  widget.userDroits.droits.first.read = true;
-                  for (var d in widget.userDroits.droits) {
-                    d.read = true;
-                  }
-                }
-                setState(() {});
-              } else {
-                widget.userDroits.droits.first.write = false;
-                widget.userDroits.droits[index].write =
-                    !widget.userDroits.droits[index].write;
-                if (widget.userDroits.droits[index].write &&
-                    !widget.userDroits.droits[index].read) {
-                  widget.userDroits.droits[index].read =
-                      !widget.userDroits.droits[index].read;
-                }
-                setState(() {});
+          onTapWrite: (int _index) {
+            if (_index == 10) {
+              widget.userDroits.droits.first.write =
+                  !widget.userDroits.droits.first.write;
+              for (var d in widget.userDroits.droits) {
+                d.write = widget.userDroits.droits.first.write;
               }
-            },
+              if (widget.userDroits.droits.first.write &&
+                  !widget.userDroits.droits.first.read) {
+                widget.userDroits.droits.first.read = true;
+                for (var d in widget.userDroits.droits) {
+                  d.read = true;
+                }
+              }
+              setState(() {});
+            } else {
+              widget.userDroits.droits.first.write = false;
+              widget.userDroits.droits[index].write =
+                  !widget.userDroits.droits[index].write;
+              if (widget.userDroits.droits[index].write &&
+                  !widget.userDroits.droits[index].read) {
+                widget.userDroits.droits[index].read =
+                    !widget.userDroits.droits[index].read;
+              }
+              setState(() {});
+            }
+          },
         );
       },
       separatorBuilder: (_, int index) => index == 0
@@ -294,7 +303,7 @@ class _CheckedDroitsState extends State<CheckedDroits> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                 Text(
+                Text(
                   'Lire',
                   style: GoogleFonts.roboto(color: Colors.grey),
                 ),
@@ -312,7 +321,7 @@ class _CheckedDroitsState extends State<CheckedDroits> {
                     } */
                   },
                 ),
-                 Text(
+                Text(
                   'Modifier',
                   style: GoogleFonts.roboto(color: Colors.grey),
                 ),
