@@ -56,13 +56,14 @@ class LastPositionProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchInfoData() async {
+  Future<void> fetchInfoData(String deviceID) async {
     Account? account = shared.getAccount();
+
     String res = await api.post(
       url: '/info',
       body: {
         'account_id': account?.account.accountId,
-        'device_id': deviceProvider.selectedDevice.deviceId
+        'device_id': deviceID,
       },
     );
     if (res.isNotEmpty) {
@@ -139,7 +140,8 @@ class LastPositionProvider with ChangeNotifier {
       if (markersProvider.fetchGroupesDevices) {
         await fetchDevices();
       } else {
-        await fetchDevice(deviceProvider.selectedDevice.deviceId, isSelected: true);
+        await fetchDevice(deviceProvider.selectedDevice.deviceId,
+            isSelected: true);
       }
     }
     _init = true;
@@ -278,12 +280,12 @@ class LastPositionProvider with ChangeNotifier {
     if (markersProvider.fetchGroupesDevices) {
       return;
     }
+    await fetchInfoData(deviceId);
 
     if (res.isNotEmpty) {
       //log(res);
       Device device = Device.fromMap(json.decode(res));
       deviceProvider.selectedDevice = device;
-      await fetchInfoData();
       markersProvider.onMarker.clear();
       markersProvider.onMarker.add(markersProvider.getSimpleMarker(device));
       markersProvider.fetchGroupesDevices = false;

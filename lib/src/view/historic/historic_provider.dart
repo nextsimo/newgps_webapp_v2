@@ -19,8 +19,6 @@ import 'package:provider/provider.dart';
 import 'date_map_picker/time_range_widget.dart';
 
 class HistoricProvider with ChangeNotifier {
-
-  
   late Set<Marker> markers = {};
 
   late DateTime dateFrom;
@@ -283,15 +281,12 @@ class HistoricProvider with ChangeNotifier {
     autoSearchController.text = deviceProvider.selectedDevice.description;
   }
 
-  Future<void> fetchInfoData() async {
+  Future<void> fetchInfoData(String deviceID) async {
     Account? account = shared.getAccount();
 
     String res = await api.post(
       url: '/info',
-      body: {
-        'account_id': account?.account.accountId,
-        'device_id': deviceProvider.selectedDevice.deviceId
-      },
+      body: {'account_id': account?.account.accountId, 'device_id': deviceID},
     );
 
     if (res.isNotEmpty) {
@@ -348,7 +343,8 @@ class HistoricProvider with ChangeNotifier {
     if (init) {
       markers.clear();
       historicModel.devices?.clear();
-      fetchInfoData();
+      fetchInfoData(deviceID);
+
       _loading = true;
     } else {
       loading = true;
@@ -392,20 +388,22 @@ class HistoricProvider with ChangeNotifier {
 
       int index = -1;
       histoLine.clear();
-      for (var m in markers) {
-        index++;
-        if (index == markers.length - 2) break;
-        histoLine.addAll(Set<Polyline>.from({
-          Polyline(
-            width: 4,
-            color: Colors.red.withOpacity(0.4),
-            polylineId: PolylineId(m.position.toString()),
-            points: [
-              m.position,
-              markers.elementAt(index + 1).position,
-            ],
-          )
-        }));
+      if (markers.length > 1) {
+        for (var m in markers) {
+          index++;
+          if (index == markers.length - 2) break;
+          histoLine.addAll(Set<Polyline>.from({
+            Polyline(
+              width: 4,
+              color: Colors.red.withOpacity(0.4),
+              polylineId: PolylineId(m.position.toString()),
+              points: [
+                m.position,
+                markers.elementAt(index + 1).position,
+              ],
+            )
+          }));
+        }
       }
       _loading = false;
 
@@ -417,8 +415,9 @@ class HistoricProvider with ChangeNotifier {
 
   Future<void> _setMapFitToTour(Set<Marker> p, {bool init = false}) async {
     log('--------> $init');
-    if( init ){
-    await Future.delayed(const Duration(seconds: 1));}
+    if (init) {
+      await Future.delayed(const Duration(seconds: 1));
+    }
     double minLat = p.first.position.latitude;
     double minLong = p.first.position.longitude;
     double maxLat = p.first.position.latitude;
@@ -434,13 +433,11 @@ class HistoricProvider with ChangeNotifier {
       }
     }
 
-
-      googleMapController?.moveCamera(CameraUpdate.newLatLngBounds(
-          LatLngBounds(
-              southwest: LatLng(minLat, minLong),
-              northeast: LatLng(maxLat, maxLong)),
-          90));
-  
+    googleMapController?.moveCamera(CameraUpdate.newLatLngBounds(
+        LatLngBounds(
+            southwest: LatLng(minLat, minLong),
+            northeast: LatLng(maxLat, maxLong)),
+        90));
   }
 
   void onTapEnter(String val) {

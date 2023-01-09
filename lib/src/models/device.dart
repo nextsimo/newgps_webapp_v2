@@ -41,7 +41,7 @@ class Device {
   final DateTime dateTime;
   final double latitude;
   final double longitude;
-  final String address;
+   String address;
   final double distanceKm;
   final double odometerKm;
   final String city;

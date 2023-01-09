@@ -11,8 +11,10 @@ import 'package:newgps/src/utils/locator.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
+import 'package:newgps/src/widgets/loading_widget.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../view/icon_change/change_icon_view.dart';
 import 'buttons/outlined_button.dart';
@@ -32,11 +34,29 @@ class FloatingGroupWindowInfo extends StatefulWidget {
       : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _FloatingGroupWindowInfoState createState() =>
       _FloatingGroupWindowInfoState();
 }
 
 class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
+  String address = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _setTheAddress();
+  }
+
+  Future<void> _setTheAddress() async {
+    Future.microtask(() async {
+      address = await api.get(
+          url:
+              '/device/address/${widget.device.latitude}/${widget.device.longitude}');
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     DeviceProvider provider =
@@ -88,24 +108,24 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           // Matricule
-                          if(widget.device.description.isNotEmpty)
-                          Row(
-                            children: [
-                              Text(
-                                widget.device.description,
-                                style: GoogleFonts.roboto(
-                                    color: AppConsts.blue,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(width: 10),
-                              IconChangeView(
-                                selectedDevice: widget.device,
-                                closeIconChangeView: () {
-                                  widget.onClose!();
-                                },
-                              ),
-                            ],
-                          ),
+                          if (widget.device.description.isNotEmpty)
+                            Row(
+                              children: [
+                                Text(
+                                  widget.device.description,
+                                  style: GoogleFonts.roboto(
+                                      color: AppConsts.blue,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                const SizedBox(width: 10),
+                                IconChangeView(
+                                  selectedDevice: widget.device,
+                                  closeIconChangeView: () {
+                                    widget.onClose!();
+                                  },
+                                ),
+                              ],
+                            ),
                           const SizedBox(height: 20),
                           Row(
                             children: [
@@ -184,10 +204,12 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                                             color:
                                                 Colors.black.withOpacity(0.7)),
                                         children: [
-                                      TextSpan(
-                                          text: widget.device.address,
+                                      if (address.isNotEmpty)
+                                        TextSpan(
+                                          text: address,
                                           style: GoogleFonts.roboto(
-                                              color: Colors.black54))
+                                              color: Colors.black54),
+                                        ),
                                     ])),
                               ),
                             ],
@@ -271,7 +293,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               onPressed: () async {
                                 Position pos = await GeolocatorPlatform.instance
                                     .getCurrentPosition();
-                                launch(
+                                launchUrlString(
                                     'https://www.google.com/maps/dir/${pos.latitude},${pos.longitude}/${widget.device.latitude},${widget.device.longitude}');
                               },
                               label: 'Iténiraire',

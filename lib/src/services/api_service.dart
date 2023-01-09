@@ -94,7 +94,7 @@ class ApiService {
       //debugPrint('$url filed ${response.body}');
       return '';
     } catch (e) {
-      //debugPrint('$url failed $e');
+      debugPrint('$url failed $e');
       return '';
     }
   }
