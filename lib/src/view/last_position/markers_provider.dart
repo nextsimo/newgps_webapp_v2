@@ -48,6 +48,8 @@ class MarkersProvider {
     showCluster = state;
     await setMarkers(ds);
   }
+  MarkersProvider.init();
+
 
   Future<void> onClickMatricule(bool state, List<Device> ds) async {
     showMatricule = state;
@@ -221,19 +223,19 @@ class MarkersProvider {
   late Droit droit;
 
   Future<void> _onTapMarker(Device device) async {
-    if (showWindows) {
+/*     if (showWindows) {
       Navigator.of(DeviceSize.c).pop();
       showWindows = false;
     }
-    showWindows = true;
+    showWindows = true; */
     await showModalBottomSheet(
       isDismissible: true,
       context: DeviceSize.c,
       backgroundColor: Colors.transparent,
       enableDrag: true,
       isScrollControlled: false,
-      builder: (context) { 
-        return FloatingGroupWindowInfo( 
+      builder: (context) {
+        return FloatingGroupWindowInfo(
           showCallDriver: fetchGroupesDevices,
           onClose: () => showWindows = false,
           device: device,
@@ -274,7 +276,8 @@ Future<BitmapDescriptor> _getClusterBitmap(String text,
   TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
   painter.text = TextSpan(
     text: text,
-    style:  GoogleFonts.roboto(color: Colors.white, fontWeight: FontWeight.normal),
+    style:
+        GoogleFonts.roboto(color: Colors.white, fontWeight: FontWeight.normal),
   );
   painter.layout();
   painter.paint(canvas,

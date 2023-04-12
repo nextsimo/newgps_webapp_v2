@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import '../../../models/device.dart';
@@ -8,7 +7,6 @@ import '../../../services/newgps_service.dart';
 import '../../../utils/functions.dart';
 import '../../../utils/locator.dart';
 import '../../../utils/styles.dart';
-import '../../../widgets/buttons/main_button.dart';
 import '../../driver_phone/driver_phone_provider.dart';
 import '../clickable_text_cell.dart';
 import '../custom_devider.dart';
@@ -37,14 +35,14 @@ class BuildHead extends StatelessWidget {
       child: Row(
         children: [
           const BuildDivider(),
-          BuildClickableTextCell(
+/*           BuildClickableTextCell(
             'N',
             flex: 1,
             ontap: repportProvider.updateOrderByNumber,
             isSlected: repportProvider.selectedIndex == 0,
             isUp: repportProvider.orderByNumber,
           ),
-          const BuildDivider(),
+          const BuildDivider(), */
           BuildClickableTextCell(
             'Matricule',
             flex: 4,
@@ -119,20 +117,20 @@ class BuildHead extends StatelessWidget {
           const BuildDivider(),
           BuildClickableTextCell(
             'Adresse',
-            flex: 6,
+            flex: 8,
             ontap: repportProvider.updateByAdresse,
             isSlected: repportProvider.selectedIndex == 10,
             isUp: repportProvider.orderByAdresse,
           ),
           const BuildDivider(),
-          BuildClickableTextCell(
+/*           BuildClickableTextCell(
             'Ville',
             flex: 2,
             ontap: repportProvider.updateByCity,
             isSlected: repportProvider.selectedIndex == 11,
             isUp: repportProvider.orderByCity,
           ),
-          const BuildDivider(),
+          const BuildDivider(), */
           BuildClickableTextCell(
             'Date actualisation',
             flex: 3,
@@ -232,8 +230,8 @@ class RepportRow extends StatelessWidget {
       ),
       child: Row(
         children: [
-          const BuildDivider(),
-          BuildTextCell('${repport.index}', flex: 1),
+/*           const BuildDivider(),
+          BuildTextCell('${repport.index}', flex: 1), */
           const BuildDivider(),
           Expanded(
             flex: 4,
@@ -287,10 +285,10 @@ class RepportRow extends StatelessWidget {
           const BuildDivider(),
           BuildTextCell(repport.drivingTime, flex: 2),
           const BuildDivider(),
-          BuildTextCell(repport.adresse, flex: 6),
+          BuildTextCell(repport.adresse, flex: 8),
           const BuildDivider(),
-          BuildTextCell(repport.city, flex: 2),
-          const BuildDivider(),
+/*           BuildTextCell(repport.city, flex: 2),
+          const BuildDivider(), */
           BuildTextCell(formatDeviceDate(repport.lastValideDate), flex: 3),
 /*           const BuildDivider(),
           Padding(

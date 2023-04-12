@@ -65,7 +65,7 @@ class NotifHistoricView extends StatelessWidget {
                                     'Pas historiques pour le moment',
                                     textAlign: TextAlign.center,
                                     style:
-                                        Theme.of(context).textTheme.subtitle1,
+                                        Theme.of(context).textTheme.titleMedium,
                                   ),
                                 ],
                               ),

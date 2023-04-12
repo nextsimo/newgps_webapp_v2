@@ -118,8 +118,8 @@ class _BuildHeader extends StatelessWidget {
         color: Colors.black.withOpacity(0.1),
         border: Border(bottom: borderSide, top: borderSide),
       ),
-      child: Row(
-        children: const [
+      child: const Row(
+        children:  [
           BuildDivider(),
           BuildTextCell('Utilisateur', flex: 2),
           BuildDivider(),

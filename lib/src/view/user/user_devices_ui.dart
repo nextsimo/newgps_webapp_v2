@@ -54,21 +54,6 @@ class _UserDevicesUiState extends State<UserDevicesUi> {
     isMenuOpen = !isMenuOpen; */
   }
 
-  OverlayEntry _overlayEntryBuilder() {
-    return OverlayEntry(
-      builder: (context) {
-        return Positioned(
-          top: buttonPosition.dy,
-          left: buttonPosition.dx,
-          width: buttonSize!.width,
-          child: _ShowListDevices(
-            closeMenu: closeMenu,
-            user: widget.user,
-          ),
-        );
-      },
-    );
-  }
 
   @override
   void dispose() {
@@ -196,7 +181,7 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
       child: Column(
         children: [
           _searchDevices(),
-          _devicesList(context),
+          Expanded(child: _devicesList(context)),
         ],
       ),
     );
@@ -234,7 +219,6 @@ class _ShowListDevicesState extends State<_ShowListDevices> {
 
   Widget _devicesList(BuildContext context) {
     return ListView.separated(
-      shrinkWrap: true,
       itemBuilder: (_, int index) {
         Device device = devices.elementAt(index);
         String deviceName = device.description;

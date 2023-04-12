@@ -106,6 +106,57 @@ class Device {
         "marker_png": markerPng,
       };
 
+      // copy with
+  Device copyWith({ 
+    String? description,
+    String? deviceId,
+    DateTime? dateTime,
+    double? latitude,
+    double? longitude,
+    String? address,
+    double? distanceKm,
+    double? odometerKm,
+    String? city,
+    int? heading,
+    int? speedKph,
+    int? index,
+    int? colorR,
+    int? colorG,
+    int? colorB,
+    String? statut,
+    String? markerPng,
+    String? markerText,
+    String? phone1,
+    String? phone2,
+    String? markerTextPng,
+    String? deviceIcon,
+  }) {
+    return Device(
+      description: description ?? this.description,
+      deviceId: deviceId ?? this.deviceId,
+      dateTime: dateTime ?? this.dateTime,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
+      address: address ?? this.address,
+      distanceKm: distanceKm ?? this.distanceKm,
+      odometerKm: odometerKm ?? this.odometerKm,
+      city: city ?? this.city,
+      heading: heading ?? this.heading,
+      speedKph: speedKph ?? this.speedKph,
+      index: index ?? this.index,
+      colorR: colorR ?? this.colorR,
+      colorG: colorG ?? this.colorG,
+      colorB: colorB ?? this.colorB,
+      statut: statut ?? this.statut,
+      markerPng: markerPng ?? this.markerPng,
+      markerText: markerText ?? this.markerText,
+      phone1: phone1 ?? this.phone1,
+      phone2: phone2 ?? this.phone2,
+      markerTextPng: markerTextPng ?? this.markerTextPng,
+      deviceIcon: deviceIcon ?? this.deviceIcon,
+    );
+  }
+
 /*   static String _getPhoneNumber(String data, [int index = 0]) {
     try {
       return data.split(',')[index];

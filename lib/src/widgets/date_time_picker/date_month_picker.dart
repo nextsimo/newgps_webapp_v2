@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:month_picker_dialog/month_picker_dialog.dart';
 import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/repport/rapport_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class DateMonthPicker extends StatelessWidget {
   const DateMonthPicker({Key? key}) : super(key: key);
@@ -28,9 +28,6 @@ class DateMonthPicker extends StatelessWidget {
         width: 140,
         height: 35,
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Center(
-            child: Text(
-                '${provider.selectedDateMonth.month}/${provider.selectedDateMonth.year}')),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(5),
@@ -39,6 +36,9 @@ class DateMonthPicker extends StatelessWidget {
             width: 1.3,
           ),
         ),
+        child: Center(
+            child: Text(
+                '${provider.selectedDateMonth.month}/${provider.selectedDateMonth.year}')),
       ),
     );
   }

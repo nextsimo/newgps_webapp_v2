@@ -88,7 +88,7 @@ class SavedAcountProvider with ChangeNotifier {
 
   final List<Widget> _accountWidget = [
     const LastPositionView(),
-    const HistoricView(),
+    const HistoricViews(),
     const RepportView(),
     const AlertNavigation(),
     const GeozoneView(),
@@ -109,7 +109,7 @@ class SavedAcountProvider with ChangeNotifier {
 
     userPages = [
       if (userDroits.droits[1].read) const LastPositionView(),
-      if (userDroits.droits[2].read) const HistoricView(),
+      if (userDroits.droits[2].read) const HistoricViews(),
       if (userDroits.droits[3].read) const RepportView(),
       if (userDroits.droits[4].read) const AlertNavigation(),
       if (userDroits.droits[5].read) const GeozoneView(),
@@ -216,7 +216,7 @@ class SavedAcountProvider with ChangeNotifier {
   SavedAccount? getAccount(String? accontID) {
     List<String> strings = shared.getAcountsList(acountsKey);
     if (strings.isNotEmpty) {
-      List<SavedAccount> _acconts =
+      List<SavedAccount> acconts =
           savedAcounts = List<SavedAccount>.from(strings
               .map<SavedAccount>(
                 (e) => SavedAccount(
@@ -227,7 +227,7 @@ class SavedAcountProvider with ChangeNotifier {
                 ),
               )
               .toList());
-      return _acconts.firstWhere((ac) => ac.user == accontID);
+      return acconts.firstWhere((ac) => ac.user == accontID);
     }
     return null;
   }

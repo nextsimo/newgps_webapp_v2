@@ -3,6 +3,7 @@ import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 
 class CameraProvider with ChangeNotifier {
+  // ignore: library_private_types_in_public_api
   late _AutoSearchHandler auto;
 
   List<Device> devices = [];
@@ -45,9 +46,9 @@ class _AutoSearchHandler {
   late void Function() handleSelectDevice;
 
   _AutoSearchHandler(
-      void Function(String id) myFunc, void Function() _handleSelectedDevice) {
+      void Function(String id) myFunc, void Function() handleSelectedDevice) {
     onSelect = myFunc;
-    handleSelectDevice = _handleSelectedDevice;
+    handleSelectDevice = handleSelectedDevice;
   }
   String deviceID = 'all';
   late Device selectedDevice;

@@ -195,16 +195,16 @@ class TypeSelectionGeozone extends StatelessWidget {
           hint: const Text('Type de sélection'),
           items: const [
             DropdownMenuItem<int>(
+              value: 0,
               child: Text(
                 'Cercle',
               ),
-              value: 0,
             ),
             DropdownMenuItem<int>(
+              value: 1,
               child: Text(
                 'Forme',
               ),
-              value: 1,
             ),
           ],
         ),

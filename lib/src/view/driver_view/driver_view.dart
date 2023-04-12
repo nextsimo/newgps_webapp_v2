@@ -36,8 +36,8 @@ class DriverView extends StatelessWidget {
                       onClickAll: provider.auto.onClickAll,
                       onSelectDevice: provider.auto.onTapDevice,
                     ),
-                    Row(
-                      children: const [
+                    const Row(
+                      children: [
                         LogoutButton(),
                         SizedBox(width: AppConsts.outsidePadding),
                       ],

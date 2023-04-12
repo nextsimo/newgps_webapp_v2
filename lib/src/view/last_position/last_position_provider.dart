@@ -18,9 +18,9 @@ class LastPositionProvider with ChangeNotifier {
 
   bool _init = false;
 
-  late MarkersProvider markersProvider;
+   MarkersProvider markersProvider = MarkersProvider.init();
 
-  Completer<GoogleMapController> controller = Completer<GoogleMapController>();
+  GoogleMapController? mapController;
 
   bool _matriculeClicked = false;
   bool _regrouperClicked = false;

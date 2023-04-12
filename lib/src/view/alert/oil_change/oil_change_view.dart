@@ -34,8 +34,8 @@ class OilChangeAertView extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 10),
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 600),
-                  child: Column(
-                    children: const [
+                  child: const Column(
+                    children: [
                       SizedBox(height: 10),
                       BuildLabel(
                           label: 'Vidange', icon: Icons.verified_user_rounded),
@@ -148,12 +148,10 @@ class _BuildDeviceSettingPortrait extends StatelessWidget {
 class _BuilTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
-  final double width;
   const _BuilTextField({
     Key? key,
     this.hint = '',
     required this.controller,
-    this.width = double.infinity,
   }) : super(key: key);
 
   @override
@@ -161,7 +159,6 @@ class _BuilTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 6),
       child: SizedBox(
-        width: width,
         child: TextFormField(
           controller: controller,
           validator: FormValidatorService.isNotEmpty,

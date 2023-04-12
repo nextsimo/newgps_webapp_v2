@@ -3,7 +3,7 @@ import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 
 class DriverViewProvider with ChangeNotifier {
-  late _AutoSearchHandler auto;
+  late AutoSearchHandler auto;
 
   List<DataDevice> devices = [];
   List<DataDevice> _fixDevices = [];
@@ -20,7 +20,7 @@ class DriverViewProvider with ChangeNotifier {
     _fixDevices.sort((d1, d2) => d1.note.compareTo(d2.note));
 
     devices = _fixDevices;
-    auto = _AutoSearchHandler(onSelected, handleSelection);
+    auto = AutoSearchHandler(onSelected, handleSelection);
   }
 
   void handleSelection() {
@@ -46,17 +46,17 @@ class DriverViewProvider with ChangeNotifier {
   }
 }
 
-class _AutoSearchHandler {
+class AutoSearchHandler {
   TextEditingController controller =
       TextEditingController(text: 'Touts les véhicules');
 
   late void Function(String id) onSelect;
   late void Function() handleSelectDevice;
 
-  _AutoSearchHandler(
-      void Function(String id) myFunc, void Function() _handleSelectedDevice) {
+  AutoSearchHandler(
+      void Function(String id) myFunc, void Function() handleSelectedDevice) {
     onSelect = myFunc;
-    handleSelectDevice = _handleSelectedDevice;
+    handleSelectDevice = handleSelectedDevice;
   }
   String deviceID = 'all';
   late Device selectedDevice;

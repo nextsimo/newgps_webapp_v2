@@ -3,13 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/services/newgps_service.dart';
-import 'package:newgps/src/utils/functions.dart';
-import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:newgps/src/view/login/login_as/save_account_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:restart_app/restart_app.dart';
 
-import '../connected_device/connected_device_provider.dart';
 
 class LoginProvider with ChangeNotifier {
   final TextEditingController compteController = TextEditingController();
@@ -55,6 +52,7 @@ class LoginProvider with ChangeNotifier {
       var data = json.decode(res);
 
       if (data['code'] == 200) {
+        // ignore: use_build_context_synchronously
         showDialog(
           context: context,
           builder: (_) => const AlertDialog(
@@ -68,6 +66,7 @@ class LoginProvider with ChangeNotifier {
         return;
       }
 
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (_) => AlertDialog(

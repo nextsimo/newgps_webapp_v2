@@ -274,7 +274,7 @@ class OptionItem extends StatelessWidget {
         notifHistoricPorvider.selectedDevice = device;
         notifHistoricPorvider.deviceID = device.deviceId;
         notifHistoricPorvider.fetchDeviceFromSearchWidget();
-        FocusScope.of(context).requestFocus(FocusNode());;
+        FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 4, top: 5),

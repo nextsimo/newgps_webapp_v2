@@ -64,7 +64,7 @@ class LastPositionView extends StatelessWidget {
               children: [
                 //const SuiviWidget(),
                 const SizedBox(height: 6),
-                MapZoomWidget(completer: lastPositionProvider.controller),
+                MapZoomWidget(controller: lastPositionProvider.mapController),
               ],
             ),
           ),

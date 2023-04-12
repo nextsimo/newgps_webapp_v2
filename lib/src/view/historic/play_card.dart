@@ -22,6 +22,12 @@ class PlayCard extends StatelessWidget {
       width: 500,
       margin: const EdgeInsets.all(AppConsts.outsidePadding),
       padding: const EdgeInsets.all(AppConsts.outsidePadding),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          border: Border.all(
+            width: 1.8,
+            color: AppConsts.mainColor,
+          )),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -77,12 +83,6 @@ class PlayCard extends StatelessWidget {
           ),
         ],
       ),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(
-            width: 1.8,
-            color: AppConsts.mainColor,
-          )),
     );
   }
 

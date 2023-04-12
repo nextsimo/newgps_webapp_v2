@@ -21,6 +21,7 @@ class GroupedButton extends StatelessWidget {
 
     if (!provider.markersProvider.fetchGroupesDevices) {
       return AppelCondicteurButton(
+        showParkingButton: false,
         device: deviceProvider.selectedDevice,
         callNewData: () async =>
             await provider.fetchDevice(deviceProvider.selectedDevice.deviceId),

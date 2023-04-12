@@ -6,15 +6,19 @@ import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/view/driver_phone/driver_phone_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../../view/historic/parking/parking_button.dart';
 import 'log_out_button.dart';
 import 'main_button.dart';
 
 class AppelCondicteurButton extends StatelessWidget {
-    final Future<void> Function()? callNewData;
+  final Future<void> Function()? callNewData;
+  final bool showParkingButton;
   final Device device;
   const AppelCondicteurButton({
     Key? key,
-    required this.device, this.callNewData,
+    required this.device,
+    this.callNewData,
+    required this.showParkingButton,
   }) : super(key: key);
 
   @override
@@ -39,6 +43,13 @@ class AppelCondicteurButton extends StatelessWidget {
               label: 'Appel conducteur',
             );
           }),
+          if (showParkingButton)
+            const Column(
+              children: [
+                SizedBox(height: 6),
+                ParkingButton(),
+              ],
+            ),
         ],
       ),
     );

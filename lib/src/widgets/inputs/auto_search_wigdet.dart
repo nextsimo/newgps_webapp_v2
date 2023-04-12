@@ -188,9 +188,9 @@ class OptionViewBuilderWidget extends StatelessWidget {
   Widget _buildToutsWidget(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());;
+        FocusScope.of(context).requestFocus(FocusNode());
         onClickAll();
-        FocusScope.of(context).requestFocus(FocusNode());;
+        FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Container(
         height: 35,
@@ -224,7 +224,7 @@ class OptionViewBuilderWidget extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           handleSelectDevice();
-          FocusScope.of(context).requestFocus(FocusNode());;
+          FocusScope.of(context).requestFocus(FocusNode());
         },
         child: Container(
           color: Colors.transparent,
@@ -281,7 +281,7 @@ class OptionItem extends StatelessWidget {
       onTap: () async {
         onSelectDevice(device);
         onSelectDevice2(device);
-        FocusScope.of(context).requestFocus(FocusNode());;
+        FocusScope.of(context).requestFocus(FocusNode());
       },
       child: Padding(
         padding: const EdgeInsets.only(bottom: 4, top: 5),

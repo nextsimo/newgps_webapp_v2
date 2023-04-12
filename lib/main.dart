@@ -9,13 +9,11 @@ const bool isProduction = bool.fromEnvironment('dart.vm.product');
 
 Future<void> main() async {
   if (isProduction) {
-    debugPrint = (String? message, {int? wrapWidth}){};
+    debugPrint = (String? message, {int? wrapWidth}) {};
   }
   configureApp();
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   setup();
   runApp(const NewGpsApp());
 }

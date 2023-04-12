@@ -70,6 +70,7 @@ class MatriculeProvider with ChangeNotifier {
     );
 
     if (res.isNotEmpty) {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (_) => Dialog(
@@ -80,9 +81,9 @@ class MatriculeProvider with ChangeNotifier {
               borderRadius: BorderRadius.circular(AppConsts.mainradius),
               color: Colors.white,
             ),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Icon(
                   Icons.check_box,
                   color: Colors.green,
@@ -95,6 +96,7 @@ class MatriculeProvider with ChangeNotifier {
         ),
       );
     } else {
+      // ignore: use_build_context_synchronously
       showDialog(
         context: context,
         builder: (_) => Dialog(
@@ -105,9 +107,9 @@ class MatriculeProvider with ChangeNotifier {
               borderRadius: BorderRadius.circular(AppConsts.mainradius),
               color: Colors.white,
             ),
-            child: Column(
+            child: const Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
+              children: [
                 Icon(
                   Icons.wifi_off_sharp,
                   color: Colors.orange,

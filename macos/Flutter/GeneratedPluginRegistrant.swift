@@ -5,16 +5,16 @@
 import FlutterMacOS
 import Foundation
 
-import device_info_plus_macos
+import device_info_plus
 import firebase_analytics
 import firebase_core
 import firebase_messaging
 import firebase_remote_config
 import flutter_tts
 import geolocator_apple
-import path_provider_macos
-import share_plus_macos
-import shared_preferences_macos
+import path_provider_foundation
+import share_plus
+import shared_preferences_foundation
 import url_launcher_macos
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {

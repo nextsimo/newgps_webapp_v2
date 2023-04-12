@@ -145,7 +145,7 @@ class GeozoneCard extends StatelessWidget {
                 geozone.description,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2!
+                    .titleSmall!
                     .copyWith(color: Colors.white),
               ),
             ),

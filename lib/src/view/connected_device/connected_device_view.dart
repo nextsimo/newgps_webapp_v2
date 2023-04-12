@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:newgps/src/utils/functions.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'connected_device_model.dart';
 import 'connected_device_provider.dart';
@@ -73,7 +73,7 @@ class _BuildConnectedWidget extends StatelessWidget {
               const SizedBox(width: 4),
               Text(
                 '${mode.deviceBrand} ${mode.platform} ${mode.os}',
-                style: Theme.of(context).textTheme.subtitle1,
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             ],
           ),
@@ -84,7 +84,7 @@ class _BuildConnectedWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text('Périphérique ID:',
-                  style: Theme.of(context).textTheme.caption),
+                  style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(height: 5),
               Text(
                 mode.deviceUid,
@@ -105,7 +105,7 @@ class _BuildConnectedWidget extends StatelessWidget {
                 const SizedBox(width: 5),
                 MainButton(
                   onPressed: () {
-                    launch('tel:${mode.phoneNumber}',
+                    launchUrlString('tel:${mode.phoneNumber}',
                         webOnlyWindowName: '_self');
                   },
                   label: 'Appeler',
@@ -119,10 +119,10 @@ class _BuildConnectedWidget extends StatelessWidget {
           Row(
             children: [
               Text('Dèrniere connexion:',
-                  style: Theme.of(context).textTheme.caption),
+                  style: Theme.of(context).textTheme.bodySmall),
               const SizedBox(width: 4),
               Text(formatSimpleDate(mode.lastConnectedDate, true),
-                  style: Theme.of(context).textTheme.caption),
+                  style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
         ],

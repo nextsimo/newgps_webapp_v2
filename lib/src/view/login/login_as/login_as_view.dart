@@ -105,6 +105,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
                 Provider.of<LastPositionProvider>(context, listen: false);
             //await savedAcountProvider.fetchUserDroits();
 
+            // ignore: use_build_context_synchronously
             fetchInitData(
                 context: context, lastPositionProvider: lastPositionProvider);
 

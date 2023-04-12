@@ -190,25 +190,25 @@ class UserProvider with ChangeNotifier {
   }
 
   Future<void> updateUserDroits(int index) async {
-    UserDroits _userDroits =
+    UserDroits myuserDroits =
         UserDroits.fromJson(userDroits.elementAt(index).toJson());
-    _userDroits.droits.removeAt(0);
+    myuserDroits.droits.removeAt(0);
     await api.post(url: '/user/droits/update', body: {
-      'droits': json.encode(_userDroits.toJson()),
+      'droits': json.encode(myuserDroits.toJson()),
     });
   }
 
   Future<void> createNewUserDroits(String userid) async {
     Account? account = shared.getAccount();
-    UserDroits _userDroits =
+    UserDroits myuserDroits =
         UserDroits.fromJson(userDroits.elementAt(0).toJson());
-    _userDroits.droits.removeAt(0);
+    myuserDroits.droits.removeAt(0);
     //debugPrint(json.encode(_userDroits.toJson()));
 
     await api.post(url: '/user/droits/create', body: {
       'user_id': userid,
       'account_id': account!.account.accountId,
-      'droits': json.encode(_userDroits.toJson()),
+      'droits': json.encode(myuserDroits.toJson()),
     });
   }
 

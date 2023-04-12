@@ -56,11 +56,11 @@ class _UserCustomBottomNavigatioBarState
         BottomAppBarItem(icon: 'driver', label: 'Conduite', index: 8),
     ];
 
-    int _index = -1;
+    int index = -1;
     for (var element in _items) {
-      _index++;
+      index++;
 
-      element.index = _index;
+      element.index = index;
     }
   }
 

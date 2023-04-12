@@ -7,6 +7,7 @@ import 'package:newgps/src/utils/styles.dart';
 import 'package:newgps/src/utils/utils.dart';
 import 'package:newgps/src/widgets/buttons/main_button.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../connected_device/connected_device_button.dart';
 import '../connected_device/connected_device_view.dart';
@@ -51,11 +52,11 @@ class CustomAppBar extends PreferredSize {
                     builder: (_) => const ConnectedDeviceView(),
                   );
                 },
-                child: SizedBox(
+                child: const SizedBox(
                   width: 140,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       _BuildAccountName(),
                       SizedBox(width: 3),
                       ConnectedDeviceButton(),
@@ -82,6 +83,7 @@ class CustomAppBar extends PreferredSize {
                               MainButton(
                                 width: 260,
                                 onPressed: () {
+                                  // ignore: deprecated_member_use
                                   launch('tel:0522304810',
                                       webOnlyWindowName: '_self');
                                 },
@@ -92,7 +94,7 @@ class CustomAppBar extends PreferredSize {
                               MainButton(
                                 width: 260,
                                 onPressed: () {
-                                  launch('tel:‎0522304810',
+                                  launchUrlString('tel:‎0522304810',
                                       webOnlyWindowName: '_self');
                                 },
                                 icon: Icons.phone_forwarded_rounded,
@@ -102,7 +104,7 @@ class CustomAppBar extends PreferredSize {
                               MainButton(
                                 width: 260,
                                 onPressed: () {
-                                  launch('tel:0661599392',
+                                  launchUrlString('tel:0661599392',
                                       webOnlyWindowName: '_self');
                                 },
                                 icon: Icons.phone_forwarded_rounded,

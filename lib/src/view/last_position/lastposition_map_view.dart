@@ -39,9 +39,7 @@ class _LastpositionMapState extends State<LastpositionMap> {
               scrollGesturesEnabled: !provider.menuClicked,
               onMapCreated: (controller) async {
                 provider.googleMapController = controller;
-                if (!provider.controller.isCompleted) {
-                  provider.controller.complete(controller);
-                }
+                provider.mapController = controller;
                 provider.normaleView();
                 provider.markersProvider.simpleMarkerManager
                     .setMapId(controller.mapId);

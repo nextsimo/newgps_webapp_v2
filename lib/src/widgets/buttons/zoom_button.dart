@@ -1,13 +1,12 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 
 class MapZoomWidget extends StatelessWidget {
-  final Completer<GoogleMapController> completer;
+  final GoogleMapController? controller;
   final double top;
 
-  const MapZoomWidget({Key? key, required this.completer, this.top = 50})
+  const MapZoomWidget({Key? key, required this.controller, this.top = 50})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -29,9 +28,7 @@ class MapZoomWidget extends StatelessWidget {
                   icon: const Icon(Icons.add),
                   iconSize: 12,
                   onPressed: () {
-                    completer.future.then((googleMpa) {
-                      googleMpa.animateCamera(CameraUpdate.zoomIn());
-                    });
+                    controller?.animateCamera(CameraUpdate.zoomIn());
                     //controller?.animateCamera(CameraUpdate.zoomIn());
                   }),
             ),
@@ -46,9 +43,7 @@ class MapZoomWidget extends StatelessWidget {
                   icon: const Icon(Icons.remove),
                   iconSize: 12,
                   onPressed: () {
-                    completer.future.then((googleMpa) {
-                      googleMpa.animateCamera(CameraUpdate.zoomOut());
-                    });
+                    controller?.animateCamera(CameraUpdate.zoomOut());
                   }),
             ),
           )

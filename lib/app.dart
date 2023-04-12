@@ -39,7 +39,7 @@ class NewGpsApp extends StatelessWidget {
         routes: {
           // When navigating to the "/" route, build the FirstScreen widget.
           '/': (context) => const SplashView(),
-          '/navigation': (context) =>  CustomNavigationView(),
+          '/navigation': (context) => CustomNavigationView(),
           '/login': (context) => const LoginView(),
           '/alert': (context) => const SplashView(alert: true),
           // When navigating to the "/second" route, build the SecondScreen widget.

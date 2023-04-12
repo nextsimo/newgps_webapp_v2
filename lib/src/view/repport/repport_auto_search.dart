@@ -151,7 +151,7 @@ class OptionViewBuilderWidget extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).requestFocus(FocusNode());;
+        FocusScope.of(context).requestFocus(FocusNode());
         repportProvider.handleSelectDevice();
       },
       child: Material(
@@ -266,7 +266,7 @@ class OptionItem extends StatelessWidget {
         }
 
 
-        FocusScope.of(context).requestFocus(FocusNode());;
+        FocusScope.of(context).requestFocus(FocusNode());
         //lastPositionProvider.moveCamera(device, zoom: 8.5);
       },
       minVerticalPadding: 0,

@@ -27,11 +27,11 @@ class AutoSearchDevice extends StatelessWidget {
     return GestureDetector(
       onHorizontalDragStart: (_) {
         deviceProvider.handleSelectDevice();
-        historicProvider.enableZoomGesture = true;
+        //historicProvider.enableZoomGesture = true;
       },
       onTap: () {
         deviceProvider.handleSelectDevice();
-        historicProvider.enableZoomGesture = true;
+        //historicProvider.enableZoomGesture = true;
       },
       child: Container(
         color: Colors.transparent,
@@ -90,10 +90,13 @@ class AutoSearchDevice extends StatelessWidget {
         textInputAction: TextInputAction.done,
         scrollPadding: EdgeInsets.zero,
         maxLines: 1,
-        onFieldSubmitted: historicProvider.onTapEnter,
+        onFieldSubmitted: (value) {
+          onFieldSubmitted();
+          //historicProvider.enableZoomGesture = true;
+        },
         onTap: () {
           deviceProvider.autoSearchController.text = '';
-          historicProvider.enableZoomGesture = false;
+          //historicProvider.enableZoomGesture = false;
         },
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(horizontal: 10),

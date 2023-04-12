@@ -106,6 +106,7 @@ class DeviceProvider with ChangeNotifier {
       String message = isStart ? 'Le démarrage' : "L'arrêt";
 
       if (res == 'success') {
+        // ignore: use_build_context_synchronously
         showDialog(
             context: context,
             builder: (_) {
@@ -134,6 +135,7 @@ class DeviceProvider with ChangeNotifier {
               );
             });
       } else {
+        // ignore: use_build_context_synchronously
         showDialog(
             context: context,
             builder: (_) {

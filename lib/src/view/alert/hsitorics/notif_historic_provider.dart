@@ -99,6 +99,7 @@ class NotifHistoricPorvider with ChangeNotifier {
 
     if (res.isNotEmpty) {
       Device device = Device.fromMap(json.decode(res));
+      // ignore: use_build_context_synchronously
       _locatedAlert(context: context, device: device);
     }
   }
