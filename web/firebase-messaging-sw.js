@@ -43,17 +43,6 @@ self.addEventListener('notificationclick', function (event) {
       })
     )
   }
-  //window.open('https://newgps-323d9.web.app', '_blank');
 }, false);
 
 const messaging = firebase.messaging();
-
-/*
-// Necessary to receive background messages:
-
-
-// Optional:
-messaging.onBackgroundMessage((m) => {
-  console.log("onBackgroundMessage", m);
- // window.open('https://newgps-323d9.web.app/#/navigation/1', '_blank');
-}); */

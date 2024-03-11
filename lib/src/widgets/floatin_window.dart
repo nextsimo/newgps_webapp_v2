@@ -24,12 +24,11 @@ class FloatingGroupWindowInfo extends StatefulWidget {
   final void Function()? onClose;
 
   const FloatingGroupWindowInfo(
-      {Key? key,
+      {super.key,
       required this.device,
       this.onClose,
       this.showOnOffDevice = true,
-      this.showCallDriver = true})
-      : super(key: key);
+      this.showCallDriver = true});
 
   @override
   // ignore: library_private_types_in_public_api

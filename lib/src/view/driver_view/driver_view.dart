@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'driver_provider.dart';
 
 class DriverView extends StatelessWidget {
-  const DriverView({Key? key}) : super(key: key);
+  const DriverView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -80,9 +80,8 @@ class DriverView extends StatelessWidget {
 class _BuildDriverCard extends StatelessWidget {
   final DataDevice device;
   _BuildDriverCard({
-    Key? key,
     required this.device,
-  }) : super(key: key);
+  });
 
   final Random random = Random();
 

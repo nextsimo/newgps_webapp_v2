@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'resume_repport_loding_provider.dart';
 
 class ResumeRepportLoading extends StatelessWidget {
-  const ResumeRepportLoading({Key? key}) : super(key: key);
+  const ResumeRepportLoading({super.key});
 
   @override
   Widget build(BuildContext context) {

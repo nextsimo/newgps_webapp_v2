@@ -5,7 +5,7 @@ import 'package:newgps/src/widgets/buttons/log_out_button.dart';
 import 'navigation/top_app_bar.dart';
 
 class UserEmptyPage extends StatelessWidget {
-  const UserEmptyPage({Key? key}) : super(key: key);
+  const UserEmptyPage({super.key});
 
   @override
   Widget build(BuildContext context) {

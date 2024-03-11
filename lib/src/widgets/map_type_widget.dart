@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapTypeWidget extends StatelessWidget {
   final void Function(MapType) onChange;
-  const MapTypeWidget({Key? key, required this.onChange}) : super(key: key);
+  const MapTypeWidget({super.key, required this.onChange});
 
   @override
   Widget build(BuildContext context) {

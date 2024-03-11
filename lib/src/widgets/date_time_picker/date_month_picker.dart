@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:month_picker_dialog/month_picker_dialog.dart';
 
 class DateMonthPicker extends StatelessWidget {
-  const DateMonthPicker({Key? key}) : super(key: key);
+  const DateMonthPicker({super.key});
 
   @override
   Widget build(BuildContext context) {

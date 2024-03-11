@@ -14,7 +14,7 @@ import 'src/view/historic/historic_provider.dart';
 import 'src/view/login/login_as/save_account_provider.dart';
 
 class NewGpsApp extends StatelessWidget {
-  const NewGpsApp({Key? key}) : super(key: key);
+  const NewGpsApp({super.key});
 
   @override
   Widget build(BuildContext context) {

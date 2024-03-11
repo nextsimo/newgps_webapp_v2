@@ -4,7 +4,7 @@ import 'package:newgps/src/utils/styles.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class CallServiceView extends StatelessWidget {
-  const CallServiceView({Key? key}) : super(key: key);
+  const CallServiceView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -6,8 +6,7 @@ class MapZoomWidget extends StatelessWidget {
   final GoogleMapController? controller;
   final double top;
 
-  const MapZoomWidget({Key? key, required this.controller, this.top = 50})
-      : super(key: key);
+  const MapZoomWidget({super.key, required this.controller, this.top = 50});
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'camera_provider.dart';
 
 class CameraView extends StatelessWidget {
-  const CameraView({Key? key}) : super(key: key);
+  const CameraView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -76,10 +76,9 @@ class _BuildCameraCard extends StatelessWidget {
   final Device device;
   final double? height;
   const _BuildCameraCard({
-    Key? key,
     required this.device,
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

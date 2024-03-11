@@ -10,8 +10,7 @@ class CustomBottomNavigatioBar extends StatefulWidget {
   final PageController pageController;
   final bool alert;
   const CustomBottomNavigatioBar(
-      {Key? key, required this.pageController, this.alert = false})
-      : super(key: key);
+      {super.key, required this.pageController, this.alert = false});
 
   @override
   State<CustomBottomNavigatioBar> createState() =>
@@ -163,8 +162,7 @@ class _AlertTabBarItem extends StatelessWidget {
   final BottomAppBarItem item;
   final bool isSelected;
   const _AlertTabBarItem(
-      {Key? key, required this.item, required this.isSelected})
-      : super(key: key);
+      {required this.item, required this.isSelected});
 
   @override
   Widget build(BuildContext context) {

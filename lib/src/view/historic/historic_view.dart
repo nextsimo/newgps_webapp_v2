@@ -16,7 +16,7 @@ import 'parking/parking_provider.dart';
 import 'play_card.dart';
 
 class HistoricViews extends StatefulWidget {
-  const HistoricViews({Key? key}) : super(key: key);
+  const HistoricViews({super.key});
 
   @override
   State<HistoricViews> createState() => _HistoricViewsState();

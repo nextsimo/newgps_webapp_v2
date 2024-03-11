@@ -8,7 +8,7 @@ import '../../navigation/top_app_bar.dart';
 import '../widgets/build_label.dart';
 
 class HighwayNotifView extends StatefulWidget {
-  const HighwayNotifView({Key? key}) : super(key: key);
+  const HighwayNotifView({super.key});
 
   @override
   State<HighwayNotifView> createState() => _HighwayNotifViewState();

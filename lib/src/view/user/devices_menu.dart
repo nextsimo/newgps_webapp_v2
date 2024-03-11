@@ -5,7 +5,7 @@ import 'package:newgps/src/services/device_provider.dart';
 import 'package:provider/provider.dart';
 
 class MenuDevices extends StatelessWidget {
-  const MenuDevices({Key? key}) : super(key: key);
+  const MenuDevices({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class MenuDevices extends StatelessWidget {
 
 class DeviceListItem extends StatelessWidget {
   final Device device;
-  const DeviceListItem({Key? key, required this.device}) : super(key: key);
+  const DeviceListItem({super.key, required this.device});
 
   @override
   Widget build(BuildContext context) {

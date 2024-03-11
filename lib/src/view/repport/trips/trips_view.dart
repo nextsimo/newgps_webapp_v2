@@ -11,7 +11,7 @@ import '../text_cell.dart';
 import 'trip_provider.dart';
 
 class TripsView extends StatelessWidget {
-  const TripsView({Key? key}) : super(key: key);
+  const TripsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,7 @@ class TripsView extends StatelessWidget {
 }
 
 class _BuildHead extends StatelessWidget {
-  const _BuildHead({
-    Key? key,
-  }) : super(key: key);
+  const _BuildHead();
 
   @override
   Widget build(BuildContext context) {
@@ -131,9 +129,8 @@ class _BuildHead extends StatelessWidget {
 
 class _RepportRow extends StatelessWidget {
   const _RepportRow({
-    Key? key,
     required this.trip,
-  }) : super(key: key);
+  });
 
   final TripsRepportModel trip;
 

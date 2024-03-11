@@ -3,7 +3,7 @@ import 'package:newgps/src/services/newgps_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VolumeWidget extends StatefulWidget {
-  const VolumeWidget({Key? key}) : super(key: key);
+  const VolumeWidget({super.key});
 
   @override
   // ignore: library_private_types_in_public_api

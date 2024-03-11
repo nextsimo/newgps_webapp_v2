@@ -7,7 +7,7 @@ import '../../navigation/top_app_bar.dart';
 import '../widgets/build_label.dart';
 
 class TemperatureView extends StatefulWidget {
-  const TemperatureView({Key? key}) : super(key: key);
+  const TemperatureView({super.key});
 
   @override
   State<TemperatureView> createState() => _TemperatureViewState();

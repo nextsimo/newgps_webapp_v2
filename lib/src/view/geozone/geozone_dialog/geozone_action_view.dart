@@ -15,8 +15,7 @@ class GeozoneActionView extends StatelessWidget {
   final bool readonly;
 
   const GeozoneActionView(
-      {Key? key, required this.geozoneDialogProvider, this.readonly = false})
-      : super(key: key);
+      {super.key, required this.geozoneDialogProvider, this.readonly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +123,7 @@ class GeozoneActionView extends StatelessWidget {
 
 class GeozoneMap extends StatelessWidget {
   final bool readonly;
-  const GeozoneMap({Key? key,required this.readonly}) : super(key: key);
+  const GeozoneMap({super.key,required this.readonly});
 
   @override
   Widget build(BuildContext context) {
@@ -162,8 +161,7 @@ class GeozoneMap extends StatelessWidget {
 
 class TypeSelectionGeozone extends StatelessWidget {
   final bool readonly;
-  const TypeSelectionGeozone({Key? key, required this.readonly})
-      : super(key: key);
+  const TypeSelectionGeozone({super.key, required this.readonly});
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +221,7 @@ class _InnerOuterMode {
 class GeoZoneSelectType extends StatelessWidget {
   final bool readonly;
   final BuildContext context;
-  const GeoZoneSelectType({Key? key, required this.context,required this.readonly}) : super(key: key);
+  const GeoZoneSelectType({super.key, required this.context,required this.readonly});
 
   final List<_InnerOuterMode> _items = const [
     _InnerOuterMode(value: 0, label: 'Entrée'),
@@ -256,11 +254,9 @@ class _InnerOuterWigdet extends StatelessWidget {
   final bool isSelected;
 
   const _InnerOuterWigdet(
-      {Key? key,
-      required this.label,
+      {required this.label,
       required this.value,
-      required this.isSelected,required this.readonly})
-      : super(key: key);
+      required this.isSelected,required this.readonly});
   @override
   Widget build(BuildContext context) {
     final GeozoneDialogProvider provider =
@@ -310,12 +306,11 @@ class GeozoneInput extends StatelessWidget {
   final bool readonly;
   final TextEditingController? controller;
   const GeozoneInput(
-      {Key? key,
+      {super.key,
       required this.hint,
       this.controller,
       this.validator,
-      required this.readonly})
-      : super(key: key);
+      required this.readonly});
 
   @override
   Widget build(BuildContext context) {

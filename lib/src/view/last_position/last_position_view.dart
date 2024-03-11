@@ -14,7 +14,7 @@ import 'date_widget.dart';
 import 'grouped_buttons.dart';
 
 class LastPositionView extends StatelessWidget {
-  const LastPositionView({Key? key}) : super(key: key);
+  const LastPositionView({super.key});
 
   @override
   Widget build(BuildContext context) {

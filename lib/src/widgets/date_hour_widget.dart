@@ -16,14 +16,13 @@ class DateHourWidget extends StatelessWidget {
   final void Function(DateTime?)? onSelectDate;
 
   const DateHourWidget(
-      {Key? key,
+      {super.key,
       this.width = 400.0,
       this.ontap,
       required this.dateFrom,
       required this.dateTo,
       this.onSelectDate,
-      this.fetchData = true})
-      : super(key: key);
+      this.fetchData = true});
 
   @override
   Widget build(BuildContext context) {

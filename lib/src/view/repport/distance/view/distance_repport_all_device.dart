@@ -11,7 +11,7 @@ import '../models/repport_distance_model.dart';
 import '../provider/distance_provider.dart';
 
 class DistanceRepportAllDeviceView extends StatefulWidget {
-  const DistanceRepportAllDeviceView({Key? key}) : super(key: key);
+  const DistanceRepportAllDeviceView({super.key});
 
   @override
   State<DistanceRepportAllDeviceView> createState() =>
@@ -129,9 +129,7 @@ class _DistanceRepportAllDeviceViewState
 }
 
 class _BuildHead extends StatelessWidget {
-  const _BuildHead({
-    Key? key,
-  }) : super(key: key);
+  const _BuildHead();
 
   @override
   Widget build(BuildContext context) {
@@ -188,9 +186,8 @@ class _BuildHead extends StatelessWidget {
 class _RepportRow extends StatelessWidget {
   final Repport model;
   const _RepportRow({
-    Key? key,
     required this.model,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

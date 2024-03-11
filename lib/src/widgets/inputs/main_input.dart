@@ -14,7 +14,7 @@ class MainInput extends StatelessWidget {
   final TextInputType? textInputType;
 
   const MainInput(
-      {Key? key,
+      {super.key,
       this.icon,
       this.hint = '',
       this.controller,
@@ -23,8 +23,7 @@ class MainInput extends StatelessWidget {
       this.onchanged,
       this.color,
       this.textInputType,
-      this.width, this.autofocus = false})
-      : super(key: key);
+      this.width, this.autofocus = false});
   @override
   Widget build(BuildContext context) {
     return SizedBox(

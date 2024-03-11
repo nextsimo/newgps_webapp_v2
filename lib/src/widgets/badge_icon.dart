@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import '../view/login/login_as/save_account_provider.dart';
 
 class BadgeIcon extends StatelessWidget {
-  const BadgeIcon({Key? key}) : super(key: key);
+  const BadgeIcon({super.key});
 
   @override
   Widget build(BuildContext context) {

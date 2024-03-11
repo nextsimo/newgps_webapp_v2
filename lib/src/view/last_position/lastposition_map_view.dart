@@ -6,7 +6,7 @@ import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:provider/provider.dart';
 
 class LastpositionMap extends StatefulWidget {
-  const LastpositionMap({Key? key}) : super(key: key);
+  const LastpositionMap({super.key});
 
   @override
   State<LastpositionMap> createState() => _LastpositionMapState();

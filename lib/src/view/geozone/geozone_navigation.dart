@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'geozone_provider.dart';
 
 class GeozoneNavigation extends StatelessWidget {
-  const GeozoneNavigation({Key? key}) : super(key: key);
+  const GeozoneNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {

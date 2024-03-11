@@ -22,7 +22,7 @@ import 'resume/resume_repport.dart';
 import 'trips/trips_view.dart';
 
 class RepportView extends StatelessWidget {
-  const RepportView({Key? key}) : super(key: key);
+  const RepportView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class RepportView extends StatelessWidget {
 }
 
 class RepportDataView extends StatelessWidget {
-  const RepportDataView({Key? key}) : super(key: key);
+  const RepportDataView({super.key});
 
   @override
   Widget build(BuildContext context) {

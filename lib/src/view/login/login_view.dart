@@ -15,7 +15,7 @@ import 'login_as/login_as_view.dart';
 import 'under_user_login.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+  const LoginView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -3,8 +3,8 @@ import 'package:newgps/src/utils/styles.dart';
 
 class BuildDivider extends StatelessWidget {
   const BuildDivider({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

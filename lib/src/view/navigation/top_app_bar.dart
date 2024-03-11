@@ -18,9 +18,8 @@ class CustomAppBar extends PreferredSize {
   final List<Widget>? actions;
 
   const CustomAppBar(
-      {Key? key, this.height = kToolbarHeight, this.actions, this.onTap})
+      {super.key, this.height = kToolbarHeight, this.actions, this.onTap})
       : super(
-          key: key,
           child: const SizedBox(),
           preferredSize: const Size.fromHeight(kToolbarHeight),
         );
@@ -129,7 +128,7 @@ class CustomAppBar extends PreferredSize {
 }
 
 class _BuildAccountName extends StatelessWidget {
-  const _BuildAccountName({Key? key}) : super(key: key);
+  const _BuildAccountName();
 
   @override
   Widget build(BuildContext context) {

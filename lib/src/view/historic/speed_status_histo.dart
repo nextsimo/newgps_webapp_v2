@@ -5,7 +5,7 @@ import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:provider/provider.dart';
 
 class SpeedStatusHisto extends StatelessWidget {
-  const SpeedStatusHisto({Key? key}) : super(key: key);
+  const SpeedStatusHisto({super.key});
 
   @override
   Widget build(BuildContext context) {

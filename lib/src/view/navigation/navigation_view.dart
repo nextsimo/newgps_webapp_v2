@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:provider/provider.dart';
 import '../../services/newgps_service.dart';
@@ -9,7 +8,7 @@ import 'bottom_app_bar/bottom_navigatiom_bar.dart';
 import 'bottom_app_bar/user_bottom_navigation_bar.dart';
 
 class CustomNavigationView extends StatelessWidget {
-  CustomNavigationView({Key? key}) : super(key: key);
+  CustomNavigationView({super.key});
   final PageController myController = PageController();
   @override
   Widget build(BuildContext context) {
@@ -22,41 +21,35 @@ class CustomNavigationView extends StatelessWidget {
     NewgpsService.messaging.init();
 
 
-    return WillPopScope(
-      onWillPop: () async {
-        SystemNavigator.pop();
-        return false;
+    return MultiProvider(
+      providers: [
+        Provider.value(value: NewgpsService.messaging),
+        Provider.value(value: navigationViewProvider),
+      ],
+      builder: (BuildContext context, __) {
+        SavedAcountProvider pro =
+            Provider.of<SavedAcountProvider>(context, listen: false);
+        pro.checkNotifcation();
+        return Scaffold(
+          backgroundColor: Colors.transparent,
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: false,
+          body: PageView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: myController,
+            children: pro.buildPages(),
+          ),
+          bottomNavigationBar: (account!.account.userID == null ||
+                  account.account.userID!.isEmpty)
+              ? CustomBottomNavigatioBar(
+                  pageController: myController,
+                )
+              : UserCustomBottomNavigatioBar(
+                  pageController: myController,
+                ),
+        );
       },
-      child: MultiProvider(
-        providers: [
-          Provider.value(value: NewgpsService.messaging),
-          Provider.value(value: navigationViewProvider),
-        ],
-        builder: (BuildContext context, __) {
-          SavedAcountProvider pro =
-              Provider.of<SavedAcountProvider>(context, listen: false);
-          pro.checkNotifcation();
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            extendBody: true,
-            extendBodyBehindAppBar: true,
-            resizeToAvoidBottomInset: false,
-            body: PageView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: myController,
-              children: pro.buildPages(),
-            ),
-            bottomNavigationBar: (account!.account.userID == null ||
-                    account.account.userID!.isEmpty)
-                ? CustomBottomNavigatioBar(
-                    pageController: myController,
-                  )
-                : UserCustomBottomNavigatioBar(
-                    pageController: myController,
-                  ),
-          );
-        },
-      ),
     );
   }
 }

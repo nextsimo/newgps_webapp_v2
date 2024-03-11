@@ -5,7 +5,7 @@ class SearchWidget extends StatelessWidget {
   final bool autoFocus;
   final void Function(String str)? onChnaged;
   final String? hint;
-  const SearchWidget({Key? key, this.onChnaged, this.hint, this.autoFocus=false}) : super(key: key);
+  const SearchWidget({super.key, this.onChnaged, this.hint, this.autoFocus=false});
 
   @override
   Widget build(BuildContext context) {

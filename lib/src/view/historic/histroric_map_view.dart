@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 
 class HistoricMapView extends StatefulWidget {
   final Key newMapKey;
-  const HistoricMapView({Key? key, required this.newMapKey}) : super(key: key);
+  const HistoricMapView({super.key, required this.newMapKey});
 
   @override
   State<HistoricMapView> createState() => _HistoricMapViewState();

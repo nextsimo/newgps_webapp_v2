@@ -9,7 +9,7 @@ import 'connected_device_model.dart';
 import 'connected_device_provider.dart';
 
 class ConnectedDeviceView extends StatelessWidget {
-  const ConnectedDeviceView({Key? key}) : super(key: key);
+  const ConnectedDeviceView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +55,8 @@ class ConnectedDeviceView extends StatelessWidget {
 class _BuildConnectedWidget extends StatelessWidget {
   final ConnectedDeviceModel mode;
   const _BuildConnectedWidget({
-    Key? key,
     required this.mode,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

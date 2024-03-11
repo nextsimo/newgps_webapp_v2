@@ -8,7 +8,7 @@ import '../widgets/build_label.dart';
 import 'hood_alert_view_provider.dart';
 
 class HoodAlertView extends StatelessWidget {
-  const HoodAlertView({Key? key}) : super(key: key);
+  const HoodAlertView({super.key});
 
   @override
   Widget build(BuildContext context) {

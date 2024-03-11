@@ -10,8 +10,7 @@ import 'package:provider/provider.dart';
 class AutoSearchDevice extends StatelessWidget {
   final Future<void> Function(Device device)? onSelectDeviceFromOtherView;
 
-  const AutoSearchDevice({Key? key, this.onSelectDeviceFromOtherView})
-      : super(key: key);
+  const AutoSearchDevice({super.key, this.onSelectDeviceFromOtherView});
 
   @override
   Widget build(BuildContext context) {
@@ -119,10 +118,10 @@ class OptionViewBuilderWidget extends StatelessWidget {
   final void Function(Device) onSelectDevice;
 
   const OptionViewBuilderWidget({
-    Key? key,
+    super.key,
     required this.devices,
     required this.onSelectDevice,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -166,11 +165,11 @@ class OptionViewBuilderWidget extends StatelessWidget {
 class OptionItem extends StatelessWidget {
   final Device device;
   const OptionItem({
-    Key? key,
+    super.key,
     required this.onSelectDevice,
     required this.deviceProvider,
     required this.device,
-  }) : super(key: key);
+  });
 
   final void Function(Device p1) onSelectDevice;
   final DeviceProvider deviceProvider;
@@ -199,9 +198,8 @@ class OptionItem extends StatelessWidget {
 
 class _BuildStatuWidget extends StatelessWidget {
   const _BuildStatuWidget({
-    Key? key,
     required this.device,
-  }) : super(key: key);
+  });
 
   final Device device;
 

@@ -8,7 +8,7 @@ environment:
 dependencies:
   auto_size_text: ^3.0.0
   custom_info_window: ^1.0.1
-  device_info_plus: ^8.1.0
+  device_info_plus: ^9.1.2
   dio: ^5.0.1
   download: ^1.0.0
   editable: ^2.0.0
@@ -17,7 +17,7 @@ dependencies:
   firebase_core: ^2.7.0
   firebase_dynamic_links: ^5.0.15
   firebase_messaging: ^14.2.5
-  firebase_remote_config: ^3.0.13
+  firebase_remote_config: ^4.3.8
   flutter:
     sdk: flutter
   flutter_animarker: ^3.2.0
@@ -25,18 +25,18 @@ dependencies:
     sdk: flutter
   flutter_native_splash: ^2.2.18
   flutter_phoenix: ^1.1.0
-  flutter_polyline_points: ^1.0.0
+  flutter_polyline_points: ^2.0.0
   flutter_svg: ^2.0.2
   flutter_tts: ^3.6.3
   fluttertoast: ^8.2.1
-  geolocator: ^9.0.2
+  geolocator: ^11.0.0
   get_it: ^7.2.0
-  google_fonts: ^4.0.3
-  google_maps_cluster_manager: ^3.0.0+1
-  google_maps_flutter: ^2.2.5
-  google_maps_flutter_web: ^0.4.0+7
+  google_fonts: ^6.2.1
+  google_maps_cluster_manager_2: ^3.1.0
+  google_maps_flutter: ^2.6.0
+  google_maps_flutter_web: ^0.5.6+2
   grouped_list: ^5.1.2
-  http: ^0.13.5
+  http: ^1.2.1
   image: ^4.0.15
   intl: ^0.18.0
   loadmore: ^2.0.1
@@ -47,16 +47,19 @@ dependencies:
   provider: ^6.0.5
   restart_app: ^1.1.2
   search_choices: ^2.2.5
-  share_plus: ^6.3.1
+  share_plus: ^7.2.2
   shared_preferences: ^2.0.18
-  syncfusion_flutter_gauges: ^20.4.52
+  syncfusion_flutter_gauges: ^24.2.9
   url_launcher: ^6.1.10
-  uuid: ^3.0.7
+  uuid: ^4.3.3
   video_player: ^2.5.2
 
+dependency_overrides:
+  web: ^0.5.0
+
 dev_dependencies:
-  flutter_launcher_icons: ^0.12.0
-  flutter_lints: ^2.0.1
+  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^3.0.1
   flutter_test:
     sdk: flutter
 flutter_icons:

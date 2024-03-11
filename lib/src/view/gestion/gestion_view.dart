@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'gestion_provider.dart';
 
 class GestionView extends StatelessWidget {
-  const GestionView({Key? key}) : super(key: key);
+  const GestionView({super.key});
 
   final List<GestionModel> _items = const [
     GestionModel(
@@ -72,7 +72,7 @@ class GestionView extends StatelessWidget {
 
 class _BuildGestionCard extends StatelessWidget {
   final GestionModel item;
-  const _BuildGestionCard({Key? key, required this.item}) : super(key: key);
+  const _BuildGestionCard({required this.item});
 
   @override
   Widget build(BuildContext context) {

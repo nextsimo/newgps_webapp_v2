@@ -12,7 +12,7 @@ class MainButton extends StatefulWidget {
   final Color? borderColor;
   final IconData? icon;
   const MainButton(
-      {Key? key,
+      {super.key,
       this.label = '',
       required this.onPressed,
       this.backgroundColor = AppConsts.mainColor,
@@ -20,8 +20,7 @@ class MainButton extends StatefulWidget {
       this.height = 48,
       this.borderColor,
       this.textColor = Colors.white,
-      this.icon})
-      : super(key: key);
+      this.icon});
 
   @override
   // ignore: library_private_types_in_public_api

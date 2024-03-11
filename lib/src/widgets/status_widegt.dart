@@ -4,9 +4,9 @@ import 'package:newgps/src/models/device.dart';
 
 class StatusWidget extends StatelessWidget {
   const StatusWidget({
-    Key? key,
+    super.key,
     required this.device,
-  }) : super(key: key);
+  });
 
   final Device device;
 

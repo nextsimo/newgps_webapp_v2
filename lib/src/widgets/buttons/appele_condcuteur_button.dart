@@ -15,11 +15,11 @@ class AppelCondicteurButton extends StatelessWidget {
   final bool showParkingButton;
   final Device device;
   const AppelCondicteurButton({
-    Key? key,
+    super.key,
     required this.device,
     this.callNewData,
     required this.showParkingButton,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

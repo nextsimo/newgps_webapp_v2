@@ -6,7 +6,7 @@ import 'package:newgps/src/view/repport/repport_type_model.dart';
 import 'package:provider/provider.dart';
 
 class AutoSearchType extends StatelessWidget {
-  const AutoSearchType({Key? key}) : super(key: key);
+  const AutoSearchType({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +109,11 @@ class OptionViewBuilderWidget extends StatelessWidget {
   final RepportProvider repportProvider;
 
   const OptionViewBuilderWidget({
-    Key? key,
+    super.key,
     required this.repports,
     required this.onSelectDevice,
     required this.repportProvider,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -154,11 +154,11 @@ class OptionViewBuilderWidget extends StatelessWidget {
 class OptionItem extends StatelessWidget {
   final RepportTypeModel repportTypeModel;
   const OptionItem({
-    Key? key,
+    super.key,
     required this.onSelectDevice,
     required this.repportProvider,
     required this.repportTypeModel,
-  }) : super(key: key);
+  });
 
   final void Function(RepportTypeModel p1) onSelectDevice;
   final RepportProvider repportProvider;

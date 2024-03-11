@@ -13,7 +13,7 @@ import '../../connected_device/connected_device_provider.dart';
 import '../../last_position/last_position_provider.dart';
 
 class LoginAsView extends StatelessWidget {
-  const LoginAsView({Key? key}) : super(key: key);
+  const LoginAsView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +54,8 @@ class LoginAsView extends StatelessWidget {
 class _BuildLoginAsWidget extends StatefulWidget {
   final SavedAccount savedAccount;
   const _BuildLoginAsWidget({
-    Key? key,
     required this.savedAccount,
-  }) : super(key: key);
+  });
 
   @override
   State<_BuildLoginAsWidget> createState() => _BuildLoginAsWidgetState();
@@ -107,6 +106,7 @@ class _BuildLoginAsWidgetState extends State<_BuildLoginAsWidget> {
 
             // ignore: use_build_context_synchronously
             fetchInitData(
+                // ignore: use_build_context_synchronously
                 context: context, lastPositionProvider: lastPositionProvider);
 
             connectedDeviceProvider.init();

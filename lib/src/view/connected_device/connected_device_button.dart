@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import 'connected_device_provider.dart';
 
 class ConnectedDeviceButton extends StatelessWidget {
-  const ConnectedDeviceButton({Key? key}) : super(key: key);
+  const ConnectedDeviceButton({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,11 +8,10 @@ class TimeRangeWigdet extends StatelessWidget {
   final void Function() onRestaure;
 
   const TimeRangeWigdet(
-      {Key? key,
+      {super.key,
       required this.provider,
       required this.onSave,
-      required this.onRestaure})
-      : super(key: key);
+      required this.onRestaure});
 
   @override
   Widget build(BuildContext context) {

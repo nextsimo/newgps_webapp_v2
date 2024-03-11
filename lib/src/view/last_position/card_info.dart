@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class CardInfoView extends StatelessWidget {
-  const CardInfoView({Key? key}) : super(key: key);
+  const CardInfoView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -170,8 +170,8 @@ class CardInfoView extends StatelessWidget {
 
 class Cdivider extends StatelessWidget {
   const Cdivider({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -186,9 +186,9 @@ class Cdivider extends StatelessWidget {
 
 class OdometreWidget extends StatelessWidget {
   const OdometreWidget({
-    Key? key,
+    super.key,
     required this.device,
-  }) : super(key: key);
+  });
 
   final Device device;
 

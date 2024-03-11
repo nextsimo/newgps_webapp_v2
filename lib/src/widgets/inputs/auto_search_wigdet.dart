@@ -18,14 +18,13 @@ class AutoSearchWithAllWidget extends StatefulWidget {
   final OnSelectDevice onSelectDevice;
   final TextEditingController controller;
   const AutoSearchWithAllWidget(
-      {Key? key,
+      {super.key,
       required this.initController,
       required this.handleSelectDevice,
       required this.onClickAll,
       required this.clearTextController,
       required this.controller,
-      required this.onSelectDevice})
-      : super(key: key);
+      required this.onSelectDevice});
 
   @override
   State<AutoSearchWithAllWidget> createState() =>
@@ -115,14 +114,14 @@ class BuildTextField extends StatefulWidget {
   final OutlineInputBorder outlineInputBorder;
   final void Function() rebuild;
   const BuildTextField({
-    Key? key,
+    super.key,
     required this.outlineInputBorder,
     required this.focusNode,
     required this.clearTextController,
     required this.handleSelectDevice,
     required this.controller,
     required this.rebuild,
-  }) : super(key: key);
+  });
 
   @override
   State<BuildTextField> createState() => _BuildTextFieldState();
@@ -177,13 +176,13 @@ class OptionViewBuilderWidget extends StatelessWidget {
   final HandleSelectDevice handleSelectDevice;
 
   const OptionViewBuilderWidget({
-    Key? key,
+    super.key,
     required this.devices,
     required this.onSelectDevice,
     required this.onClickAll,
     required this.handleSelectDevice,
     required this.onSelectDevice2,
-  }) : super(key: key);
+  });
 
   Widget _buildToutsWidget(BuildContext context) {
     return GestureDetector(
@@ -267,11 +266,11 @@ class OptionItem extends StatelessWidget {
   final Device device;
   final OnSelectDevice onSelectDevice2;
   const OptionItem({
-    Key? key,
+    super.key,
     required this.onSelectDevice,
     required this.device,
     required this.onSelectDevice2,
-  }) : super(key: key);
+  });
 
   final void Function(Device p1) onSelectDevice;
 
@@ -302,9 +301,8 @@ class OptionItem extends StatelessWidget {
 
 class _BuildStatuWidget extends StatelessWidget {
   const _BuildStatuWidget({
-    Key? key,
     required this.device,
-  }) : super(key: key);
+  });
 
   final Device device;
 

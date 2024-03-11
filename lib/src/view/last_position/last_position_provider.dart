@@ -2,13 +2,13 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:newgps/src/models/account.dart';
 import 'package:newgps/src/models/device.dart';
 import 'package:newgps/src/models/info_model.dart';
 import 'package:newgps/src/services/newgps_service.dart';
 import 'package:newgps/src/view/last_position/markers_provider.dart';
+import 'package:uuid/uuid.dart';
 
 class LastPositionProvider with ChangeNotifier {
   late Set<Polyline> polylines = {};
@@ -195,17 +195,17 @@ class LastPositionProvider with ChangeNotifier {
     markersProvider.textMakers = ms;
     notifyListeners();
   }
+    final uuid = const Uuid();
 
-  Future<Marker> Function(Cluster<Place>) markerBuilder(bool isText) =>
+  Future<Marker> Function(dynamic) markerBuilder(bool isText) =>
       (cluster) async {
         if (!isText) {
           return markersProvider.getClusterMarker(cluster);
         }
         if (isText && !cluster.isMultiple) {
-          return await markersProvider
-              .getTextMarker(cluster.items.first.device);
+          return markersProvider.getTextMarker(cluster.items.first.device);
         }
-        return const Marker(markerId: MarkerId(''), visible: false);
+        return Marker(markerId: MarkerId(uuid.v4()), visible: false);
       };
 
   void _initCluster() {

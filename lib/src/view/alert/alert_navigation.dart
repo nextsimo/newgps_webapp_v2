@@ -18,73 +18,66 @@ import 'temperature/temperature_view.dart';
 import 'towing/towing_view.dart';
 
 class AlertNavigation extends StatelessWidget {
-  const AlertNavigation({Key? key}) : super(key: key);
+  const AlertNavigation({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return false;
-      },
-      child: Stack(
-        children: [
-          Navigator(
-          initialRoute: deviceProvider.initAlertRoute,
-            onGenerateRoute: (RouteSettings settings) {
-              switch (settings.name) {
-                case '/speed':
-                  return MaterialPageRoute(
-                      builder: (_) => const SpeedAlertView());
-                case '/historics':
-                  return MaterialPageRoute(
-                      builder: (_) => const NotifHistoricView());
-                case '/hood':
-                  return MaterialPageRoute(
-                      builder: (_) => const HoodAlertView());
-                case '/temp':
-                  return MaterialPageRoute(
-                      builder: (_) => const TemperatureView());
-                case '/radar':
-                  return MaterialPageRoute(
-                      builder: (_) => const RadarNotifView());
-                case '/fuel':
-                  return MaterialPageRoute(
-                      builder: (_) => const FuelAlertView());
-                case '/oil_change':
-                  return MaterialPageRoute(
-                      builder: (_) => const OilChangeAertView());
-                case '/towing':
-                  return MaterialPageRoute(builder: (_) => const TowingView());
-                case '/startup':
-                  return MaterialPageRoute(builder: (_) => const StartupView());
-                case '/imobility':
-                  return MaterialPageRoute(
-                      builder: (_) => const ImobilityAlertView());
-                case '/debranchement':
-                  return MaterialPageRoute(
-                      builder: (_) => const DepranchNotifView());
-                case '/battery':
-                  return MaterialPageRoute(
-                      builder: (_) => const BatteryAlertView());
-                case '/highway':
-                  return MaterialPageRoute(
-                      builder: (_) => const HighwayNotifView());
-                default:
-                  return MaterialPageRoute(builder: (_) => const AlertView());
-              }
-            },
-          ),
-          const _BuildMapWidget(),
-        ],
-      ),
+    return Stack(
+      children: [
+        Navigator(
+        initialRoute: deviceProvider.initAlertRoute,
+          onGenerateRoute: (RouteSettings settings) {
+            switch (settings.name) {
+              case '/speed':
+                return MaterialPageRoute(
+                    builder: (_) => const SpeedAlertView());
+              case '/historics':
+                return MaterialPageRoute(
+                    builder: (_) => const NotifHistoricView());
+              case '/hood':
+                return MaterialPageRoute(
+                    builder: (_) => const HoodAlertView());
+              case '/temp':
+                return MaterialPageRoute(
+                    builder: (_) => const TemperatureView());
+              case '/radar':
+                return MaterialPageRoute(
+                    builder: (_) => const RadarNotifView());
+              case '/fuel':
+                return MaterialPageRoute(
+                    builder: (_) => const FuelAlertView());
+              case '/oil_change':
+                return MaterialPageRoute(
+                    builder: (_) => const OilChangeAertView());
+              case '/towing':
+                return MaterialPageRoute(builder: (_) => const TowingView());
+              case '/startup':
+                return MaterialPageRoute(builder: (_) => const StartupView());
+              case '/imobility':
+                return MaterialPageRoute(
+                    builder: (_) => const ImobilityAlertView());
+              case '/debranchement':
+                return MaterialPageRoute(
+                    builder: (_) => const DepranchNotifView());
+              case '/battery':
+                return MaterialPageRoute(
+                    builder: (_) => const BatteryAlertView());
+              case '/highway':
+                return MaterialPageRoute(
+                    builder: (_) => const HighwayNotifView());
+              default:
+                return MaterialPageRoute(builder: (_) => const AlertView());
+            }
+          },
+        ),
+        const _BuildMapWidget(),
+      ],
     );
   }
 }
 
 class _BuildMapWidget extends StatelessWidget {
-  const _BuildMapWidget({
-    Key? key,
-  }) : super(key: key);
+  const _BuildMapWidget();
 
   @override
   Widget build(BuildContext context) {

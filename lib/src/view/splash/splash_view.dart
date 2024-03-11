@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 class SplashView extends StatelessWidget {
   final bool alert;
-  const SplashView({Key? key, this.alert = false}) : super(key: key);
+  const SplashView({super.key, this.alert = false});
 
   @override
   Widget build(BuildContext context) {

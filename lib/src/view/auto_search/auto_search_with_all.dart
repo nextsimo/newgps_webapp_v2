@@ -8,7 +8,7 @@ import 'package:newgps/src/view/last_position/last_position_provider.dart';
 import 'package:provider/provider.dart';
 
 class AutoSearchDeviceWithAll extends StatefulWidget {
-  const AutoSearchDeviceWithAll({Key? key}) : super(key: key);
+  const AutoSearchDeviceWithAll({super.key});
 
   @override
   State<AutoSearchDeviceWithAll> createState() =>
@@ -107,11 +107,11 @@ class BuildTextField extends StatefulWidget {
   final FocusNode focusNode;
   final OutlineInputBorder outlineInputBorder;
   const BuildTextField({
-    Key? key,
+    super.key,
     required this.lastPositionProvider,
     required this.outlineInputBorder,
     required this.focusNode,
-  }) : super(key: key);
+  });
 
   @override
   State<BuildTextField> createState() => _BuildTextFieldState();
@@ -182,11 +182,11 @@ class OptionViewBuilderWidget extends StatelessWidget {
   final void Function(Device) onSelectDevice;
 
   const OptionViewBuilderWidget({
-    Key? key,
+    super.key,
     required this.devices,
     required this.onSelectDevice,
     required this.focusNode,
-  }) : super(key: key);
+  });
 
   Widget _buildToutsWidget(
       LastPositionProvider lastPositionProvider, BuildContext context) {
@@ -270,12 +270,12 @@ class OptionItem extends StatelessWidget {
   final FocusNode focusNode;
   final Device device;
   const OptionItem({
-    Key? key,
+    super.key,
     required this.onSelectDevice,
     required this.lastPositionProvider,
     required this.device,
     required this.focusNode,
-  }) : super(key: key);
+  });
 
   final void Function(Device p1) onSelectDevice;
   final LastPositionProvider lastPositionProvider;
@@ -303,9 +303,8 @@ class OptionItem extends StatelessWidget {
 
 class _BuildStatuWidget extends StatelessWidget {
   const _BuildStatuWidget({
-    Key? key,
     required this.device,
-  }) : super(key: key);
+  });
 
   final Device device;
 

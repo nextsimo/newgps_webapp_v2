@@ -105,6 +105,7 @@ class GeozoneProvider with ChangeNotifier {
     if (res.isEmpty) {
       // ignore: use_build_context_synchronously
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (_) => const AlertDialog(
           title: Text('Nom de geozone déja exister'),
@@ -141,6 +142,7 @@ class GeozoneProvider with ChangeNotifier {
     if (res.isEmpty) {
       // ignore: use_build_context_synchronously
       showDialog(
+        // ignore: use_build_context_synchronously
         context: context,
         builder: (_) => const AlertDialog(
           title: Text('Nom de geozone déja exister'),
@@ -173,6 +175,7 @@ class GeozoneProvider with ChangeNotifier {
           double.parse(geozoneDialogProvider.controllerGeozoneMetre.text),
           geozoneDialogProvider.pos,
           geozoneDialogProvider.controllerGeozoneName.text,
+          // ignore: use_build_context_synchronously
           context);
     }
 
@@ -221,6 +224,7 @@ class GeozoneProvider with ChangeNotifier {
           double.parse(geozoneDialogProvider.controllerGeozoneMetre.text),
           geozoneDialogProvider.pos,
           geozoneDialogProvider.controllerGeozoneName.text,
+          // ignore: use_build_context_synchronously
           context);
     }
     geozoneDialogProvider.clear();

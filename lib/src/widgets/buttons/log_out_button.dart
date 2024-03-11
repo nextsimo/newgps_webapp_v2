@@ -9,7 +9,7 @@ import 'audio_widget.dart';
 
 class LogoutButton extends StatelessWidget {
   final double witdh;
-  const LogoutButton({Key? key, this.witdh = 150}) : super(key: key);
+  const LogoutButton({super.key, this.witdh = 150});
 
   @override
   Widget build(BuildContext context) {

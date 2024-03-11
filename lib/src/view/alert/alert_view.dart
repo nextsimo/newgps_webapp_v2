@@ -8,7 +8,7 @@ import 'package:newgps/src/widgets/buttons/main_button.dart';
 import '../navigation/top_app_bar.dart';
 
 class AlertView extends StatelessWidget {
-  const AlertView({Key? key}) : super(key: key);
+  const AlertView({super.key});
 
   final List<_AlertItem> _items = const [
     _AlertItem(
@@ -152,7 +152,7 @@ class _AlertItem {
 
 class _AlertCatd extends StatelessWidget {
   final _AlertItem alertItem;
-  const _AlertCatd({Key? key, required this.alertItem}) : super(key: key);
+  const _AlertCatd({required this.alertItem});
 
   @override
   Widget build(BuildContext context) {

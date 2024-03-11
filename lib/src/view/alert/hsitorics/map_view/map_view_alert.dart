@@ -9,7 +9,7 @@ import 'map_view_alert_provider.dart';
 
 class MapViewALert extends StatelessWidget {
   final Device device;
-  const MapViewALert({Key? key, required this.device}) : super(key: key);
+  const MapViewALert({super.key, required this.device});
 
   @override
   Widget build(BuildContext context) {

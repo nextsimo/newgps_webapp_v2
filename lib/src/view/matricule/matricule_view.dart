@@ -10,7 +10,7 @@ import 'package:newgps/src/widgets/inputs/search_widget.dart';
 import 'package:provider/provider.dart';
 
 class MatriculeView extends StatelessWidget {
-  const MatriculeView({Key? key}) : super(key: key);
+  const MatriculeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class MatriculeView extends StatelessWidget {
 }
 
 class MatriculeDataView extends StatelessWidget {
-  const MatriculeDataView({Key? key}) : super(key: key);
+  const MatriculeDataView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +105,8 @@ class MatriculeDataView extends StatelessWidget {
 
 class BuildHead extends StatelessWidget {
   const BuildHead({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -160,9 +160,9 @@ class BuildHead extends StatelessWidget {
 
 class MatriculeRowContent extends StatelessWidget {
   const MatriculeRowContent({
-    Key? key,
+    super.key,
     required this.matricule,
-  }) : super(key: key);
+  });
 
   final MatriculeModel matricule;
 
@@ -265,8 +265,8 @@ class MatriculeRowContent extends StatelessWidget {
 
 class BuildDivider extends StatelessWidget {
   const BuildDivider({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -283,8 +283,7 @@ class EditableCell extends StatelessWidget {
   final int flex;
   final void Function(String val) onchanged;
   EditableCell(
-      {Key? key, required this.content, required this.onchanged, this.flex = 1})
-      : super(key: key);
+      {super.key, required this.content, required this.onchanged, this.flex = 1});
 
   final TextEditingController _controller = TextEditingController();
   @override
@@ -322,8 +321,7 @@ class BuildTextCell extends StatelessWidget {
   final int flex;
 
   const BuildTextCell(this.content,
-      {Key? key, this.color = Colors.black, this.flex = 1})
-      : super(key: key);
+      {super.key, this.color = Colors.black, this.flex = 1});
 
   @override
   Widget build(BuildContext context) {

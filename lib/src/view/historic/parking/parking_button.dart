@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 import '../historic_provider.dart';
 
 class ParkingButton extends StatelessWidget {
-  const ParkingButton({Key? key}) : super(key: key);
+  const ParkingButton({super.key});
 
   @override
   Widget build(BuildContext context) {
