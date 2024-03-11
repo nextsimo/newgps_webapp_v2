@@ -23,7 +23,7 @@ class HistoricViews extends StatefulWidget {
 }
 
 class _HistoricViewsState extends State<HistoricViews> {
-  Key newMapKey = const Key('newMapKey');
+  Key newMapKey = UniqueKey();
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,8 @@ class _HistoricViewsState extends State<HistoricViews> {
             ),
             body: Stack(
               children: [
-                const HistoricMapView(
+                HistoricMapView(
+                  newMapKey: newMapKey,
                 ),
                 Selector<HistoricProvider, bool>(
                     selector: (_, p) => p.historicIsPlayed,
@@ -93,9 +94,11 @@ class _HistoricViewsState extends State<HistoricViews> {
                       if (isPlayed) return const SizedBox();
                       return AutoSearchDevice(
                         onSelectDeviceFromOtherView: (Device device) async {
-                          await provider.fetchHistorics(context, device);
+                          provider.animateMarker.clear();
+                          provider.markers.clear();
                           newMapKey = UniqueKey();
                           setState(() {});
+                          await provider.fetchHistorics(context, device);
                         },
                       );
                     }),

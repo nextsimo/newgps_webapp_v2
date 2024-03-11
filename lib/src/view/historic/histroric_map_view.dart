@@ -7,7 +7,8 @@ import 'package:newgps/src/view/historic/historic_provider.dart';
 import 'package:provider/provider.dart';
 
 class HistoricMapView extends StatefulWidget {
-  const HistoricMapView({super.key});
+  final Key newMapKey;
+  const HistoricMapView({super.key, required this.newMapKey});
 
   @override
   State<HistoricMapView> createState() => _HistoricMapViewState();
@@ -20,7 +21,8 @@ class _HistoricMapViewState extends State<HistoricMapView> {
         builder: (_, HistoricProvider provider, __) {
       final DeviceProvider deviceProvider =
           Provider.of<DeviceProvider>(context, listen: false);
-        debugPrint('provider.animateMarker.values.toSet() ${provider.markers.values.length}');
+      debugPrint(
+          'provider.animateMarker.values.toSet() ${provider.markers.values.length}');
       return Animarker(
         isActiveTrip: true,
         useRotation: false,
@@ -33,6 +35,8 @@ class _HistoricMapViewState extends State<HistoricMapView> {
         mapId: Future<int>.value(provider.googleMapController?.mapId ?? 0),
         markers: provider.animateMarker.values.toSet(),
         child: GoogleMap(
+          zoomGesturesEnabled: provider.enableZoomGesture,
+          key: widget.newMapKey,
           polylines: provider.getLines(),
           zoomControlsEnabled: false,
           markers: provider.getMarker(),

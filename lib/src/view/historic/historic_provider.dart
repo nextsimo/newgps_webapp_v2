@@ -45,6 +45,16 @@ class HistoricProvider with ChangeNotifier {
     useParkingMarker = v;
   }
 
+  bool _enableZoomGesture = true;
+
+  bool get enableZoomGesture => _enableZoomGesture;
+
+  set enableZoomGesture(bool value) {
+    if (value == _enableZoomGesture) return;
+    _enableZoomGesture = value;
+    notifyListeners();
+  }
+
   List<TripsRepportModel> trips = [];
 
   // get ripple color from device
