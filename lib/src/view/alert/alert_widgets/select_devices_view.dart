@@ -66,6 +66,7 @@ class SelectDeviceUi extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: MainButton(
+                            width: 150,
                             label: 'Enregistrer',
                             onPressed: () async {
                               await onSaveDevices(List.from(provider.selectedDevices));

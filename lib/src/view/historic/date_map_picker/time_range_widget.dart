@@ -43,6 +43,7 @@ class TimeRangeWigdet extends StatelessWidget {
           ),
           const SizedBox(height: 2),
           MainButton(
+            width: 160,
             onPressed: () {
               if (fetch) {
                 provider.onTimeRangeSaveClicked();
@@ -56,6 +57,8 @@ class TimeRangeWigdet extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           MainButton(
+                        width: 160,
+
             onPressed: () {
               if (fetch) {
                 provider.onTimeRangeRestaureClicked();

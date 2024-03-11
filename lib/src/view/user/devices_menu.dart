@@ -15,7 +15,7 @@ class MenuDevices extends StatelessWidget {
     List<Device> devices = deviceProvider.devices;
 
     return Container(
-      width: 150,
+      width: 160,
       height: 250,
       decoration: BoxDecoration(
         color: Colors.white,

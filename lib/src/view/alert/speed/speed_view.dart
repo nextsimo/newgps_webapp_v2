@@ -81,7 +81,7 @@ class SpeedAlertView extends StatelessWidget {
           color: AppConsts.mainColor, width: AppConsts.borderWidth),
     );
     return SizedBox(
-      width: 150,
+      width: 160,
       child: TextField(
         readOnly: readOnly,
         controller: provider.controller,

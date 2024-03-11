@@ -36,7 +36,7 @@ class GroupedButton extends StatelessWidget {
             return MainButton(
               borderColor: AppConsts.mainColor,
               height: 30,
-              width: 150,
+              width: 160,
               textColor: clicked ? AppConsts.mainColor : Colors.white,
               backgroundColor: clicked ? Colors.white : AppConsts.mainColor,
               onPressed: () {
@@ -53,7 +53,7 @@ class GroupedButton extends StatelessWidget {
             return MainButton(
               borderColor: AppConsts.mainColor,
               height: 30,
-              width: 150,
+              width: 160,
               textColor: clicked ? AppConsts.mainColor : Colors.white,
               backgroundColor: clicked ? Colors.white : AppConsts.mainColor,
               onPressed: () {
@@ -70,7 +70,7 @@ class GroupedButton extends StatelessWidget {
             return MainButton(
               borderColor: AppConsts.mainColor,
               height: 30,
-              width: 150,
+              width: 160,
               textColor: clicked ? AppConsts.mainColor : Colors.white,
               backgroundColor: clicked ? Colors.white : AppConsts.mainColor,
               onPressed: () {

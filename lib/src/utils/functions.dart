@@ -278,6 +278,7 @@ void showCallConducteurDialog(BuildContext context, Device device) {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 MainButton(
+                  width: 260,
                   onPressed: () {
                       launchUrlString('tel:${device.phone1}', webOnlyWindowName: '_self');
                   },
@@ -287,6 +288,7 @@ void showCallConducteurDialog(BuildContext context, Device device) {
                 const SizedBox(height: 10),
                 if (device.phone2.isNotEmpty)
                   MainButton(
+                    width: 260,
                     onPressed: () {
                       launchUrlString('tel:${device.phone2}', webOnlyWindowName: '_self');
                     },

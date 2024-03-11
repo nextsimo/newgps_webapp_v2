@@ -30,11 +30,9 @@ class AppelCondicteurButton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [
-          const LogoutButton(),
-          const SizedBox(height: 2),
           Consumer<DeviceProvider>(builder: (_, ___, ____) {
             return MainButton(
-              width: 150,
+              width: double.infinity,
               height: 35,
               onPressed: () {
                 locator<DriverPhoneProvider>().checkPhoneDriver(

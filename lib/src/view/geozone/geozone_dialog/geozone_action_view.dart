@@ -62,6 +62,7 @@ class GeozoneActionView extends StatelessWidget {
                                   if (!readonly)
                                     Expanded(
                                       child: MainButton(
+                                        width: 160,
                                         backgroundColor: Colors.red,
                                         onPressed: () =>
                                             geozoneDialogProvider.pop(context),
@@ -101,6 +102,8 @@ class GeozoneActionView extends StatelessWidget {
                             Expanded(
                               flex: 2,
                               child: MainButton(
+                                                                        width: 160,
+
                                 onPressed: () =>
                                     geozoneDialogProvider.onSave(context),
                                 label: 'Enregister',

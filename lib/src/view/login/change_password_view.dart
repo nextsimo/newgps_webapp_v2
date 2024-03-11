@@ -56,6 +56,8 @@ class ChangePasswordView extends StatelessWidget {
                 hint: 'Nouveau mot de passe'),
             const SizedBox(height: 22),
             MainButton(
+                          width: 160,
+
                 onPressed: () => model.updatePassword(context),
                 label: 'Mettre à jour'),
           ],

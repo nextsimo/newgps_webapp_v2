@@ -79,8 +79,7 @@ class _HistoricViewsState extends State<HistoricViews> {
             ),
             body: Stack(
               children: [
-                HistoricMapView(
-                  newMapKey: newMapKey,
+                const HistoricMapView(
                 ),
                 Selector<HistoricProvider, bool>(
                     selector: (_, p) => p.historicIsPlayed,

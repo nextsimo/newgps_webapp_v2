@@ -16,7 +16,7 @@ class MainButton extends StatefulWidget {
       this.label = '',
       required this.onPressed,
       this.backgroundColor = AppConsts.mainColor,
-      this.width,
+      required this.width,
       this.height = 48,
       this.borderColor,
       this.textColor = Colors.white,

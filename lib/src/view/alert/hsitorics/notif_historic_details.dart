@@ -196,7 +196,7 @@ class _HistoricCard extends StatelessWidget {
                         MainButton(
                           onPressed: () => porvider.call(context, notifHistoric.deviceId),
                           label: 'Conducteur',
-                          width: 150,
+                          width: 180,
                           height: 30,
                           icon: Icons.call,
                         ),
@@ -204,7 +204,7 @@ class _HistoricCard extends StatelessWidget {
                         MainButton(
                           onPressed: () => porvider.findAlertPosition(context: context, deviceId: notifHistoric.deviceId, timestamp: notifHistoric.timestamp),
                           label: 'Localiser',
-                          width: 150,
+                          width: 160,
                           height: 30,
                           icon: Icons.location_on,
                         ),

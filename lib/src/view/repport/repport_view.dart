@@ -84,7 +84,7 @@ class RepportDataView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 5),
                       child: MainButton(
-                        width: 140,
+                        width: 160,
                         icon: Icons.call,
                         height: 32,
                         onPressed: () {
@@ -107,7 +107,7 @@ class RepportDataView extends StatelessWidget {
                     onPressed: () => repportProvider.downloadDocument(context),
                     label: 'Télécharger',
                     height: 35,
-                    width: 120,
+                    width: 160,
                   ),
                   if (repportProvider.selectedRepport.index == 0)
                     Padding(
@@ -142,7 +142,7 @@ class RepportDataView extends StatelessWidget {
               const Padding(
                 padding: EdgeInsets.only(right: AppConsts.outsidePadding),
                 child: LogoutButton(
-                  witdh: 116,
+                  witdh: 160,
                 ),
               ),
             ],

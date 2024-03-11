@@ -49,11 +49,13 @@ class TimeRangeWigdet extends StatelessWidget {
           MainButton(
             onPressed: onSave,
             label: 'Enregistrer',
+            width: 160,
           ),
           const SizedBox(height: 10),
           MainButton(
             onPressed: onRestaure,
             label: "Restaurer l'heure",
+            width: 160,
           ),
         ],
       ),

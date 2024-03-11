@@ -21,6 +21,7 @@ class LoginView extends StatelessWidget {
   Widget build(BuildContext context) {
     LoginProvider provider = Provider.of<LoginProvider>(context, listen: false);
     final loginButton = MainButton(
+      width: double.infinity,
       label: 'Se connecter',
       onPressed: () => provider.login(context),
     );
@@ -106,6 +107,7 @@ class LoginView extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   const CallServiceView(),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),

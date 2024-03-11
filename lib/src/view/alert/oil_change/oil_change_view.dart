@@ -135,6 +135,7 @@ class _BuildDeviceSettingPortrait extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             MainButton(
+              width: 150,
               onPressed: provider.save,
               label: 'Modifier',
             ),

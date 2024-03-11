@@ -64,11 +64,13 @@ class RepportProvider with ChangeNotifier {
             mainAxisSize: MainAxisSize.min,
             children: [
               MainButton(
+                width: 160,
                 onPressed: downloadXcl,
                 label: 'XSL',
               ),
               const SizedBox(height: 10),
               MainButton(
+                width: 160,
                 onPressed: downloadPdf,
                 label: 'PDF',
               ),

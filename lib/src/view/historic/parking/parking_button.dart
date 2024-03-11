@@ -19,7 +19,7 @@ class ParkingButton extends StatelessWidget {
           backgroundColor: isSelected ? Colors.white: Colors.blue,
           borderColor:  isSelected ? Colors.blue: Colors.transparent,
           textColor: isSelected ? Colors.black: Colors.white,
-              width: 150,
+              width: 160,
               height: 35,
           onPressed: () => provider.ontap(historicProvider),
           label: 'Parking',

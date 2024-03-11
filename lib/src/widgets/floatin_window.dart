@@ -174,8 +174,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                               style: GoogleFonts.roboto(
                                   color: Colors.black.withOpacity(0.7)),
                               children: [
-                                TextSpan(
-                                    text: "${widget.device.speedKph} Km/H")
+                                TextSpan(text: "${widget.device.speedKph} Km/H")
                               ],
                             )),
                           ],
@@ -192,8 +191,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                                   text: TextSpan(
                                       text: "Adresse: ",
                                       style: GoogleFonts.roboto(
-                                          color:
-                                              Colors.black.withOpacity(0.7)),
+                                          color: Colors.black.withOpacity(0.7)),
                                       children: [
                                     if (address.isNotEmpty)
                                       TextSpan(
@@ -209,8 +207,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
 
                         Row(
                           children: [
-                            const Icon(Icons.speed,
-                                color: AppConsts.mainColor),
+                            const Icon(Icons.speed, color: AppConsts.mainColor),
                             const SizedBox(width: 5),
                             RichText(
                                 text: TextSpan(
@@ -230,6 +227,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                         const SizedBox(height: 7),
                         if (widget.showCallDriver)
                           MainButton(
+                            width: double.infinity,
                             height: 35,
                             icon: Icons.call,
                             onPressed: () {
@@ -253,6 +251,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                         children: [
                           Expanded(
                             child: MainButton(
+                              width: 160,
                               height: 35,
                               onPressed: () async {
                                 await _showStartStopDilaog(context, provider,
@@ -265,6 +264,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                           const SizedBox(width: 10),
                           Expanded(
                               child: MainButton(
+                            width: 160,
                             height: 35,
                             onPressed: () async {
                               await _showStartStopDilaog(context, provider,
@@ -280,6 +280,7 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                       children: [
                         Expanded(
                           child: MainButton(
+                            width: 160,
                             height: 35,
                             onPressed: () async {
                               Position pos = await GeolocatorPlatform.instance
@@ -295,6 +296,8 @@ class _FloatingGroupWindowInfoState extends State<FloatingGroupWindowInfo> {
                         const SizedBox(width: 10),
                         Expanded(
                             child: MainButton(
+                                                          width: 160,
+
                           height: 35,
                           onPressed: () async {
                             Clipboard.setData(ClipboardData(

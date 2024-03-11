@@ -86,6 +86,7 @@ class _DriverAddDialogState extends State<DriverAddDialog> {
                     MainButton(
                       onPressed: _savePhone,
                       label: 'Enregister',
+                      width: 150,
                     ),
                     const SizedBox(height: 6),
                   ],
