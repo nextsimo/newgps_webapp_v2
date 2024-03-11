@@ -30,7 +30,9 @@ class GroupedButton extends StatelessWidget {
     return Positioned(
       right: AppConsts.outsidePadding,
       top: 50,
-      child: Column(children: [
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
         Selector<LastPositionProvider, bool>(
           builder: (_, bool clicked, __) {
             return MainButton(
